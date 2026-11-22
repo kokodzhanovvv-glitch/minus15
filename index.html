@@ -662,7 +662,7 @@ let S = { start: TK, days: {} };
 
 /* ---------- финансы: данные ---------- */
 // F.acc = [{i, n, ic, c, b0}]  F.tx = [{i, t:'e'|'i'|'x', a, ac, to, c, n, d}]
-let F = { cur: "₽", acc: [], xc: [], bud: {}, tx: [], init: false, goals: [], subs: [], paid: {} };
+let F = { cur: "сом", acc: [], xc: [], bud: {}, tx: [], init: false, goals: [], subs: [], paid: {} };
 const FCHUNK = /^f(\d{6})_(\d+)$/;
 const FCOUNT = {};           // сколько чанков у месяца в облаке
 const packTx = t => [t.i, t.t, t.a, t.ac, t.to || "", t.c || "", t.n || "", +t.d.slice(8)];
@@ -1011,7 +1011,7 @@ const CAT_I = [
   ["gifti","🎁","Подарки","#F72585"],["sale","🏷","Продажи","#FFD166"],["cashb","💸","Кэшбэк","#06D6A0"],["otheri","💰","Другое","#8B94A5"]];
 const PALETTE = ["#C8F542","#5B8CFF","#A78BFA","#FF9F43","#FF5C6C","#06D6A0","#4CC9F0","#F72585","#FFD166"];
 const ACC_ICONS = ["💳","💵","🏦","💰","🐷","📈","🪙","💎","👛","🏧"];
-const CURS = ["₽","$","€","сум","₸","₴","Br","₺"];
+const CURS = ["сом","₽","$","€","₸","сум","₴","Br","₺"];
 const MON_NOM = ["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,5);
 let FM = TK.slice(0,7), FDONUT = "e", FFILT = { t: "all", c: null, ac: null };

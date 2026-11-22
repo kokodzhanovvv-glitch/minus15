@@ -733,7 +733,7 @@ function saveDay(k){
   }, 300);
 }
 function saveMeta(){
-  if (hasCloud) cloud.set("meta", JSON.stringify({start: S.start, ach: S.ach || null, timer: S.timer || null, wr: S.wr || null}));
+  if (hasCloud) cloud.set("meta", JSON.stringify({start: S.start, ach: S.ach || null, timer: S.timer || null, wr: S.wr || null, imp: (S.imp || []).slice(-60)}));
   else LS.set("solve", JSON.stringify(S));
 }
 const day = k => { const o = (S.days[k] = S.days[k] || {}); o.c = o.c || []; o.s = o.s || {}; o.j = o.j || {}; o.t = o.t || []; return o; };
@@ -1869,15 +1869,22 @@ function pushSnap(){
   clearTimeout(snapTimer);
   snapTimer = setTimeout(() => apiPost("/api/sync", {snap: snapshot()}).catch(() => {}), 4000);
 }
+let syncing = false;
 async function serverSync(){
-  if (!apiOn()) return;
+  if (!apiOn() || syncing) return;
+  syncing = true;
   try {
     const r = await apiPost("/api/sync", {});
-    const items = r.items || [], ack = [];
-    items.forEach(it => { applyItem(it); ack.push(it.id); });
-    if (items.length){ renderAll(); hap("ok"); toast("📥 Из чата с ботом: " + items.length + " " + plural(items.length, "запись", "записи", "записей")); }
+    const seen = Array.isArray(S.imp) ? S.imp : [];
+    const items = r.items || [], ack = [], fresh = [];
+    items.forEach(it => { ack.push(it.id); if (!seen.includes(it.id)){ applyItem(it); fresh.push(it.id); } });
+    if (fresh.length){
+      S.imp = seen.concat(fresh).slice(-200); saveMeta();
+      renderAll(); hap("ok"); toast("📥 Из чата с ботом: " + fresh.length + " " + plural(fresh.length, "запись", "записи", "записей"));
+    }
     await apiPost("/api/sync", {ack, snap: snapshot()});
   } catch(e){}
+  syncing = false;
 }
 async function shareStory(){
   if (!apiOn() || !WR.img) return;

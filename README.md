@@ -1,2 +1,3 @@
-# minus15
-Telegram Mini App: чек-лист похудения
+# Solve
+
+Цифровой дневник в Telegram Mini App: сегодня, работа, тренировки, прогресс.

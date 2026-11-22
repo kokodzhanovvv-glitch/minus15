@@ -1604,7 +1604,8 @@ function sheetWr(){
   return sheetHead("✨ Итоги недели") +
     `<div class="seg" style="margin-bottom:12px"><button class="${WR.off === 0 ? "on" : ""}" data-act="xwroff:0">Эта неделя</button><button class="${WR.off === 1 ? "on" : ""}" data-act="xwroff:1">Прошлая</button></div>` +
     (WR.img ? `<img class="wrimg" src="${WR.img}" alt="Итоги недели">` : `<div class="wrimg empty" style="display:grid;place-items:center">Рисую карточку…</div>`) +
-    `<div class="amthint" style="margin-top:12px">Зажми картинку → «Сохранить в Фото» и выложи в сторис 📲</div>`;
+    (WR.img && apiOn() && tg.shareToStory && tg.isVersionAtLeast("7.8") ? `<button class="btn main" data-act="xstory">📲 Выложить в сторис</button>` : "") +
+    `<div class="amthint" style="margin-top:12px">${apiOn() ? "Или зажми картинку → «Сохранить в Фото»" : "Зажми картинку → «Сохранить в Фото» и выложи в сторис 📲"}</div>`;
 }
 async function openWr(off){
   WR = {off, img: null}; openSheet(sheetWr);
@@ -1696,6 +1697,7 @@ function xAct(cmd, p1){
     case "xach": { const a = achList().find(x => x.id === p1); toast(a.ok ? a.ic + " " + a.n + " — получено!" : a.ic + " " + a.n + ": " + (Math.round(a.v * 10) / 10) + " / " + a.need); hap(); return true; }
     case "xwr": S.wr = wrKey(+p1); saveMeta(); openWr(+p1); hap(); return true;
     case "xwroff": openWr(+p1); hap(); return true;
+    case "xstory": shareStory(); return true;
     // цели
     case "xgoalnew": GO = {n: "", ic: "🎯", t: "", dl: "", ac: null}; openSheet(sheetGoal); hap(); return true;
     case "xgoal": { const g = F.goals.find(x => x.i === p1); GO = {edit: g.i, n: g.n, ic: g.ic, t: String(g.t), dl: g.dl || "", ac: g.ac || null, add: ""}; openSheet(sheetGoal); hap(); return true; }
@@ -1761,7 +1763,7 @@ document.addEventListener("input", e => {
   else if (b === "sb-n") SUB.n = v; else if (b === "sb-a") SUB.a = v; else if (b === "sb-day") SUB.day = v;
 });
 
-function renderAll(){ renderToday(); renderWork(); renderTrain(); renderFin(); renderQFin(); renderProg(); renderExtras(); }
+function renderAll(){ renderToday(); renderWork(); renderTrain(); renderFin(); renderQFin(); renderProg(); renderExtras(); pushSnap(); }
 
 /* ================= ДЕЙСТВИЯ ================= */
 function act(a, el){
@@ -1830,6 +1832,63 @@ document.addEventListener("keydown", e => {
   else if (e.target.id === "w-in" || e.target.id === "wq-in") act("wsave:" + e.target.id);
 });
 
+/* ================= СЕРВЕР (Cloudflare) ================= */
+const API = "https://solve-bot.solve-app.workers.dev";
+const apiOn = () => hasCloud && API.startsWith("https://");
+async function apiPost(path, body){
+  const r = await fetch(API + path, {method: "POST", headers: {"content-type": "application/json"}, body: JSON.stringify(Object.assign({initData: tg.initData}, body))});
+  if (!r.ok) throw new Error("api " + r.status);
+  return r.json();
+}
+function snapshot(){
+  const td = F.tx.filter(t => t.d === TK);
+  return {date: TK, hab: peek(TK).c.length, zloy: workRaw(TK, "zloy"), claude: workRaw(TK, "claude"), wo: !!peek(TK).wo,
+    spent: sumT(td, "e"), earned: sumT(td, "i"), idx: dayIndex(TK), cur: F.cur,
+    subs: F.subs.map(s => ({n: s.n, ic: s.ic, a: s.a, day: s.day, per: s.per, mon: s.mon}))};
+}
+function applyItem(it){
+  const d = it.d && it.d <= TK ? it.d : TK;
+  if (it.k === "f"){
+    if (!F.acc.length) return false;
+    const ac = accOf(F.last) ? F.last : F.acc[0].i;
+    F.tx.push({i: uid(), t: it.t === "i" ? "i" : "e", a: +it.a, ac, to: null, c: it.c || (it.t === "i" ? "otheri" : "other"), n: it.n || "", d});
+    saveFin(d); return true;
+  }
+  const o = day(d);
+  if (it.k === "w" && it.v >= 40 && it.v <= 250) o.w = Math.round(it.v * 10) / 10;
+  else if (it.k === "wo"){ setWorkout(d, true); return true; }
+  else if (it.k === "j" && (it.id === "zloy" || it.id === "claude")) o.j[it.id] = (o.j[it.id] || 0) + Math.max(1, Math.min(20, +it.n || 1));
+  else if (it.k === "h" && ITEMS.some(x => x[0] === it.id)){ if (!o.c.includes(it.id)) o.c.push(it.id); }
+  else if (it.k === "t" && it.x) o.t.push({i: uid(), x: String(it.x).slice(0, 120), d: false});
+  else return false;
+  saveDay(d); return true;
+}
+let snapTimer = null;
+function pushSnap(){
+  if (!apiOn()) return;
+  clearTimeout(snapTimer);
+  snapTimer = setTimeout(() => apiPost("/api/sync", {snap: snapshot()}).catch(() => {}), 4000);
+}
+async function serverSync(){
+  if (!apiOn()) return;
+  try {
+    const r = await apiPost("/api/sync", {});
+    const items = r.items || [], ack = [];
+    items.forEach(it => { applyItem(it); ack.push(it.id); });
+    if (items.length){ renderAll(); hap("ok"); toast("📥 Из чата с ботом: " + items.length + " " + plural(items.length, "запись", "записи", "записей")); }
+    await apiPost("/api/sync", {ack, snap: snapshot()});
+  } catch(e){}
+}
+async function shareStory(){
+  if (!apiOn() || !WR.img) return;
+  toast("📤 Готовлю сторис…");
+  try {
+    const r = await apiPost("/api/story", {png: WR.img});
+    tg.shareToStory(r.url, {text: "Мои итоги недели в solve. 💪"});
+  } catch(e){ toast("Не получилось — сохрани картинку вручную"); }
+}
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") serverSync(); });
+
 /* ================= ГЛАВНЫЙ ЭКРАН ================= */
 function initHomeScreen(){
   if (!tg || !tg.isVersionAtLeast || !tg.isVersionAtLeast("8.0") || typeof tg.addToHomeScreen !== "function") return;
@@ -1850,6 +1909,7 @@ function initHomeScreen(){
   await load();
   renderAll();
   initHomeScreen();
+  serverSync();
   const l = $("loader"); l.style.opacity = 0; setTimeout(() => l.remove(), 300);
 })();
 </script>

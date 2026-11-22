@@ -240,9 +240,119 @@ input{font:inherit;color:inherit}
 .wstats b{font-family:Unbounded;font-size:16px;font-weight:600}
 .empty{color:var(--muted);font-size:13px;text-align:center;padding:20px 0}
 
+/* ===== finance ===== */
+.fhero{padding:20px;background:radial-gradient(90% 120% at 100% 0%, rgba(200,245,66,.16), transparent 60%),radial-gradient(80% 110% at 0% 100%, rgba(91,140,255,.16), transparent 60%),var(--card)}
+.fhero small{color:var(--muted);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.fbig{font-family:Unbounded;font-weight:600;font-size:32px;line-height:1.1;margin:6px 0 16px;letter-spacing:-.03em;word-break:break-word}
+.fbig.neg{color:var(--red)}
+.fstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.fstats div{background:rgba(255,255,255,.04);border-radius:14px;padding:10px 10px 9px}
+.fstats small{display:block;font-size:10.5px;text-transform:none;letter-spacing:0;margin-bottom:3px}
+.fstats b{font-family:Unbounded;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.g{color:var(--lime)} .r{color:var(--red)} .bl{color:var(--blue)}
+.accs{display:flex;gap:10px;overflow-x:auto;margin:0 -16px 12px;padding:2px 16px 6px;scrollbar-width:none}
+.accs::-webkit-scrollbar{display:none}
+.acc{flex:none;width:156px;height:104px;border-radius:20px;padding:13px 14px;display:flex;flex-direction:column;justify-content:space-between;text-align:left;border:1px solid var(--line);transition:transform .12s}
+.acc:active{transform:scale(.97)}
+.acc .ai{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-size:17px}
+.acc .an{font-size:12.5px;font-weight:700;color:#C9D0DA;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acc .ab{font-family:Unbounded;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acc.add{border:1.5px dashed rgba(255,255,255,.14);background:transparent;align-items:center;justify-content:center;color:var(--muted);font-weight:800;gap:6px;width:110px}
+.acc.add span{font-size:26px;color:var(--lime);line-height:1}
+.acc.sel{outline:2px solid var(--lime);outline-offset:2px}
+.fbtns{display:grid;grid-template-columns:1fr 1fr 56px;gap:8px;margin-bottom:6px}
+.fbtn{height:54px;border-radius:17px;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;gap:6px;transition:transform .12s}
+.fbtn:active{transform:scale(.97)}
+.fbtn.exp{background:rgba(255,92,108,.13);color:#FF8B96;border:1px solid rgba(255,92,108,.25)}
+.fbtn.inc{background:var(--lime);color:#111;box-shadow:0 8px 24px var(--lime-glow)}
+.fbtn.tr{background:var(--card);border:1px solid var(--line);color:var(--blue);font-size:20px}
+.mon{display:flex;align-items:center;justify-content:space-between;margin:22px 2px 10px}
+.mon b{font-family:Unbounded;font-size:16px;font-weight:600;text-transform:capitalize}
+.mon button{width:38px;height:38px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:18px;color:var(--muted)}
+.mon button:disabled{opacity:.3}
+.donut{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:center}
+.donut .dc{position:relative;width:150px;height:150px}
+.donut .dc svg{transform:rotate(-90deg)}
+.donut .dc .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.donut .dc .c small{color:var(--muted);font-size:11px;font-weight:700}
+.donut .dc .c b{font-family:Unbounded;font-size:15px;font-weight:600;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dleg{display:grid;gap:7px}
+.dleg div{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;min-width:0}
+.dleg i{width:9px;height:9px;border-radius:3px;flex:none}
+.dleg span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#C9D0DA}
+.dleg em{font-style:normal;color:var(--muted)}
+.crow{display:flex;align-items:center;gap:12px;padding:11px 0;width:100%;text-align:left}
+.crow + .crow{border-top:1px solid var(--line)}
+.ce{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;font-size:18px;flex:none}
+.crow .cm{flex:1;min-width:0}
+.crow .cm .l1{display:flex;justify-content:space-between;gap:8px;font-weight:700;font-size:14px}
+.crow .cm .l1 span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crow .cm .l1 b{font-family:Unbounded;font-size:13px;font-weight:600;white-space:nowrap}
+.crow .cm .l2{display:flex;justify-content:space-between;color:var(--muted);font-size:11.5px;font-weight:600;margin-top:5px;gap:8px}
+.pbar{height:6px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:6px}
+.pbar i{display:block;height:100%;border-radius:6px}
+.fchips{display:flex;gap:6px;overflow-x:auto;margin:0 -16px 10px;padding:0 16px;scrollbar-width:none}
+.fchips::-webkit-scrollbar{display:none}
+.fchip{flex:none;height:34px;padding:0 13px;border-radius:11px;background:var(--card);border:1px solid var(--line);font-weight:700;font-size:12.5px;color:var(--muted);white-space:nowrap}
+.fchip.on{background:var(--text);color:#111;border-color:var(--text)}
+.fchip.x{background:rgba(200,245,66,.14);color:var(--lime);border-color:rgba(200,245,66,.3)}
+.hday{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;font-weight:800;margin:14px 4px 6px;text-transform:uppercase;letter-spacing:.03em}
+.txr{display:flex;align-items:center;gap:12px;padding:10px 0;width:100%;text-align:left}
+.txr + .txr{border-top:1px solid var(--line)}
+.txr .tm{flex:1;min-width:0}
+.txr .tm b{display:block;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.txr .tm small{display:block;color:var(--muted);font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.txr .ta{font-family:Unbounded;font-size:14px;font-weight:600;white-space:nowrap}
+.fgear{width:38px;height:38px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:17px}
+.qfin{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.qfin .qf{display:flex;flex-direction:column;gap:2px}
+.qfin .qf small{color:var(--muted);font-size:12px;font-weight:600}
+.qfin .qf b{font-family:Unbounded;font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ===== bottom sheet ===== */
+.sheet-wrap{position:fixed;inset:0;z-index:40;display:none}
+.sheet-wrap.on{display:block}
+.sheet-bg{position:absolute;inset:0;background:rgba(0,0,0,.62);animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0}}
+.sheet{position:absolute;left:0;right:0;bottom:0;max-width:520px;margin:0 auto;max-height:90vh;overflow-y:auto;background:#12161B;border:1px solid var(--line);border-bottom:0;
+  border-radius:28px 28px 0 0;padding:10px 16px calc(20px + var(--safe-b));animation:up .32s cubic-bezier(.2,.9,.2,1)}
+@keyframes up{from{transform:translateY(100%)}}
+.sheet .hnd{width:40px;height:5px;border-radius:5px;background:#2F3541;margin:0 auto 14px}
+.sheet h3{font-size:17px;font-weight:600;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.sheet h3 button{color:var(--muted);font-size:24px;width:32px;height:32px}
+.amt{display:flex;align-items:baseline;justify-content:center;gap:8px;margin:6px 0 4px}
+.amt input{min-width:1.2em;max-width:280px;background:transparent;border:0;outline:none;text-align:center;font-family:Unbounded;font-weight:600;font-size:40px;letter-spacing:-.03em;color:var(--text)}
+.amt input::placeholder{color:#2F3541}
+.amt span{font-family:Unbounded;font-size:22px;color:var(--muted)}
+.amthint{text-align:center;color:var(--dim);font-size:11.5px;font-weight:600;margin-bottom:14px;min-height:16px}
+.lbl{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin:16px 2px 8px}
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 4px}
+.cc{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#C9D0DA;padding:2px 0}
+.cc .ce{width:48px;height:48px;border-radius:16px;font-size:21px;transition:.2s;border:2px solid transparent}
+.cc.on .ce{border-color:var(--lime);box-shadow:0 0 0 3px rgba(200,245,66,.18)}
+.cc.on{color:var(--text)}
+.cc span{max-width:76px;text-align:center;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hchips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.hchips::-webkit-scrollbar{display:none}
+.hc{flex:none;height:40px;padding:0 13px;border-radius:13px;background:var(--card);border:1px solid var(--line);font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px;white-space:nowrap;color:#C9D0DA}
+.hc.on{background:rgba(200,245,66,.14);border-color:rgba(200,245,66,.45);color:var(--text)}
+.hc input[type=date]{background:transparent;border:0;color:inherit;font:inherit;outline:none;width:118px;color-scheme:dark}
+.field{width:100%;height:50px;border-radius:15px;background:var(--card);border:1px solid var(--line);padding:0 15px;font-weight:600;outline:none}
+.field:focus{border-color:rgba(200,245,66,.5)}
+.sgrid{display:flex;flex-wrap:wrap;gap:8px}
+.sw{width:40px;height:40px;border-radius:13px;border:2px solid transparent;font-size:19px;display:grid;place-items:center;background:var(--card)}
+.sw.on{border-color:var(--lime)}
+.sheet .btn{margin-top:18px}
+.btn.danger{background:rgba(255,92,108,.1);color:var(--red);height:48px;font-size:14px;margin-top:8px;border:1px solid rgba(255,92,108,.2)}
+.seg3{display:grid;grid-template-columns:repeat(3,1fr);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px;margin-bottom:8px}
+.seg3 button{height:38px;border-radius:11px;font-weight:800;font-size:13px;color:var(--muted)}
+.seg3 button.on.e{background:rgba(255,92,108,.16);color:#FF8B96}
+.seg3 button.on.i{background:rgba(200,245,66,.16);color:var(--lime)}
+.seg3 button.on.x{background:rgba(91,140,255,.16);color:var(--blue)}
+
 /* tab bar */
 .tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + var(--safe-b));width:calc(100% - 28px);max-width:490px;
-  display:grid;grid-template-columns:repeat(4,1fr);padding:7px;border-radius:24px;
+  display:grid;grid-template-columns:repeat(5,1fr);padding:6px;border-radius:24px;
   background:rgba(20,24,30,.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--line);
   box-shadow:0 20px 50px rgba(0,0,0,.5);z-index:10}
 .tabs button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0 6px;border-radius:17px;color:var(--dim);font-size:10.5px;font-weight:800;transition:.2s}
@@ -272,6 +382,9 @@ input{font:inherit;color:inherit}
 
     <div class="sec"><h2 class="h">💼 Работа</h2><button data-act="tab:work">Подробнее ›</button></div>
     <div class="card" style="padding:6px 16px" id="q-work"></div>
+
+    <div class="sec"><h2 class="h">💳 Финансы</h2><button data-act="tab:fin">Подробнее ›</button></div>
+    <div class="card" id="q-fin"></div>
 
     <div class="sec"><h2 class="h">🏋️ Тренировка</h2><button data-act="tab:train">Открыть ›</button></div>
     <div class="card wcard" id="q-train"></div>
@@ -337,6 +450,28 @@ input{font:inherit;color:inherit}
     </div>
   </section>
 
+  <!-- ============ ФИНАНСЫ ============ -->
+  <section class="screen" id="s-fin">
+    <div class="top"><div><div class="date">Счета, доходы и расходы</div><h1 class="h">Финансы</h1></div><button class="fgear" data-act="fcur">⚙️</button></div>
+    <div class="card fhero" id="f-hero"></div>
+    <div class="accs" id="f-accs"></div>
+    <div class="fbtns">
+      <button class="fbtn exp" data-act="fadd:e">− Расход</button>
+      <button class="fbtn inc" data-act="fadd:i">+ Доход</button>
+      <button class="fbtn tr" data-act="fadd:x">⇄</button>
+    </div>
+    <div class="mon"><button data-act="fmon:-1">‹</button><b id="f-mon"></b><button id="f-next" data-act="fmon:1">›</button></div>
+    <div class="seg" id="seg-f"><button class="on" data-act="fdonut:e">Расходы</button><button data-act="fdonut:i">Доходы</button></div>
+    <div class="card" id="f-donut"></div>
+    <div class="sec" style="margin-top:14px"><h2 class="h">Категории</h2><span id="f-budhint">нажми, чтобы задать бюджет</span></div>
+    <div class="card" style="padding:4px 16px" id="f-cats"></div>
+    <div class="sec"><h2 class="h">По дням</h2><span id="f-avg"></span></div>
+    <div class="card" id="f-days"></div>
+    <div class="sec"><h2 class="h">История</h2><span id="f-count"></span></div>
+    <div class="fchips" id="f-filt"></div>
+    <div id="f-hist"></div>
+  </section>
+
   <!-- ============ ПРОГРЕСС ============ -->
   <section class="screen" id="s-prog">
     <div class="top"><div><div class="date">Вся картина по дням</div><h1 class="h">Прогресс</h1></div></div>
@@ -358,9 +493,11 @@ input{font:inherit;color:inherit}
   <button class="on" data-act="tab:today"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>Сегодня</button>
   <button data-act="tab:work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 12.5h18"/></svg>Работа</button>
   <button data-act="tab:train"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>Тренировки</button>
+  <button data-act="tab:fin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V5.5A1.5 1.5 0 0 0 17.5 4h-12A2.5 2.5 0 0 0 3 6.5v11A2.5 2.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"/><path d="M3 6.5A2.5 2.5 0 0 0 5.5 9h13A1.5 1.5 0 0 1 20 10.5V16h-4a2.5 2.5 0 0 1 0-5h4"/></svg>Финансы</button>
   <button data-act="tab:prog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg>Прогресс</button>
 </nav>
 <div class="toast" id="toast"></div>
+<div class="sheet-wrap" id="sheet"><div class="sheet-bg" data-act="sclose"></div><div class="sheet" id="sheet-body"></div></div>
 
 <script>
 /* ================= НАСТРОЙКИ ================= */
@@ -418,22 +555,64 @@ const cloud = {
 };
 const LS = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e){} } };
 let S = { start: TK, days: {} };
+
+/* ---------- финансы: данные ---------- */
+// F.acc = [{i, n, ic, c, b0}]  F.tx = [{i, t:'e'|'i'|'x', a, ac, to, c, n, d}]
+let F = { cur: "₽", acc: [], xc: [], bud: {}, tx: [], init: false };
+const FCHUNK = /^f(\d{6})_(\d+)$/;
+const FCOUNT = {};           // сколько чанков у месяца в облаке
+const packTx = t => [t.i, t.t, t.a, t.ac, t.to || "", t.c || "", t.n || "", +t.d.slice(8)];
+const unpackTx = (r, ym) => ({ i: r[0], t: r[1], a: r[2], ac: r[3], to: r[4] || null, c: r[5] || null, n: r[6] || "", d: ym.slice(0,4) + "-" + ym.slice(4) + "-" + String(r[7]).padStart(2, "0") });
+const ymKey = d => d.slice(0,4) + d.slice(5,7);
+const finDirty = new Set(); let finTimer = null;
+function saveFin(...dates){
+  dates.forEach(d => d && finDirty.add(ymKey(d)));
+  clearTimeout(finTimer);
+  finTimer = setTimeout(async () => {
+    const meta = { cur: F.cur, acc: F.acc, xc: F.xc, bud: F.bud, init: F.init };
+    if (!hasCloud){ LS.set("solve_fin", JSON.stringify(Object.assign({}, meta, { tx: F.tx }))); finDirty.clear(); return; }
+    await cloud.set("fm", JSON.stringify(meta));
+    for (const ym of [...finDirty]){
+      finDirty.delete(ym);
+      const list = F.tx.filter(t => ymKey(t.d) === ym).map(packTx);
+      const str = JSON.stringify(list), parts = [];
+      for (let p = 0; p < str.length; p += 3800) parts.push(str.slice(p, p + 3800));
+      if (!list.length) parts.length = 0;
+      for (let n = 0; n < parts.length; n++) await cloud.set("f" + ym + "_" + n, parts[n]);
+      const old = FCOUNT[ym] || 0;
+      if (old > parts.length){
+        const rm = []; for (let n = parts.length; n < old; n++) rm.push("f" + ym + "_" + n);
+        await new Promise(r => tg.CloudStorage.removeItems(rm, () => r()));
+      }
+      FCOUNT[ym] = parts.length;
+    }
+  }, 350);
+}
 // day = {c:[привычки], w:вес, wo:тип тренировки, s:{подходы}, j:{работа}, t:[задачи]}
 
 async function load(){
   if (hasCloud){
     const keys = await cloud.keys();
-    const want = keys.filter(k => k === "meta" || k.startsWith("d"));
+    const want = keys.filter(k => k === "meta" || k === "fm" || k.startsWith("d") || FCHUNK.test(k));
+    const chunks = {};
     for (let i = 0; i < want.length; i += 50){
       const got = await cloud.get(want.slice(i, i+50));
       for (const k in got){
         if (!got[k]) continue;
-        try { const v = JSON.parse(got[k]); if (k === "meta") Object.assign(S, v); else S.days[k.slice(1)] = v; } catch(e){}
+        const m = k.match(FCHUNK);
+        if (m){ (chunks[m[1]] = chunks[m[1]] || [])[+m[2]] = got[k]; continue; }
+        try { const v = JSON.parse(got[k]); if (k === "meta") Object.assign(S, v); else if (k === "fm") Object.assign(F, v); else S.days[k.slice(1)] = v; } catch(e){}
       }
+    }
+    for (const ym in chunks){
+      FCOUNT[ym] = chunks[ym].length;
+      try { JSON.parse(chunks[ym].join("")).forEach(r => F.tx.push(unpackTx(r, ym))); } catch(e){}
     }
   } else {
     try { const v = JSON.parse(LS.get("solve") || "null"); if (v) S = v; } catch(e){}
+    try { const v = JSON.parse(LS.get("solve_fin") || "null"); if (v) F = Object.assign(F, v); } catch(e){}
   }
+  finInit();
   if (!S.start) S.start = TK;
   const first = Object.keys(S.days).sort()[0];
   if (first && first < S.start) S.start = first;
@@ -712,12 +891,348 @@ function renderWeight(){
   </svg>`;
 }
 
-function renderAll(){ renderToday(); renderWork(); renderTrain(); renderProg(); }
+/* ================= ФИНАНСЫ ================= */
+const CAT_E = [
+  ["food","🍔","Еда вне дома","#FF9F43"],["groc","🛒","Продукты","#C8F542"],["taxi","🚕","Транспорт","#FFD166"],
+  ["home","🏠","Дом и счета","#5B8CFF"],["subs","📱","Связь и подписки","#A78BFA"],["fun","🎮","Развлечения","#FF5C6C"],
+  ["cloth","👕","Одежда","#4CC9F0"],["health","💊","Здоровье","#06D6A0"],["sport","🏋️","Спорт","#B5E48C"],
+  ["study","📚","Учёба","#F4A261"],["gift","🎁","Подарки","#F72585"],["workx","🎬","Для работы","#7B8CFF"],["other","📦","Другое","#8B94A5"]];
+const CAT_I = [
+  ["salary","💼","Зарплата","#C8F542"],["content","🎬","Монтаж и контент","#A78BFA"],["free","💻","Фриланс","#5B8CFF"],
+  ["gifti","🎁","Подарки","#F72585"],["sale","🏷","Продажи","#FFD166"],["cashb","💸","Кэшбэк","#06D6A0"],["otheri","💰","Другое","#8B94A5"]];
+const PALETTE = ["#C8F542","#5B8CFF","#A78BFA","#FF9F43","#FF5C6C","#06D6A0","#4CC9F0","#F72585","#FFD166"];
+const ACC_ICONS = ["💳","💵","🏦","💰","🐷","📈","🪙","💎","👛","🏧"];
+const CURS = ["₽","$","€","сум","₸","₴","Br","₺"];
+const MON_NOM = ["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,5);
+let FM = TK.slice(0,7), FDONUT = "e", FFILT = { t: "all", c: null, ac: null };
+let TX = null, ACC = null, CATS = null, NEWC = null, SH = null;
+
+function finInit(){
+  if (!F.init && !F.acc.length){
+    F.acc = [{i: uid(), n: "Карта", ic: "💳", c: "#5B8CFF", b0: 0}, {i: uid(), n: "Наличные", ic: "💵", c: "#C8F542", b0: 0}];
+    F.init = true; saveFin();
+  }
+}
+function cats(t){
+  const base = (t === "i" ? CAT_I : CAT_E).map(c => ({id: c[0], ic: c[1], n: c[2], col: c[3]}));
+  const xs = F.xc.filter(x => x.t === t).map((x, k) => ({id: x.i, ic: x.ic, n: x.n, col: PALETTE[k % PALETTE.length], custom: true}));
+  return base.slice(0, -1).concat(xs, base.slice(-1));
+}
+const catOf = id => cats("e").concat(cats("i")).find(c => c.id === id) || {id, ic: "❔", n: "Без категории", col: "#5A6372"};
+const accOf = id => F.acc.find(a => a.i === id);
+const money = (n, plus) => { const v = Math.abs(n); return (n < 0 ? "−" : plus && v ? "+" : "") + v.toLocaleString("ru-RU", {maximumFractionDigits: 2}) + " " + F.cur; };
+const moneyS = n => { const v = Math.abs(n), s = n < 0 ? "−" : ""; return v >= 1e6 ? s + (v/1e6).toFixed(1).replace(".", ",") + " млн" : v >= 1e5 ? s + Math.round(v/1000) + " тыс" : money(n); };
+const amtW = s => (Math.max(1, String(s || "").length) * .74 + .25).toFixed(2) + "em";
+function parseAmt(s){
+  s = String(s || "").replace(/\s/g, "").replace(/,/g, ".");
+  if (!s || !/^[\d.+\-*/()]+$/.test(s)) return NaN;
+  try { const v = Function('"use strict";return (' + s + ')')(); return isFinite(v) ? Math.round(v * 100) / 100 : NaN; } catch(e){ return NaN; }
+}
+function accDelta(id){
+  let s = 0;
+  for (const t of F.tx){
+    if (t.t === "i" && t.ac === id) s += t.a;
+    else if (t.t === "e" && t.ac === id) s -= t.a;
+    else if (t.t === "x"){ if (t.ac === id) s -= t.a; if (t.to === id) s += t.a; }
+  }
+  return s;
+}
+const bal = id => { const a = accOf(id); return a ? (a.b0 || 0) + accDelta(id) : 0; };
+const monthTx = ym => F.tx.filter(t => t.d.startsWith(ym));
+const sumT = (list, t) => list.filter(x => x.t === t).reduce((s, x) => s + x.a, 0);
+const daysIn = ym => new Date(+ym.slice(0,4), +ym.slice(5,7), 0).getDate();
+function catTotals(ym, t){
+  const m = {};
+  monthTx(ym).filter(x => x.t === t).forEach(x => m[x.c] = (m[x.c] || 0) + x.a);
+  return m;
+}
+const budTotal = () => Object.values(F.bud).reduce((s, v) => s + v, 0);
+function budLeft(){
+  const m = catTotals(TK.slice(0,7), "e");
+  return Object.keys(F.bud).reduce((s, c) => s + F.bud[c] - (m[c] || 0), 0);
+}
+const fdateLabel = k => { const d = D(k); return (k === TK ? "Сегодня, " : k === K(add(TODAY,-1)) ? "Вчера, " : "") + d.getDate() + " " + MON[d.getMonth()] + ", " + WD[wd(d)].toLowerCase(); };
+
+function renderFin(){
+  const ml = monthTx(FM), inc = sumT(ml, "i"), exp = sumT(ml, "e"), net = inc - exp;
+  const total = F.acc.reduce((s, a) => s + bal(a.i), 0);
+  const mName = MON_NOM[+FM.slice(5,7) - 1];
+  $("f-hero").innerHTML = `<small>Всего на счетах</small><div class="fbig ${total < 0 ? "neg" : ""}">${money(total)}</div>
+    <div class="fstats"><div><small>Доходы · ${mName}</small><b class="g">${moneyS(inc)}</b></div>
+    <div><small>Расходы · ${mName}</small><b class="r">${moneyS(exp)}</b></div>
+    <div><small>Итог месяца</small><b class="${net >= 0 ? "g" : "r"}">${net > 0 ? "+" : ""}${moneyS(net)}</b></div></div>`;
+
+  $("f-accs").innerHTML = F.acc.map(a => { const b = bal(a.i);
+    return `<button class="acc ${FFILT.ac === a.i ? "sel" : ""}" data-act="facc:${a.i}" style="background:linear-gradient(145deg,${a.c}2E,${a.c}0D),var(--card);border-color:${a.c}40">
+      <div class="ai" style="background:${a.c}30">${a.ic}</div><div><div class="an">${esc(a.n)}</div><div class="ab ${b < 0 ? "r" : ""}">${money(b)}</div></div></button>`; }).join("") +
+    `<button class="acc add" data-act="faccnew"><span>+</span>Счёт</button>`;
+
+  $("f-mon").textContent = mName + " " + FM.slice(0,4);
+  $("f-next").disabled = FM >= TK.slice(0,7);
+
+  // donut
+  const tot = catTotals(FM, FDONUT), entries = Object.entries(tot).sort((a,b) => b[1] - a[1]);
+  const sum = entries.reduce((s, e) => s + e[1], 0);
+  if (!sum){
+    $("f-donut").innerHTML = `<div class="empty">${FDONUT === "e" ? "Расходов" : "Доходов"} за ${mName} пока нет.<br>Нажми «${FDONUT === "e" ? "− Расход" : "+ Доход"}», чтобы добавить.</div>`;
+  } else {
+    const R = 58, C = 2 * Math.PI * R; let off = 0;
+    const segs = entries.map(([c, v]) => { const len = v / sum * C, g = entries.length > 1 ? Math.min(3, len * .3) : 0;
+      const s = `<circle cx="75" cy="75" r="${R}" fill="none" stroke="${catOf(c).col}" stroke-width="18" stroke-dasharray="${Math.max(0.01, len - g)} ${C}" stroke-dashoffset="${-off}"/>`;
+      off += len; return s; }).join("");
+    $("f-donut").innerHTML = `<div class="donut"><div class="dc"><svg width="150" height="150" viewBox="0 0 150 150">
+      <circle cx="75" cy="75" r="${R}" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="18"/>${segs}</svg>
+      <div class="c"><small>${FDONUT === "e" ? "расходы" : "доходы"}</small><b>${moneyS(sum)}</b><small>${ml.filter(x => x.t === FDONUT).length} опер.</small></div></div>
+      <div class="dleg">${entries.slice(0, 5).map(([c, v]) => `<div><i style="background:${catOf(c).col}"></i><span>${catOf(c).ic} ${catOf(c).n}</span><em>${Math.round(v/sum*100)}%</em></div>`).join("")}
+      ${entries.length > 5 ? `<div><i style="background:#2F3541"></i><span>ещё ${entries.length - 5}</span></div>` : ""}</div></div>`;
+  }
+
+  // категории + бюджеты
+  $("f-budhint").textContent = FDONUT === "e" ? "нажми — задать бюджет" : "нажми — история";
+  const rows = cats(FDONUT).filter(c => tot[c.id] || (FDONUT === "e" && F.bud[c.id]))
+    .sort((a, b) => (tot[b.id] || 0) - (tot[a.id] || 0) || (F.bud[b.id] || 0) - (F.bud[a.id] || 0));
+  let budRow = "";
+  if (FDONUT === "e" && budTotal()){
+    const bs = Object.keys(F.bud).reduce((s, c) => s + (tot[c] || 0), 0), bt = budTotal(), p = bs / bt;
+    budRow = `<div class="crow" style="cursor:default"><div class="ce" style="background:rgba(255,255,255,.06)">🎯</div><div class="cm">
+      <div class="l1"><span>Все бюджеты</span><b>${moneyS(bs)}</b></div>
+      <div class="pbar"><i style="width:${Math.min(100, p*100)}%;background:${p > 1 ? "var(--red)" : p > .8 ? "var(--orange)" : "var(--lime)"}"></i></div>
+      <div class="l2"><span>из ${money(bt)}</span><span class="${bt - bs < 0 ? "r" : ""}">${bt - bs >= 0 ? "осталось " + money(bt - bs) : "перерасход " + money(bs - bt)}</span></div></div></div>`;
+  }
+  $("f-cats").innerHTML = (budRow + rows.map(c => {
+    const v = tot[c.id] || 0, b = FDONUT === "e" ? F.bud[c.id] : 0, p = b ? v / b : (sum ? v / sum : 0);
+    const color = b ? (p > 1 ? "var(--red)" : p > .8 ? "var(--orange)" : c.col) : c.col;
+    return `<button class="crow" data-act="fcat:${c.id}"><div class="ce" style="background:${c.col}26">${c.ic}</div><div class="cm">
+      <div class="l1"><span>${esc(c.n)}</span><b>${money(v)}</b></div>
+      <div class="pbar"><i style="width:${Math.min(100, p*100)}%;background:${color}"></i></div>
+      <div class="l2">${b ? `<span>бюджет ${money(b)}</span><span class="${b - v < 0 ? "r" : ""}">${b - v >= 0 ? "осталось " + money(b - v) : "перерасход " + money(v - b)}</span>`
+        : `<span>${sum ? Math.round(v/sum*100) : 0}% от всех</span><span></span>`}</div></div></button>`;
+  }).join("")) || `<div class="empty">Здесь появятся категории с суммами${FDONUT === "e" ? " и бюджетами" : ""}</div>`;
+
+  // по дням
+  const nd = daysIn(FM), per = Array(nd).fill(0);
+  ml.filter(x => x.t === FDONUT).forEach(x => per[+x.d.slice(8) - 1] += x.a);
+  const isCur = FM === TK.slice(0,7), passed = isCur ? TODAY.getDate() : nd;
+  const avg = sum / passed, mx = Math.max(...per, avg, 1);
+  const W = 340, H = 120, pb = 18, pt = 8, bw = (W / nd) * .62, st = W / nd;
+  const Y = v => H - pb - v / mx * (H - pb - pt);
+  let svg = per.map((v, k) => { const x = k * st + (st - bw) / 2, cur = isCur && k + 1 === TODAY.getDate();
+    return `<rect x="${x.toFixed(1)}" y="${v ? Y(v).toFixed(1) : H - pb - 3}" width="${bw.toFixed(1)}" height="${v ? (H - pb - Y(v)).toFixed(1) : 3}" rx="${Math.min(4, bw/2).toFixed(1)}" fill="${v ? (cur ? "#F3F5F8" : FDONUT === "e" ? "#FF8B96" : "#C8F542") : "#232933"}" opacity="${isCur && k + 1 > TODAY.getDate() ? .35 : 1}"/>`; }).join("");
+  if (sum) svg += `<line x1="0" x2="${W}" y1="${Y(avg)}" y2="${Y(avg)}" stroke="rgba(255,255,255,.35)" stroke-dasharray="3 4"/>`;
+  [1, 10, 20, nd].forEach(dn => svg += `<text x="${((dn - .5) * st).toFixed(1)}" y="${H - 3}" text-anchor="middle" font-size="10" font-weight="800" fill="#5A6372">${dn}</text>`);
+  $("f-avg").textContent = sum ? "≈ " + money(Math.round(avg)) + " в день" : "";
+  $("f-days").innerHTML = `<div class="bars"><svg viewBox="0 0 ${W} ${H}" style="height:120px">${svg}</svg></div>` +
+    (isCur && sum && FDONUT === "e" ? `<div class="legend" style="margin-top:8px"><span>📈 Прогноз на месяц: <b style="color:var(--text);margin-left:4px">${money(Math.round(avg * nd))}</b></span></div>` : "");
+
+  // фильтры + история
+  const fl = [["all","Все"],["e","Расходы"],["i","Доходы"],["x","Переводы"]];
+  $("f-filt").innerHTML = fl.map(([k, n]) => `<button class="fchip ${FFILT.t === k ? "on" : ""}" data-act="ffilt:${k}">${n}</button>`).join("") +
+    (FFILT.c ? `<button class="fchip x" data-act="fclr">${catOf(FFILT.c).ic} ${esc(catOf(FFILT.c).n)} ×</button>` : "") +
+    (FFILT.ac && accOf(FFILT.ac) ? `<button class="fchip x" data-act="fclr">${accOf(FFILT.ac).ic} ${esc(accOf(FFILT.ac).n)} ×</button>` : "");
+  const list = ml.map((t, k) => [t, k]).filter(([t]) => (FFILT.t === "all" || t.t === FFILT.t) && (!FFILT.c || t.c === FFILT.c) && (!FFILT.ac || t.ac === FFILT.ac || t.to === FFILT.ac))
+    .sort((a, b) => b[0].d.localeCompare(a[0].d) || b[1] - a[1]).map(x => x[0]);
+  $("f-count").textContent = list.length ? list.length + " " + plural(list.length, "операция", "операции", "операций") : "";
+  if (!list.length){ $("f-hist").innerHTML = `<div class="card empty">Операций нет</div>`; return; }
+  const groups = {}; list.forEach(t => (groups[t.d] = groups[t.d] || []).push(t));
+  $("f-hist").innerHTML = Object.keys(groups).map(d => {
+    const g = groups[d], de = sumT(g, "e"), di = sumT(g, "i");
+    return `<div class="hday"><span>${fdateLabel(d)}</span><span>${di ? `<span class="g">${money(di, true)}</span> ` : ""}${de ? money(-de) : ""}</span></div>
+      <div class="card" style="padding:2px 16px;margin-bottom:6px">${g.map(txRow).join("")}</div>`;
+  }).join("");
+}
+function txRow(t){
+  const a = accOf(t.ac), to = accOf(t.to);
+  if (t.t === "x") return `<button class="txr" data-act="ftx:${t.i}"><div class="ce" style="background:rgba(91,140,255,.15)">⇄</div>
+    <div class="tm"><b>Перевод</b><small>${a ? esc(a.n) : "?"} → ${to ? esc(to.n) : "?"}${t.n ? " · " + esc(t.n) : ""}</small></div><div class="ta bl">${money(t.a)}</div></button>`;
+  const c = catOf(t.c);
+  return `<button class="txr" data-act="ftx:${t.i}"><div class="ce" style="background:${c.col}26">${c.ic}</div>
+    <div class="tm"><b>${t.n ? esc(t.n) : esc(c.n)}</b><small>${t.n ? esc(c.n) + " · " : ""}${a ? a.ic + " " + esc(a.n) : "Удалённый счёт"}</small></div>
+    <div class="ta ${t.t === "i" ? "g" : ""}">${t.t === "i" ? money(t.a, true) : money(-t.a)}</div></button>`;
+}
+function renderQFin(){
+  const td = F.tx.filter(t => t.d === TK), spent = sumT(td, "e"), got = sumT(td, "i");
+  const hasB = budTotal() > 0, left = hasB ? budLeft() : 0;
+  const total = F.acc.reduce((s, a) => s + bal(a.i), 0);
+  $("q-fin").innerHTML = `<div class="qfin">
+    <div class="qf"><small>Потрачено сегодня</small><b class="${spent ? "r" : ""}">${money(spent ? -spent : 0)}</b>${got ? `<small class="g">доход ${money(got, true)}</small>` : ""}</div>
+    <div class="qf"><small>${hasB ? "Осталось в бюджетах" : "Всего на счетах"}</small><b class="${(hasB ? left : total) < 0 ? "r" : ""}">${moneyS(hasB ? left : total)}</b></div></div>
+    ${td.length ? `<div style="margin:-4px 0 10px">${td.slice(-2).reverse().map(txRow).join("")}</div>` : ""}
+    <div class="fbtns" style="grid-template-columns:1fr 1fr;margin:0"><button class="fbtn exp" style="height:46px" data-act="fadd:e">− Расход</button><button class="fbtn inc" style="height:46px" data-act="fadd:i">+ Доход</button></div>`;
+}
+
+/* ---------- шторки ---------- */
+function openSheet(fn, focusId){
+  SH = fn; $("sheet-body").innerHTML = fn(); $("sheet").classList.add("on"); document.body.style.overflow = "hidden";
+  try { tg.BackButton.show(); } catch(e){}
+  if (focusId) setTimeout(() => { const el = $(focusId); el && el.focus(); }, 250);
+}
+function closeSheet(){ SH = null; $("sheet").classList.remove("on"); document.body.style.overflow = ""; try { tg.BackButton.hide(); } catch(e){} }
+const rerenderSheet = () => { if (SH) $("sheet-body").innerHTML = SH(); };
+const sheetHead = t => `<div class="hnd"></div><h3 class="h">${t}<button data-act="sclose">×</button></h3>`;
+
+function sheetTx(){
+  const t = TX.t, v = parseAmt(TX.a), expr = /[+\-*/]/.test(String(TX.a).replace(/^-/, ""));
+  const accChips = (sel, act, excl) => F.acc.filter(a => a.i !== excl).map(a =>
+    `<button class="hc ${sel === a.i ? "on" : ""}" data-act="${act}:${a.i}">${a.ic} ${esc(a.n)} <span style="color:var(--dim);font-size:11px">${moneyS(bal(a.i))}</span></button>`).join("") +
+    `<button class="hc" data-act="faccnew">＋</button>`;
+  const yd = K(add(TODAY, -1));
+  return sheetHead(TX.edit ? "Изменить операцию" : "Новая операция") +
+    `<div class="seg3"><button class="e ${t === "e" ? "on" : ""}" data-act="ftmode:e">Расход</button><button class="i ${t === "i" ? "on" : ""}" data-act="ftmode:i">Доход</button><button class="x ${t === "x" ? "on" : ""}" data-act="ftmode:x">Перевод</button></div>
+    <div class="amt"><input id="tx-a" data-bind="a" inputmode="decimal" autocomplete="off" placeholder="0" value="${esc(TX.a)}" style="width:${amtW(TX.a)}"><span>${F.cur}</span></div>
+    <div class="amthint" id="tx-hint">${expr && isFinite(v) ? "= " + money(v) : "можно считать: 1200+350"}</div>` +
+    (t !== "x" ? `<div class="lbl">Категория</div><div class="cgrid">${cats(t).map(c =>
+      `<button class="cc ${TX.c === c.id ? "on" : ""}" data-act="fpick:${c.id}"><div class="ce" style="background:${c.col}26">${c.ic}</div><span>${esc(c.n)}</span></button>`).join("")}
+      <button class="cc" data-act="fcatnew"><div class="ce" style="background:rgba(255,255,255,.05);color:var(--muted)">＋</div><span>Своя</span></button></div>` : "") +
+    `<div class="lbl">${t === "x" ? "Откуда" : "Счёт"}</div><div class="hchips">${accChips(TX.ac, "fac")}</div>` +
+    (t === "x" ? `<div class="lbl">Куда</div><div class="hchips">${accChips(TX.to, "fto", TX.ac)}</div>` : "") +
+    `<div class="lbl">Дата</div><div class="hchips">
+      <button class="hc ${TX.d === TK ? "on" : ""}" data-act="fdate:t">Сегодня</button>
+      <button class="hc ${TX.d === yd ? "on" : ""}" data-act="fdate:y">Вчера</button>
+      <label class="hc ${TX.d !== TK && TX.d !== yd ? "on" : ""}">📅 <input type="date" data-bind="d" value="${TX.d}" max="${TK}"></label></div>
+    <div class="lbl">Комментарий</div><input class="field" data-bind="n" maxlength="60" placeholder="${t === "e" ? "Например: шаурма у универа" : t === "i" ? "Например: монтаж для клиента" : "Необязательно"}" value="${esc(TX.n)}">
+    <button class="btn main" data-act="fsave">${TX.edit ? "Сохранить" : t === "e" ? "Добавить расход" : t === "i" ? "Добавить доход" : "Перевести"}</button>` +
+    (TX.edit ? `<button class="btn danger" data-act="fdel">${TX.del ? "Нажми ещё раз — удалить навсегда" : "Удалить операцию"}</button>` : "");
+}
+function sheetAcc(){
+  return sheetHead(ACC.edit ? "Счёт" : "Новый счёт") +
+    `<div class="lbl" style="margin-top:0">Название</div><input class="field" data-bind="acc-n" maxlength="24" placeholder="Например: Тинькофф, Наличные, Копилка" value="${esc(ACC.n)}">
+    <div class="lbl">Иконка</div><div class="sgrid">${ACC_ICONS.map(ic => `<button class="sw ${ACC.ic === ic ? "on" : ""}" data-act="faic:${ic}">${ic}</button>`).join("")}</div>
+    <div class="lbl">Цвет</div><div class="sgrid">${PALETTE.map((c, k) => `<button class="sw ${ACC.c === c ? "on" : ""}" data-act="facol:${k}" style="background:${c}"></button>`).join("")}</div>
+    <div class="lbl">Текущий баланс, ${F.cur}</div><input class="field" data-bind="acc-b" inputmode="decimal" placeholder="0" value="${esc(ACC.b)}">
+    <button class="btn main" data-act="faccsave">Сохранить счёт</button>` +
+    (ACC.edit ? `<button class="btn ghost" style="margin-top:8px" data-act="faccflt">Показать операции счёта</button>
+      <button class="btn danger" data-act="faccdel">${ACC.del ? "Нажми ещё раз — удалить счёт и его операции" : "Удалить счёт"}</button>` : "");
+}
+function sheetCat(){
+  const c = catOf(CATS.id), isE = cats("e").some(x => x.id === c.id), v = catTotals(FM, isE ? "e" : "i")[c.id] || 0;
+  return sheetHead(c.ic + " " + esc(c.n)) +
+    `<div class="tiles" style="margin-bottom:0"><div class="tile"><small>За ${MON_NOM[+FM.slice(5,7)-1]}</small><b class="${isE ? "r" : "g"}" style="font-size:18px">${money(v)}</b></div>
+      <div class="tile"><small>Операций</small><b style="font-size:18px">${monthTx(FM).filter(t => t.c === c.id).length}</b></div></div>` +
+    (isE ? `<div class="lbl">Бюджет на месяц, ${F.cur}</div><input class="field" data-bind="cat-b" inputmode="decimal" placeholder="Например: 8000" value="${esc(CATS.b)}">
+      <button class="btn main" data-act="fbudsave">Сохранить бюджет</button>${F.bud[c.id] ? `<button class="btn ghost" style="margin-top:8px" data-act="fbuddel">Убрать бюджет</button>` : ""}` : "") +
+    `<button class="btn ghost" style="margin-top:8px" data-act="fcatflt">Показать операции</button>` +
+    (c.custom ? `<button class="btn danger" data-act="fcatdel">Удалить категорию</button>` : "");
+}
+function sheetNewCat(){
+  return sheetHead("Своя категория") +
+    `<div class="lbl" style="margin-top:0">Эмодзи</div><input class="field" data-bind="nc-ic" maxlength="4" placeholder="🍕" value="${esc(NEWC.ic)}" style="font-size:22px;width:90px;text-align:center">
+    <div class="lbl">Название</div><input class="field" data-bind="nc-n" maxlength="20" placeholder="Например: Кофе" value="${esc(NEWC.n)}">
+    <button class="btn main" data-act="fcatsave">Создать</button><button class="btn ghost" style="margin-top:8px" data-act="fback">Назад</button>`;
+}
+function sheetCur(){
+  return sheetHead("Настройки финансов") + `<div class="lbl" style="margin-top:0">Валюта</div>
+    <div class="sgrid">${CURS.map((c, k) => `<button class="hc ${F.cur === c ? "on" : ""}" data-act="fcurset:${k}">${c}</button>`).join("")}</div>
+    <div class="amthint" style="margin-top:14px;text-align:left">Валюта меняет только значок — суммы не пересчитываются.</div>`;
+}
+
+function openTx(t, existing){
+  if (!F.acc.length){ ACC = {n: "", ic: "💳", c: PALETTE[1], b: ""}; openSheet(sheetAcc); toast("Сначала добавь счёт"); return; }
+  if (existing) TX = {edit: existing.i, t: existing.t, a: String(existing.a), ac: existing.ac, to: existing.to, c: existing.c, d: existing.d, n: existing.n || "", del: false};
+  else {
+    const ac = (accOf(F.last) ? F.last : F.acc[0].i);
+    TX = {t, a: "", ac, to: (F.acc.find(a => a.i !== ac) || {}).i || null, c: null, d: TK, n: "", del: false};
+  }
+  openSheet(sheetTx, existing ? null : "tx-a");
+}
+
+function finAct(cmd, p1){
+  switch (cmd){
+    case "fadd": openTx(p1); hap(); return true;
+    case "ftx": { const t = F.tx.find(x => x.i === p1); if (t) openTx(t.t, t); hap(); return true; }
+    case "ftmode": TX.t = p1; TX.c = null; if (p1 === "x" && (!TX.to || TX.to === TX.ac)) TX.to = (F.acc.find(a => a.i !== TX.ac) || {}).i || null; hap(); return true;
+    case "fpick": TX.c = p1; hap(); return true;
+    case "fac": TX.ac = p1; if (TX.to === p1) TX.to = (F.acc.find(a => a.i !== p1) || {}).i || null; hap(); return true;
+    case "fto": TX.to = p1; hap(); return true;
+    case "fdate": TX.d = p1 === "t" ? TK : K(add(TODAY, -1)); hap(); return true;
+    case "fsave": {
+      const v = parseAmt(TX.a);
+      if (!(v > 0)){ toast("Введи сумму"); hap("light"); return true; }
+      if (TX.t !== "x" && !TX.c){ toast("Выбери категорию"); return true; }
+      if (!accOf(TX.ac)){ toast("Выбери счёт"); return true; }
+      if (TX.t === "x" && (!accOf(TX.to) || TX.to === TX.ac)){ toast("Выбери счёт, куда перевести"); return true; }
+      const rec = {t: TX.t, a: v, ac: TX.ac, to: TX.t === "x" ? TX.to : null, c: TX.t === "x" ? null : TX.c, n: TX.n.trim(), d: TX.d || TK};
+      let oldD = null;
+      if (TX.edit){ const o = F.tx.find(x => x.i === TX.edit); oldD = o.d; Object.assign(o, rec); }
+      else F.tx.push(Object.assign({i: uid()}, rec));
+      F.last = TX.ac; saveFin(rec.d, oldD);
+      closeSheet(); hap("ok");
+      if (rec.t === "e" && F.bud[rec.c]){
+        const sp = catTotals(rec.d.slice(0,7), "e")[rec.c] || 0;
+        if (sp > F.bud[rec.c]) { toast("⚠️ Бюджет «" + catOf(rec.c).n + "» превышен"); return true; }
+        if (sp > F.bud[rec.c] * .8) { toast("🟠 «" + catOf(rec.c).n + "»: осталось " + money(F.bud[rec.c] - sp)); return true; }
+      }
+      toast(rec.t === "x" ? "⇄ Перевод " + money(v) : (rec.t === "e" ? money(-v) : money(v, true)) + " · " + catOf(rec.c).n);
+      return true;
+    }
+    case "fdel":
+      if (!TX.del){ TX.del = true; hap("medium"); return true; }
+      { const o = F.tx.find(x => x.i === TX.edit); F.tx = F.tx.filter(x => x.i !== TX.edit); saveFin(o && o.d); closeSheet(); hap("ok"); toast("🗑 Операция удалена"); }
+      return true;
+    case "faccnew": ACC = {n: "", ic: ACC_ICONS[F.acc.length % ACC_ICONS.length], c: PALETTE[F.acc.length % PALETTE.length], b: "", back: SH === sheetTx}; openSheet(sheetAcc); hap(); return true;
+    case "facc": { const a = accOf(p1); ACC = {edit: a.i, n: a.n, ic: a.ic, c: a.c, b: String(Math.round(bal(a.i) * 100) / 100), del: false}; openSheet(sheetAcc); hap(); return true; }
+    case "faic": ACC.ic = p1; hap(); return true;
+    case "facol": ACC.c = PALETTE[+p1]; hap(); return true;
+    case "faccsave": {
+      const n = ACC.n.trim(); if (!n){ toast("Введи название счёта"); return true; }
+      const b = ACC.b === "" ? 0 : parseAmt(ACC.b); if (!isFinite(b)){ toast("Проверь баланс"); return true; }
+      if (ACC.edit){ const a = accOf(ACC.edit); Object.assign(a, {n, ic: ACC.ic, c: ACC.c}); a.b0 = b - accDelta(a.i); }
+      else { const a = {i: uid(), n, ic: ACC.ic, c: ACC.c, b0: b}; F.acc.push(a); if (ACC.back && TX){ TX.ac = a.i; saveFin(); openSheet(sheetTx); hap("ok"); return true; } }
+      saveFin(); closeSheet(); hap("ok"); toast("✓ Счёт сохранён"); return true;
+    }
+    case "faccdel":
+      if (!ACC.del){ ACC.del = true; hap("medium"); return true; }
+      { const id = ACC.edit, ds = F.tx.filter(t => t.ac === id || t.to === id).map(t => t.d);
+        F.tx = F.tx.filter(t => t.ac !== id && t.to !== id); F.acc = F.acc.filter(a => a.i !== id);
+        if (FFILT.ac === id) FFILT.ac = null; saveFin(...ds); closeSheet(); hap("ok"); toast("🗑 Счёт удалён"); }
+      return true;
+    case "faccflt": FFILT = {t: "all", c: null, ac: ACC.edit}; closeSheet(); setTimeout(() => $("f-filt").scrollIntoView({behavior: "smooth", block: "start"}), 50); return true;
+    case "fcat": CATS = {id: p1, b: F.bud[p1] ? String(F.bud[p1]) : ""}; openSheet(sheetCat); hap(); return true;
+    case "fbudsave": { const v = parseAmt(CATS.b); if (!(v > 0)){ toast("Введи сумму бюджета"); return true; } F.bud[CATS.id] = v; saveFin(); closeSheet(); hap("ok"); toast("🎯 Бюджет сохранён"); return true; }
+    case "fbuddel": delete F.bud[CATS.id]; saveFin(); closeSheet(); hap(); return true;
+    case "fcatflt": FFILT = {t: "all", c: CATS.id, ac: null}; closeSheet(); setTimeout(() => $("f-filt").scrollIntoView({behavior: "smooth", block: "start"}), 50); return true;
+    case "fcatdel": F.xc = F.xc.filter(x => x.i !== CATS.id); delete F.bud[CATS.id]; saveFin(); closeSheet(); hap(); return true;
+    case "fcatnew": NEWC = {t: TX ? TX.t : "e", ic: "", n: ""}; openSheet(sheetNewCat); hap(); return true;
+    case "fcatsave": {
+      const n = NEWC.n.trim(), ic = NEWC.ic.trim() || "🏷";
+      if (!n){ toast("Введи название"); return true; }
+      const c = {i: uid(), ic, n, t: NEWC.t}; F.xc.push(c); saveFin();
+      if (TX){ TX.c = c.i; openSheet(sheetTx); } else closeSheet();
+      hap("ok"); return true;
+    }
+    case "fback": openSheet(sheetTx); return true;
+    case "fmon": { const [y, m] = FM.split("-").map(Number), d = new Date(y, m - 1 + (+p1), 1); FM = d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2, "0"); hap(); return true; }
+    case "fdonut": FDONUT = p1; document.querySelectorAll("#seg-f button").forEach(b => b.classList.toggle("on", b.dataset.act === "fdonut:" + p1)); hap(); return true;
+    case "ffilt": FFILT.t = p1; hap(); return true;
+    case "fclr": FFILT.c = null; FFILT.ac = null; hap(); return true;
+    case "fcur": openSheet(sheetCur); hap(); return true;
+    case "fcurset": F.cur = CURS[+p1]; saveFin(); hap("medium"); return true;
+  }
+  return false;
+}
+document.addEventListener("input", e => {
+  const b = e.target.dataset && e.target.dataset.bind; if (!b) return;
+  const v = e.target.value;
+  if (b === "a"){ TX.a = v; e.target.style.width = amtW(v); const n = parseAmt(v), h = $("tx-hint"); if (h) h.textContent = /[+\-*/]/.test(v.replace(/^-/, "")) && isFinite(n) ? "= " + money(n) : "можно считать: 1200+350"; }
+  else if (b === "d"){ if (v) TX.d = v > TK ? TK : v; }
+  else if (b === "n") TX.n = v;
+  else if (b === "acc-n") ACC.n = v;
+  else if (b === "acc-b") ACC.b = v;
+  else if (b === "cat-b") CATS.b = v;
+  else if (b === "nc-ic") NEWC.ic = v;
+  else if (b === "nc-n") NEWC.n = v;
+});
+document.addEventListener("change", e => { if (e.target.dataset && e.target.dataset.bind === "d") rerenderSheet(); });
+
+function renderAll(){ renderToday(); renderWork(); renderTrain(); renderFin(); renderQFin(); renderProg(); }
 
 /* ================= ДЕЙСТВИЯ ================= */
 function act(a, el){
   const [cmd, p1, p2] = a.split(":");
+  if (cmd === "sclose"){ closeSheet(); hap(); return; }
+  if (finAct(cmd, p1)){ renderAll(); rerenderSheet(); return; }
   if (cmd === "tab"){
+    closeSheet();
     document.querySelectorAll(".tabs button").forEach(b => b.classList.toggle("on", b.dataset.act === a));
     document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === "s-" + p1));
     window.scrollTo(0,0); hap(); return;
@@ -774,6 +1289,7 @@ document.addEventListener("click", e => {
 document.addEventListener("keydown", e => {
   if (e.key !== "Enter") return;
   if (e.target.id === "t-in") act("tadd");
+  else if (e.target.id === "tx-a"){ e.target.blur(); act("fsave"); }
   else if (e.target.id === "w-in" || e.target.id === "wq-in") act("wsave:" + e.target.id);
 });
 
@@ -792,6 +1308,7 @@ function initHomeScreen(){
 
 /* ================= СТАРТ ================= */
 (async () => {
+  if (tg){ try { tg.BackButton.onClick(closeSheet); } catch(e){} }
   if (tg){ try { tg.ready(); tg.expand(); tg.setHeaderColor && tg.setHeaderColor("#0A0C0F"); tg.setBackgroundColor && tg.setBackgroundColor("#0A0C0F"); tg.disableVerticalSwipes && tg.disableVerticalSwipes(); } catch(e){} }
   await load();
   renderAll();

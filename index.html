@@ -215,6 +215,7 @@ input{font:inherit;color:inherit}
 .cell.none{background:transparent;border:1px dashed rgba(255,255,255,.05)}
 .cell.fut{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.05)}
 .cell.miss{background:rgba(255,92,108,.55)}
+.cell.rest{background:rgba(91,140,255,.22)}
 .cell.l1{background:rgba(200,245,66,.22)}
 .cell.l2{background:rgba(200,245,66,.45)}
 .cell.l3{background:rgba(200,245,66,.7)}
@@ -396,6 +397,42 @@ input{font:inherit;color:inherit}
 .qtimer span{flex:1;color:#C9D0DA;font-size:13px;font-weight:700}
 .qtimer button{height:34px;padding:0 12px;border-radius:11px;background:var(--orange);color:#111;font-weight:800;font-size:12.5px}
 
+/* ===== onboarding / settings ===== */
+#ob{position:fixed;inset:0;z-index:35;background:var(--bg);overflow-y:auto;display:none;
+  background-image:radial-gradient(80% 50% at 10% 0%, rgba(200,245,66,.10), transparent 60%),radial-gradient(70% 50% at 100% 100%, rgba(91,140,255,.10), transparent 60%)}
+#ob.on{display:block;animation:fade .3s ease}
+.obw{max-width:520px;margin:0 auto;padding:22px 16px 0;min-height:100%;display:flex;flex-direction:column}
+.obdots{display:flex;gap:6px;margin-bottom:26px}
+.obdots i{flex:1;height:4px;border-radius:4px;background:rgba(255,255,255,.08);transition:.3s}
+.obdots i.on{background:var(--lime)}
+.obtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.obtop b{font-size:20px}
+.obhero{text-align:center;padding:30px 4px 18px}
+.obhero h1{font-size:26px;font-weight:600;margin:18px 0 10px;line-height:1.2}
+.obhero p{color:var(--muted);font-weight:600;font-size:14.5px;line-height:1.5}
+.obh{font-size:21px;font-weight:600;line-height:1.25;margin-bottom:8px}
+.obp{color:var(--muted);font-weight:600;font-size:13.5px;margin-bottom:16px;line-height:1.45}
+.obnav{position:sticky;bottom:0;display:flex;gap:8px;margin-top:auto;padding:22px 0 calc(16px + var(--safe-b));background:linear-gradient(to top,var(--bg) 70%,transparent)}
+.obnav .btn{margin-top:0}
+.wrow{display:flex;gap:8px;align-items:center}
+.field.ic{width:52px;flex:none;text-align:center;font-size:20px;padding:0}
+.wrow .del{color:var(--dim);font-size:22px;width:34px;flex:none}
+.obgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.obcalc{margin-top:16px;text-align:center;background:linear-gradient(120deg,rgba(200,245,66,.12),rgba(91,140,255,.08)),var(--card)}
+.obcalc small{display:block;color:var(--muted);font-size:12px;font-weight:700}
+.obcalc b{display:block;font-family:Unbounded;font-size:19px;font-weight:600;margin:6px 0 4px;color:var(--lime)}
+.obcalc span{color:var(--muted);font-size:12px;font-weight:600}
+.pc{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;padding:15px;margin-bottom:9px;border-radius:20px;background:var(--card);border:1px solid var(--line);transition:.2s}
+.pc.on{border-color:rgba(200,245,66,.55);background:linear-gradient(120deg,rgba(200,245,66,.10),transparent 70%),var(--card)}
+.pc .pi{width:46px;height:46px;border-radius:15px;background:var(--card2);display:grid;place-items:center;font-size:22px;flex:none}
+.pc b{display:block;font-size:15px;font-weight:800}
+.pc small{display:block;color:var(--muted);font-size:12.5px;font-weight:600;margin-top:2px;line-height:1.35}
+.pw{display:flex;gap:4px;margin-top:9px}
+.pw i{font-style:normal;font-size:10px;font-weight:800;color:var(--dim);width:26px;height:22px;border-radius:7px;display:grid;place-items:center;background:rgba(255,255,255,.04)}
+.pw i.on{background:rgba(200,245,66,.18);color:var(--lime)}
+.sumrow{display:flex;gap:12px;padding:10px 0;font-size:14px;font-weight:600;color:#D5DAE2}
+.sumrow + .sumrow{border-top:1px solid var(--line)}
+
 /* ===== bottom sheet ===== */
 .sheet-wrap{position:fixed;inset:0;z-index:40;display:none}
 .sheet-wrap.on{display:block}
@@ -460,7 +497,7 @@ input{font:inherit;color:inherit}
   <section class="screen on" id="s-today">
     <div class="top">
       <div><div class="logo">solve<i>.</i></div><div class="date" id="t-date" style="margin-top:8px"></div></div>
-      <div class="pill" id="t-week"></div>
+      <div style="display:flex;gap:8px;align-items:center"><div class="pill" id="t-week"></div><button class="fgear" data-act="cfgopen:1" aria-label="Настройки">⚙️</button></div>
     </div>
 
     <div id="hs"></div>
@@ -508,7 +545,7 @@ input{font:inherit;color:inherit}
 
   <!-- ============ ТРЕНИРОВКИ ============ -->
   <section class="screen" id="s-train">
-    <div class="top"><div><div class="date" id="w-date"></div><h1 class="h">Тренировки</h1></div></div>
+    <div class="top"><div><div class="date" id="w-date"></div><h1 class="h" id="t-title">Тренировки</h1></div></div>
     <div class="seg" id="seg-t"><button class="on" data-act="segt:w">Тренировка</button><button data-act="segt:f">Питание</button></div>
     <div id="t-workout">
       <div class="card whead"><small id="wh-sub"></small><h2 class="h" id="wh-title"></h2><div class="lvl" id="wh-tags"></div></div>
@@ -519,9 +556,11 @@ input{font:inherit;color:inherit}
     </div>
     <div id="t-food" style="display:none">
       <div class="tiles">
-        <div class="tile"><small>Калории в день</small><b class="g">2200</b></div>
-        <div class="tile"><small>Белок в день</small><b>160 <span>г</span></b></div>
+        <div class="tile"><small>Калории в день</small><b class="g" id="food-kcal">2200</b></div>
+        <div class="tile"><small>Белок в день</small><b><span id="food-prot" style="font-size:inherit;color:inherit;font-family:inherit">160</span> <span>г</span></b></div>
       </div>
+      <div id="food-gen"></div>
+      <div id="food-owner">
       <div class="card food"><h3>🍕 Обед в универе</h3><ul>
         <li>Пицца с курицей или мясом, а не «4 сыра» и пепперони</li>
         <li>3–4 раза в неделю лучше заменить на мясо с гарниром или шаурму</li>
@@ -540,6 +579,7 @@ input{font:inherit;color:inherit}
         <li>Взвешивайся утром натощак, смотри на среднее за неделю</li>
         <li>Вес стоит 2 недели — урежь гарнир или +2000 шагов</li>
         <li>Читмил — не чаще раза в неделю</li></ul></div>
+      </div>
     </div>
   </section>
 
@@ -601,23 +641,37 @@ input{font:inherit;color:inherit}
   <button data-act="tab:prog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg>Прогресс</button>
 </nav>
 <div class="toast" id="toast"></div>
+<div id="ob"></div>
 <div class="sheet-wrap" id="sheet"><div class="sheet-bg" data-act="sclose"></div><div class="sheet" id="sheet-body"></div></div>
 
 <script>
-/* ================= НАСТРОЙКИ ================= */
-const GOAL = 15, WEEKS = 8;
-const WORK = [ // [id, иконка, название, цель в день, подсказка]
-  ["zloy","✂️","Нарезки ZLOY",2,"короткие видео для канала"],
-  ["claude","🎬","Видео Claude",3,"ролики про Claude"],
-];
-const WORK_PLAN = WORK.reduce((s,w) => s + w[3], 0);
-const ITEMS = [ // [id, иконка, коротко, полностью]
+/* ================= НАСТРОЙКИ ПОЛЬЗОВАТЕЛЯ ================= */
+// Владелец (создатель Solve) — его настройки зашиты и не меняются онбордингом.
+const OWNER_ID = 8058885114;
+const OWNER_ITEMS = [ // [id, иконка, коротко, полностью]
   ["kcal","🍽","Калории","≤ 2300 ккал"],["protein","🥩","Белок","160 г+"],["water","💧","Вода","2.5–3 л"],
   ["nosugar","🚫","Без сахара","кола, соки, сладости"],["lunch","🍕","Обед","пицца с мясом + белок"],
   ["dinner","🍗","Ужин","без кожи, гарнир ½"],["veg","🥗","Овощи","хотя бы раз"],
   ["workout","🏋️","Тренировка","отметится сама"],["steps","👟","Шаги","8–10 тыс."],["sleep","😴","Сон","7–8 часов"],
 ];
-const PROGRAM = {
+const HABIT_CAT = [ // каталог привычек для всех остальных
+  ["kcal","🍽","Калории","≤ {kcal} ккал"],["protein","🥩","Белок","{prot} г+"],["water","💧","Вода","2–3 л"],
+  ["nosugar","🚫","Без сахара","без сладкого и газировки"],["veg","🥗","Овощи","хотя бы раз"],["workout","🏋️","Тренировка","отметится сама"],
+  ["steps","👟","Шаги","8–10 тыс."],["sleep","😴","Сон","7–8 часов"],["read","📖","Чтение","20 минут"],
+  ["noscreen","📵","Без телефона","час перед сном"],["meditate","🧘","Медитация","10 минут"],["english","🇬🇧","Английский","15 минут"],
+  ["journal","✍️","Дневник","пару строк о дне"],["cold","🚿","Холодный душ","бодрит"],["nofast","🍔","Без фастфуда","весь день"],["early","🌅","Ранний подъём","до 7:00"],
+];
+function ownerCfg(){
+  return {v: 1, owner: true, name: "",
+    work: [{id: "zloy", ic: "✂️", n: "Нарезки ZLOY", g: 2, h: "короткие видео для канала", kw: ["нарезк"]},
+           {id: "claude", ic: "🎬", n: "Видео Claude", g: 3, h: "ролики про Claude", kw: ["видео", "ролик", "claude", "клод"]}],
+    wmode: "lose", wl: 15, wt: null, prog: "home_cut", habits: OWNER_ITEMS.map(i => i[0]), ch: [],
+    kcal: 2200, prot: 160, food: "owner", weeks: 8};
+}
+let C = null;                         // активная конфигурация
+let GOAL = 15, WEEKS = 8, WORK = [], WORK_PLAN = 0, ITEMS = [], PROGRAM = {}, SCHED = [];
+const REST = {title: "Отдых", kind: "День отдыха", ico: "😌", ex: [], rest: true};
+const PROG_HOME = {
   A:{title:"Верх тела",kind:"Силовая A",ico:"💪",ex:[
     ["Отжимания","можно с колен",4,10,2,"повт",30],["Узкие отжимания","локти вдоль корпуса",3,8,1,"повт",20],
     ["Тяга в наклоне","гантель или рюкзак",4,12,1,"повт",20],["Жим вверх","гантели или отжимания уголком",3,10,1,"повт",20],
@@ -634,7 +688,64 @@ const PROGRAM = {
   LIGHT:{title:"Восстановление",kind:"Лёгкий день",ico:"🧘",ex:[
     ["Прогулка","спокойный темп",0,30,5,"мин",45],["Растяжка","всё тело",0,10,0,"мин",10]]},
 };
-const SCHED = ["A","B","HIIT","A","B","LONG","LIGHT"];
+const PRESETS = {
+  home_cut: {n: "Похудение дома", d: "4 силовые + 3 кардио, без зала. Нагрузка растёт каждую неделю", ic: "🔥",
+    p: PROG_HOME, s: ["A","B","HIIT","A","B","LONG","LIGHT"]},
+  start3: {n: "Лёгкий старт", d: "3 тренировки на всё тело дома + прогулка. Для новичков", ic: "🌱",
+    p: {FB: {title: "Всё тело", kind: "Фулбоди дома", ico: "💪", ex: [
+          ["Приседания","спина прямая",3,12,1,"повт",25],["Отжимания","можно с колен",3,8,1,"повт",25],
+          ["Ягодичный мост","пауза наверху",3,15,1,"повт",30],["Тяга в наклоне","рюкзак или гантель",3,10,1,"повт",20],
+          ["Выпады","на каждую ногу",2,8,1,"повт",16],["Планка","корпус прямой",3,30,5,"сек",90]]},
+        WALK: {title: "Прогулка", kind: "Активный отдых", ico: "🚶", ex: [["Быстрая прогулка","на улице",0,30,5,"мин",60]]}, REST},
+    s: ["FB","REST","FB","REST","FB","WALK","REST"]},
+  gym: {n: "Зал: верх / низ", d: "4 силовые в зале + кардио. Набор силы и мышц", ic: "🏋️",
+    p: {UP: {title: "Верх тела", kind: "Зал", ico: "💪", ex: [
+          ["Жим лёжа","дошёл до 12 — добавь вес",4,8,1,"повт",12],["Тяга штанги в наклоне","спина ровная",4,8,1,"повт",12],
+          ["Жим гантелей сидя","плечи",3,10,1,"повт",14],["Подтягивания / тяга блока","до касания груди",3,8,1,"повт",12],
+          ["Бицепс","штанга или гантели",3,12,1,"повт",15],["Трицепс","блок или брусья",3,12,1,"повт",15]]},
+        LOW: {title: "Низ тела", kind: "Зал", ico: "🦵", ex: [
+          ["Приседания со штангой","дошёл до 12 — добавь вес",4,8,1,"повт",12],["Румынская тяга","задняя поверхность",3,10,1,"повт",12],
+          ["Жим ногами","полная амплитуда",3,12,1,"повт",15],["Выпады с гантелями","на каждую ногу",3,10,1,"повт",12],
+          ["Икры","медленно вниз",4,15,1,"повт",20],["Пресс","скручивания",3,15,2,"повт",30]]},
+        CARD: {title: "Кардио", kind: "Зал", ico: "❤️", ex: [["Дорожка / велосипед","умеренный темп",0,25,5,"мин",45]]}, REST},
+    s: ["UP","LOW","REST","UP","LOW","CARD","REST"]},
+  run: {n: "Бег", d: "3–4 пробежки в неделю с ростом объёма", ic: "🏃",
+    p: {EASY: {title: "Лёгкий бег", kind: "Бег", ico: "🏃", ex: [["Лёгкий бег","можешь говорить",0,20,2,"мин",45]]},
+        INT: {title: "Интервалы", kind: "Бег", ico: "⚡", ex: [["Разминка","трусцой",0,10,0,"мин",10],
+          ["1 мин быстро / 2 мин легко","раунды",0,5,1,"раундов",10],["Заминка","шагом",0,5,0,"мин",5]]},
+        LONGR: {title: "Длинный бег", kind: "Бег", ico: "🛣", ex: [["Длинный бег","спокойно",0,30,5,"мин",80]]}, REST},
+    s: ["EASY","REST","INT","REST","EASY","REST","LONGR"]},
+  none: {n: "Без тренировок", d: "Раздел тренировок будет скрыт", ic: "🚫", p: {REST}, s: ["REST","REST","REST","REST","REST","REST","REST"]},
+};
+const WCOLS = ["#C8F542", "#A78BFA", "#5B8CFF", "#FF9F43"];
+const hasProgram = () => C && C.prog !== "none";
+const isRestDay = d => !!(PROGRAM[SCHED[wd(d)]] || REST).rest;
+// каталог привычек: у владельца его собственные формулировки идут первыми
+const habitBase = cfg => (cfg.owner ? OWNER_ITEMS.concat(HABIT_CAT.filter(h => !OWNER_ITEMS.some(o => o[0] === h[0]))) : HABIT_CAT)
+  .concat((cfg.ch || []).map(c => [c.id, c.ic, c.n, c.d || ""]));
+function buildItems(){
+  const fill = s => s.replace("{kcal}", C.kcal || 2000).replace("{prot}", C.prot || 120);
+  const base = habitBase(C);
+  const list = (C.habits || []).map(id => base.find(h => h[0] === id))
+    .filter(Boolean).map(h => [h[0], h[1], h[2], fill(h[3])]);
+  if (hasProgram() && !list.some(i => i[0] === "workout")) list.push(HABIT_CAT.find(h => h[0] === "workout"));
+  return list.filter(i => i[0] !== "workout" || hasProgram());
+}
+function applyConfig(){
+  const pr = PRESETS[C.prog] || PRESETS.home_cut;
+  PROGRAM = Object.assign({REST}, pr.p); SCHED = pr.s;
+  WORK = (C.work || []).map(w => [w.id, w.ic, w.n, w.g, w.h || ""]);
+  WORK_PLAN = WORK.reduce((s, w) => s + w[3], 0);
+  ITEMS = buildItems();
+  WEEKS = C.weeks || 0; GOAL = C.wl || 0;
+  const tabTrain = document.querySelector('.tabs [data-act="tab:train"]');
+  if (tabTrain) tabTrain.lastChild.textContent = hasProgram() ? "Тренировки" : "Питание";
+}
+function goalWeight(){
+  if (!C || C.wmode === "none") return null;
+  if (C.wt) return C.wt;
+  const w = weights(); return C.wl && w.length ? w[0][1] - C.wl : null;
+}
 const WD = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
 const WD_FULL = ["понедельник","вторник","среда","четверг","пятница","суббота","воскресенье"];
 const MON = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
@@ -699,7 +810,7 @@ function saveFin(...dates){
 async function load(){
   if (hasCloud){
     const keys = await cloud.keys();
-    const want = keys.filter(k => k === "meta" || k === "fm" || k === "fg" || k.startsWith("d") || FCHUNK.test(k));
+    const want = keys.filter(k => k === "meta" || k === "fm" || k === "fg" || k === "cfg" || k.startsWith("d") || FCHUNK.test(k));
     const chunks = {};
     for (let i = 0; i < want.length; i += 50){
       const got = await cloud.get(want.slice(i, i+50));
@@ -707,7 +818,7 @@ async function load(){
         if (!got[k]) continue;
         const m = k.match(FCHUNK);
         if (m){ (chunks[m[1]] = chunks[m[1]] || [])[+m[2]] = got[k]; continue; }
-        try { const v = JSON.parse(got[k]); if (k === "meta") Object.assign(S, v); else if (k === "fm" || k === "fg") Object.assign(F, v); else S.days[k.slice(1)] = v; } catch(e){}
+        try { const v = JSON.parse(got[k]); if (k === "meta") Object.assign(S, v); else if (k === "cfg") C = v; else if (k === "fm" || k === "fg") Object.assign(F, v); else S.days[k.slice(1)] = v; } catch(e){}
       }
     }
     for (const ym in chunks){
@@ -717,6 +828,7 @@ async function load(){
   } else {
     try { const v = JSON.parse(LS.get("solve") || "null"); if (v) S = v; } catch(e){}
     try { const v = JSON.parse(LS.get("solve_fin") || "null"); if (v) F = Object.assign(F, v); } catch(e){}
+    try { C = JSON.parse(LS.get("solve_cfg") || "null"); } catch(e){}
   }
   finInit();
   if (!S.start) S.start = TK;
@@ -731,6 +843,9 @@ function saveDay(k){
     if (hasCloud) cloud.set("d"+k, JSON.stringify(S.days[k] || {}));
     else LS.set("solve", JSON.stringify(S));
   }, 300);
+}
+function saveCfg(){
+  if (hasCloud) cloud.set("cfg", JSON.stringify(C)); else LS.set("solve_cfg", JSON.stringify(C));
 }
 function saveMeta(){
   if (hasCloud) cloud.set("meta", JSON.stringify({start: S.start, ach: S.ach || null, timer: S.timer || null, wr: S.wr || null, imp: (S.imp || []).slice(-60)}));
@@ -751,11 +866,19 @@ function didLastWeek(type, ref){
 }
 const target = (ex, lv) => Math.min(ex[3] + ex[4]*Math.max(lv,0), ex[6]);
 const weights = () => Object.keys(S.days).filter(k => S.days[k].w).sort().map(k => [k, S.days[k].w]);
-const habitPct = k => peek(k).c.length / ITEMS.length;
+const habitPct = k => ITEMS.length ? peek(k).c.filter(c => ITEMS.some(i => i[0] === c)).length / ITEMS.length : 0;
 const workDone = k => { const j = peek(k).j; return WORK.reduce((s,w) => s + Math.min(j[w[0]]||0, w[3]), 0); };
 const workRaw = (k, id) => peek(k).j[id] || 0;
-const workPct = k => workDone(k) / WORK_PLAN;
-const dayScore = k => (habitPct(k) + workPct(k) + (peek(k).wo ? 1 : 0)) / 3;
+const workPct = k => WORK_PLAN ? workDone(k) / WORK_PLAN : 0;
+// оценка дня: только те блоки, которые у человека есть (тренировка не учитывается в день отдыха)
+function dayScore(k){
+  const parts = [];
+  if (ITEMS.length) parts.push(habitPct(k));
+  if (WORK_PLAN) parts.push(workPct(k));
+  if (hasProgram() && (!isRestDay(D(k)) || peek(k).wo)) parts.push(peek(k).wo ? 1 : 0);
+  return parts.length ? parts.reduce((s, x) => s + x, 0) / parts.length : 0;
+}
+const woOk = k => !!peek(k).wo || isRestDay(D(k));   // для серий: день отдыха не рвёт серию
 function setWorkout(k, done){
   const o = day(k);
   if (done){ o.wo = SCHED[wd(D(k))]; if (!o.c.includes("workout")) o.c.push("workout"); }
@@ -796,14 +919,17 @@ function renderToday(){
   const d = D(SEL), o = peek(SEL);
   const wnum = Math.floor((monday(d) - monday(D(S.start))) / 864e5 / 7) + 1;
   $("t-date").textContent = (SEL === TK ? "Сегодня · " : "") + fmtDate(d);
-  $("t-week").innerHTML = "Неделя <b>" + Math.max(1, wnum) + "</b> / " + WEEKS;
+  $("t-week").innerHTML = "Неделя <b>" + Math.max(1, wnum) + "</b>" + (WEEKS ? " / " + WEEKS : "");
 
   const tasksAll = o.t.length, tasksDone = o.t.filter(t => t.d).length;
-  const wu = workDone(SEL) + tasksDone, wt = WORK_PLAN + tasksAll;
-  $("ov").innerHTML =
-    `<div>${miniRing(wu/wt, wu, "из " + wt, "#A78BFA")}<div class="lb">Работа</div></div>` +
-    `<div>${miniRing(o.wo ? 1 : 0, o.wo ? "✓" : "—", o.wo ? "готово" : "впереди", "#5B8CFF")}<div class="lb">Тренировка</div></div>` +
-    `<div>${miniRing(habitPct(SEL), o.c.length, "из " + ITEMS.length, "#C8F542")}<div class="lb">Привычки</div></div>`;
+  const wu = workDone(SEL) + tasksDone, wt = WORK_PLAN + tasksAll, rest = hasProgram() && isRestDay(d) && !o.wo;
+  const rings = [];
+  if (wt) rings.push(`<div>${miniRing(wu/wt, wu, "из " + wt, "#A78BFA")}<div class="lb">Работа</div></div>`);
+  if (hasProgram()) rings.push(rest ? `<div>${miniRing(0, "😌", "отдых", "#5B8CFF")}<div class="lb">Тренировка</div></div>`
+    : `<div>${miniRing(o.wo ? 1 : 0, o.wo ? "✓" : "—", o.wo ? "готово" : "впереди", "#5B8CFF")}<div class="lb">Тренировка</div></div>`);
+  if (ITEMS.length) rings.push(`<div>${miniRing(habitPct(SEL), peek(SEL).c.filter(c => ITEMS.some(i => i[0] === c)).length, "из " + ITEMS.length, "#C8F542")}<div class="lb">Привычки</div></div>`);
+  $("ov").style.gridTemplateColumns = "repeat(" + Math.max(1, rings.length) + ",1fr)";
+  $("ov").innerHTML = rings.join("");
 
   const m = monday(TODAY);
   $("week").innerHTML = [0,1,2,3,4,5,6].map(i => {
@@ -815,22 +941,33 @@ function renderToday(){
     return `<button class="${cls.join(" ")}" data-act="day:${k}"><small>${WD[i]}</small><b>${x.getDate()}</b><i></i></button>`;
   }).join("");
 
-  $("q-work").innerHTML = WORK.map(w => counterRow(w[0], w[1], w[2], w[3], SEL)).join("") +
-    o.t.map(t => taskRow(t, false)).join("");
+  $("q-work").innerHTML = (WORK.map(w => counterRow(w[0], w[1], w[2], w[3], SEL)).join("") +
+    o.t.map(t => taskRow(t, false)).join("")) || `<div class="empty" style="padding:14px 0">Добавь задачи в «Работе» или свои ежедневные дела в ⚙️ настройках</div>`;
 
-  const type = SCHED[wd(d)], P = PROGRAM[type], lv = level(type, d);
-  const tag = o.wo ? "" : lv > 0 && didLastWeek(type, d) ? `<span class="tag">↑ нагрузка выросла</span>` : lv > 0 ? `<span class="tag warn">прошлую пропустил</span>` : `<span class="tag">старт программы</span>`;
-  $("q-train").innerHTML = `<div class="wico">${P.ico}</div>
-    <div class="t" data-act="tab:train"><small>${P.kind} · уровень ${lv+1}</small><b>${P.title}</b>${tag}</div>
-    <button class="wbtn ${o.wo ? "ok" : ""}" data-act="${o.wo ? "wundo" : "wdone"}">${o.wo ? "✓ Готово" : "Выполнил"}</button>`;
+  const qt = $("q-train"), qtSec = qt.previousElementSibling;
+  qt.style.display = qtSec.style.display = hasProgram() ? "" : "none";
+  if (hasProgram()){
+    const type = SCHED[wd(d)], P = PROGRAM[type], lv = level(type, d);
+    if (P.rest && !o.wo){
+      qt.innerHTML = `<div class="wico" style="background:linear-gradient(145deg,#8FB3FF,#5B8CFF)">😌</div>
+        <div class="t" data-act="tab:train"><small>По плану</small><b>День отдыха</b><span class="tag">восстановление тоже прогресс</span></div>`;
+    } else {
+      const tag = o.wo ? "" : lv > 0 && didLastWeek(type, d) ? `<span class="tag">↑ нагрузка выросла</span>` : lv > 0 ? `<span class="tag warn">прошлую пропустил</span>` : `<span class="tag">старт программы</span>`;
+      qt.innerHTML = `<div class="wico">${P.ico}</div>
+        <div class="t" data-act="tab:train"><small>${P.kind} · уровень ${lv+1}</small><b>${P.title}</b>${tag}</div>
+        <button class="wbtn ${o.wo ? "ok" : ""}" data-act="${o.wo ? "wundo" : "wdone"}">${o.wo ? "✓ Готово" : "Выполнил"}</button>`;
+    }
+  }
 
-  $("q-hcount").textContent = o.c.length === ITEMS.length ? "🔥 идеально" : o.c.length + " из " + ITEMS.length;
+  const hDone = o.c.filter(c => ITEMS.some(i => i[0] === c)).length;
+  $("q-habits").previousElementSibling.style.display = $("q-habits").style.display = ITEMS.length ? "" : "none";
+  $("q-hcount").textContent = hDone === ITEMS.length ? "🔥 идеально" : hDone + " из " + ITEMS.length;
   $("q-habits").innerHTML = ITEMS.map(([id, ic, s]) =>
     `<button class="chip ${o.c.includes(id) ? "on" : ""}" data-act="habit:${id}"><span>${ic}</span>${s}<div class="chk">${CHECK(11)}</div></button>`).join("");
 
   const w = o.w;
   $("q-weight").innerHTML = `<div class="qi">⚖️</div><div class="qt"><b>${w ? w.toFixed(1) + " кг" : "Вес"}</b><small>${w ? "записан · можно изменить" : "утром натощак"}</small></div>
-    <input id="wq-in" type="number" inputmode="decimal" step="0.1" placeholder="${w ? w.toFixed(1) : "97.5"}"><button data-act="wsave:wq-in">✓</button>`;
+    <input id="wq-in" type="number" inputmode="decimal" step="0.1" placeholder="${w ? w.toFixed(1) : (weights().slice(-1)[0] || [0, C.owner ? 97.5 : 70])[1].toFixed(1)}"><button data-act="wsave:wq-in">✓</button>`;
 }
 
 /* ================= РАБОТА ================= */
@@ -840,15 +977,19 @@ function renderWork(){
   const ws = streakOf(k => workPct(k) >= 1);
   $("wk-streak").innerHTML = "🔥 <b>" + ws + "</b> " + plural(ws, "день", "дня", "дней");
   const done = workDone(SEL), extra = WORK.reduce((s,w) => s + Math.max(0, workRaw(SEL, w[0]) - w[3]), 0);
-  $("wk-head").innerHTML = `<small>План контента на день</small>
-    <div class="big"><b>${done}</b><span>/ ${WORK_PLAN} видео</span>${extra ? `<span class="badge blue">+${extra} сверх плана</span>` : ""}</div>
-    <div class="bar"><i style="width:${Math.min(100, done/WORK_PLAN*100)}%"></i></div>`;
+  ["wk-bars", "wk-tiles"].forEach(id => $(id).style.display = WORK_PLAN ? "" : "none");
+  $("wk-bars").previousElementSibling.style.display = WORK_PLAN ? "" : "none";
+  $("wk-head").innerHTML = WORK_PLAN ? `<small>${C.owner ? "План контента на день" : "План на день"}</small>
+    <div class="big"><b>${done}</b><span>/ ${WORK_PLAN} ${C.owner ? "видео" : "по плану"}</span>${extra ? `<span class="badge blue">+${extra} сверх плана</span>` : ""}</div>
+    <div class="bar"><i style="width:${Math.min(100, done/WORK_PLAN*100)}%"></i></div>`
+    : `<small>Ежедневные дела</small><div style="margin-top:8px;color:var(--muted);font-weight:600;font-size:13.5px">Добавь то, что делаешь каждый день (учёба, посты, звонки…), — появятся счётчики, график и статистика.</div>
+      <button class="btn main" style="height:46px;font-size:14px;margin-top:12px" data-act="cfgopen:1">⚙️ Настроить дела</button>`;
 
   $("wk-counters").innerHTML = WORK.map(([id, ico, name, goal, hint]) => {
     const v = workRaw(SEL, id);
     const slots = Array.from({length: goal}, (_,i) => `<i class="${i < v ? "on" : ""}"></i>`).join("");
     return `<div class="card ctr ${v >= goal ? "ok" : ""}">
-      <div class="r1"><div class="qi">${ico}</div><div class="qt"><b>${name}</b><small>${hint} · цель ${goal} в день</small></div>
+      <div class="r1"><div class="qi">${ico}</div><div class="qt"><b>${name}</b><small>${hint ? hint + " · " : ""}цель ${goal} в день</small></div>
         ${v >= goal ? `<span class="badge">✓ план</span>` : ""}</div>
       <div class="r2"><div class="num">${v}<em> / ${goal}</em></div><div class="slots">${slots}</div>
         <div class="bigstp"><button data-act="dec:${id}">−</button><button class="plus" data-act="inc:${id}">+</button></div></div></div>`;
@@ -865,7 +1006,7 @@ function renderWork(){
   const max = Math.max(WORK_PLAN, ...vals.map(v => v.reduce((a,b)=>a+b,0))) + 1;
   const W = 340, H = 150, pb = 22, pt = 10, bw = 28, gap = (W - 7*bw) / 7;
   const Y = v => H - pb - v / max * (H - pb - pt);
-  const cols = ["#C8F542", "#A78BFA"];
+  const cols = WCOLS;
   let svg = `<line x1="0" x2="${W}" y1="${Y(WORK_PLAN)}" y2="${Y(WORK_PLAN)}" stroke="rgba(255,255,255,.25)" stroke-dasharray="4 5"/>
     <text x="${W}" y="${Y(WORK_PLAN)-5}" text-anchor="end" font-size="10" fill="#8B94A5" font-weight="800">план ${WORK_PLAN}</text>`;
   days.forEach((k, i) => {
@@ -880,23 +1021,34 @@ function renderWork(){
     svg += `<text x="${x + bw/2}" y="${H-6}" text-anchor="middle" font-size="10.5" font-weight="800" fill="${k === SEL ? "#C8F542" : "#5A6372"}">${WD[wd(D(k))]}</text>`;
   });
   $("wk-bars").innerHTML = `<svg viewBox="0 0 ${W} ${H}">${svg}</svg>
-    <div class="legend"><span><i style="background:#C8F542"></i>Нарезки ZLOY</span><span><i style="background:#A78BFA"></i>Видео Claude</span></div>`;
+    <div class="legend">${WORK.map((w, j) => `<span><i style="background:${cols[j % cols.length]}"></i>${esc(w[2])}</span>`).join("")}</div>`;
   const sums = WORK.map((w, j) => vals.reduce((s, v) => s + v[j], 0));
   $("wk-wsum").textContent = "всего " + sums.reduce((a,b)=>a+b,0);
   const planDays = days.filter(k => workPct(k) >= 1).length;
-  $("wk-tiles").innerHTML = `<div class="tile"><small>Нарезки за 7 дней</small><b class="g">${sums[0]}</b></div>
-    <div class="tile"><small>Видео Claude за 7 дней</small><b class="v">${sums[1]}</b></div>
-    <div class="tile"><small>Дней с планом</small><b>${planDays}<span> / 7</span></b></div>
+  $("wk-tiles").innerHTML = WORK.slice(0, 2).map((w, j) => `<div class="tile"><small>${esc(w[2])} за 7 дней</small><b style="color:${cols[j]}">${sums[j]}</b></div>`).join("") +
+    `<div class="tile"><small>Дней с планом</small><b>${planDays}<span> / 7</span></b></div>
     <div class="tile"><small>В среднем в день</small><b>${(sums.reduce((a,b)=>a+b,0)/7).toFixed(1)}</b></div>`;
 }
 
 /* ================= ТРЕНИРОВКИ ================= */
 function renderTrain(){
+  if (!hasProgram()) TMODE = "f";
+  $("seg-t").style.display = hasProgram() ? "" : "none";
+  $("t-title").textContent = hasProgram() ? "Тренировки" : "Питание";
   $("t-workout").style.display = TMODE === "w" ? "" : "none";
   $("t-food").style.display = TMODE === "f" ? "" : "none";
-  const d = D(SEL), type = SCHED[wd(d)], P = PROGRAM[type];
+  renderFood();
+  const d = D(SEL), type = SCHED[wd(d)], P = PROGRAM[type] || REST;
   const lv = level(type, d), grew = lv > 0 && didLastWeek(type, d), o = peek(SEL);
   $("w-date").textContent = fmtDate(d);
+  if (P.rest && !o.wo){
+    $("wh-sub").textContent = "По плану";
+    $("wh-title").textContent = "😌 День отдыха";
+    $("wh-tags").innerHTML = `<span class="tag">Мышцы растут во время отдыха</span>`;
+    $("ex-list").innerHTML = `<div class="card empty">Сегодня тренировки нет — погуляй, растянись и выспись.<br>Захочешь позаниматься — отметь ниже.</div>`;
+    $("w-action").innerHTML = `<button class="btn ghost" data-act="wdone">Всё равно потренировался</button>`;
+    renderPlan(d); return;
+  }
   $("wh-sub").textContent = P.kind;
   $("wh-title").textContent = P.ico + " " + P.title;
   $("wh-tags").innerHTML = `<span class="tag">Уровень ${lv+1}</span>` +
@@ -921,16 +1073,45 @@ function renderTrain(){
   } else {
     $("w-action").innerHTML = `<button class="btn main" data-act="wdone">${CHECK(18)} Я выполнил тренировку</button>`;
   }
+  renderPlan(d);
+}
+function renderPlan(d){
   const m = monday(d);
   $("plan").innerHTML = SCHED.map((t, i) => {
-    const k = K(add(m, i)), st = peek(k).wo ? "✓ сделано" : (k < TK && k >= S.start ? "пропуск" : "");
-    return `<div class="${k === SEL ? "cur" : ""}"><small>${WD[i]}</small>${PROGRAM[t].ico} ${PROGRAM[t].title}<i>${st}</i></div>`;
+    const P = PROGRAM[t] || REST, k = K(add(m, i));
+    const st = peek(k).wo ? "✓ сделано" : P.rest ? "" : (k < TK && k >= S.start ? "пропуск" : "");
+    return `<div class="${k === SEL ? "cur" : ""}"><small>${WD[i]}</small>${P.ico} ${P.title}<i>${st}</i></div>`;
   }).join("");
+}
+function renderFood(){
+  $("food-owner").style.display = C.food === "owner" ? "" : "none";
+  $("food-gen").style.display = C.food === "owner" ? "none" : "";
+  $("food-kcal").textContent = C.kcal || 2000;
+  $("food-prot").textContent = C.prot || 120;
+  if (C.food === "owner") return;
+  const g = C.wmode, lose = g === "lose", gain = g === "gain";
+  $("food-gen").innerHTML = `
+    <div class="card food"><h3>🍽 Тарелка на каждый приём</h3><ul>
+      <li>Половина — овощи или салат</li><li>Четверть — белок: мясо, рыба, яйца, творог, бобовые</li><li>Четверть — гарнир: крупы, картофель, хлеб</li></ul></div>
+    <div class="card food"><h3>🥩 Белок ${C.prot || 120} г в день</h3><ul>
+      <li>Добавляй белок в каждый приём пищи</li><li>Перекус: йогурт, кефир, творог, яйца, орехи</li><li>Белок дольше насыщает и сохраняет мышцы</li></ul></div>
+    <div class="card food"><h3>${lose ? "📉 Как худеть без мучений" : gain ? "📈 Как набирать правильно" : "⚖️ Как держать форму"}</h3><ul>
+      ${lose ? `<li>Дефицит ~400–500 ккал — около ${C.kcal} ккал в день</li><li>Жидкие калории (соки, газировка) — первыми под нож</li><li>Худей на 0,5–1 кг в неделю, не быстрее</li>`
+      : gain ? `<li>Профицит ~300 ккал — около ${C.kcal} ккал в день</li><li>Ешь 4–5 раз в день, добавляй орехи и крупы</li><li>Набор 0,25–0,5 кг в неделю — норма</li>`
+      : `<li>Около ${C.kcal} ккал в день</li><li>Больше цельной еды, меньше фастфуда</li><li>Следи за средним весом за неделю</li>`}</ul></div>
+    <div class="card food"><h3>📏 Правила</h3><ul>
+      <li>Вода 2–3 л в день</li><li>Взвешивайся утром натощак, смотри на среднее за неделю</li>
+      <li>Сладкое и фастфуд — не каждый день</li><li>Сон 7–8 часов — без него сложно держать режим</li></ul></div>`;
 }
 
 /* ================= ПРОГРЕСС ================= */
 function renderProg(){
-  const start = D(S.start), m0 = monday(start), endMon = add(m0, 7*(WEEKS-1));
+  // доступные режимы карты зависят от настроек
+  const segBtns = [...document.querySelectorAll("#seg-p button")];
+  const avail = {w: hasProgram(), c: ITEMS.length > 0, j: WORK_PLAN > 0};
+  segBtns.forEach(b => b.style.display = avail[b.dataset.act.split(":")[1]] ? "" : "none");
+  if (!avail[PMODE]){ PMODE = ["w","c","j"].find(m => avail[m]) || "c"; segBtns.forEach(b => b.classList.toggle("on", b.dataset.act === "segp:" + PMODE)); }
+  const start = D(S.start), m0 = monday(start), endMon = add(m0, 7*((WEEKS || 8)-1));
   const to = monday(TODAY) > endMon ? monday(TODAY) : endMon;
   let html = `<div></div>` + WD.map(w => `<div class="hd">${w}</div>`).join("");
   for (let m = new Date(Math.max(m0, add(to, -7*13))); m <= to; m = add(m, 7)){
@@ -940,6 +1121,7 @@ function renderProg(){
       let cls = "cell";
       if (k < S.start) cls += " none";
       else if (k > TK) cls += " fut";
+      else if (PMODE === "w" && !o.wo && isRestDay(D(k))) cls += " rest";
       else {
         const p = PMODE === "w" ? (o.wo ? 1 : 0) : PMODE === "c" ? habitPct(k) : workPct(k);
         if (p >= .9) cls += " l4"; else if (p >= .7) cls += " l3"; else if (p >= .4) cls += " l2"; else if (p > 0) cls += " l1"; else if (k < TK) cls += " miss";
@@ -950,14 +1132,14 @@ function renderProg(){
   }
   $("heat").innerHTML = html;
   $("legend").innerHTML = PMODE === "w"
-    ? `<span><i style="background:var(--lime)"></i>Сделал</span><span><i style="background:rgba(255,92,108,.55)"></i>Пропустил</span><span><i style="background:rgba(255,255,255,.08)"></i>Впереди</span><span><i style="outline:2px solid #fff;background:#1A1F27"></i>Сегодня</span>`
+    ? `<span><i style="background:var(--lime)"></i>Сделал</span><span><i style="background:rgba(255,92,108,.55)"></i>Пропустил</span>${SCHED.some(t => (PROGRAM[t] || REST).rest) ? `<span><i style="background:rgba(91,140,255,.35)"></i>Отдых</span>` : ""}<span><i style="background:rgba(255,255,255,.08)"></i>Впереди</span><span><i style="outline:2px solid #fff;background:#1A1F27"></i>Сегодня</span>`
     : `<span>Меньше</span><span><i style="background:rgba(200,245,66,.22)"></i><i style="background:rgba(200,245,66,.45)"></i><i style="background:rgba(200,245,66,.7)"></i><i style="background:var(--lime)"></i></span><span>Больше</span><span><i style="background:rgba(255,92,108,.55)"></i>Ничего</span>`;
 
   const all = []; for (let x = new Date(start); x <= TODAY; x = add(x,1)) all.push(K(x));
   const past = all.filter(k => k < TK);
   const dd = n => `<span> ${plural(n,"день","дня","дней")}</span>`;
   if (PMODE === "w"){
-    const done = all.filter(k => peek(k).wo).length, miss = past.filter(k => !peek(k).wo).length, st = streakOf(k => !!peek(k).wo);
+    const done = all.filter(k => peek(k).wo).length, miss = past.filter(k => !woOk(k)).length, st = streakOf(k => !!peek(k).wo || (isRestDay(D(k)) && k !== TK));
     $("tiles").innerHTML = `<div class="tile"><small>Выполнено</small><b class="g">${done}</b></div><div class="tile"><small>Пропущено</small><b class="r">${miss}</b></div>
       <div class="tile"><small>Подряд</small><b>${st}${dd(st)}</b></div><div class="tile"><small>Дисциплина</small><b>${done+miss ? Math.round(done/(done+miss)*100) : 0}%</b></div>`;
   } else if (PMODE === "c"){
@@ -966,23 +1148,23 @@ function renderProg(){
     $("tiles").innerHTML = `<div class="tile"><small>Средний день</small><b class="g">${avg}%</b></div><div class="tile"><small>Серия ≥70%</small><b>${st}${dd(st)}</b></div>
       <div class="tile"><small>Идеальных дней</small><b>${perfect}</b></div><div class="tile"><small>Всего дней</small><b>${all.length}</b></div>`;
   } else {
-    const z = all.reduce((s,k) => s + workRaw(k,"zloy"), 0), c = all.reduce((s,k) => s + workRaw(k,"claude"), 0);
     const pd = all.filter(k => workPct(k) >= 1).length, st = streakOf(k => workPct(k) >= 1);
-    $("tiles").innerHTML = `<div class="tile"><small>Нарезок ZLOY</small><b class="g">${z}</b></div><div class="tile"><small>Видео Claude</small><b class="v">${c}</b></div>
-      <div class="tile"><small>Дней с планом</small><b>${pd}</b></div><div class="tile"><small>Подряд</small><b>${st}${dd(st)}</b></div>`;
+    $("tiles").innerHTML = WORK.slice(0, 2).map((w, j) => `<div class="tile"><small>${esc(w[2])}</small><b style="color:${WCOLS[j]}">${all.reduce((s,k) => s + workRaw(k, w[0]), 0)}</b></div>`).join("") +
+      `<div class="tile"><small>Дней с планом</small><b>${pd}</b></div><div class="tile"><small>Подряд</small><b>${st}${dd(st)}</b></div>`;
   }
   renderWeight();
 }
 function renderWeight(){
   const ws = weights();
   if (!ws.length){ $("wstats").innerHTML = ""; $("chart").innerHTML = `<div class="empty">Запиши вес утром натощак — здесь появится график</div>`; $("w-avg").textContent = ""; return; }
-  const start = ws[0][1], last = ws[ws.length-1][1], goal = start - GOAL;
-  $("wstats").innerHTML = `<div><small>Старт</small><b>${start.toFixed(1)}</b></div><div><small>Сейчас</small><b style="color:var(--lime)">${last.toFixed(1)}</b></div><div><small>Цель</small><b>${goal.toFixed(1)}</b></div>`;
+  const start = ws[0][1], last = ws[ws.length-1][1], gw = goalWeight(), goal = gw == null ? last : gw, WK = WEEKS || 8;
+  $("wstats").innerHTML = `<div><small>Старт</small><b>${start.toFixed(1)}</b></div><div><small>Сейчас</small><b style="color:var(--lime)">${last.toFixed(1)}</b></div>` +
+    (gw == null ? `<div><small>Изменение</small><b>${(last - start > 0 ? "+" : "") + (last - start).toFixed(1)}</b></div>` : `<div><small>Цель</small><b>${gw.toFixed(1)}</b></div>`);
   const wk = ws.filter(([k]) => D(k) > add(TODAY, -7)).map(x => x[1]);
   $("w-avg").textContent = wk.length ? "среднее за 7 дней: " + (wk.reduce((a,b)=>a+b,0)/wk.length).toFixed(1) : "";
   const W = 340, H = 170, pl = 30, pr = 10, pt = 14, pb = 22;
-  const t0 = D(S.start).getTime(), t1 = Math.max(add(D(S.start), WEEKS*7).getTime(), TODAY.getTime());
-  const lo = Math.floor(Math.min(goal, ...ws.map(x=>x[1])) - 1), hi = Math.ceil(Math.max(...ws.map(x=>x[1])) + 1);
+  const t0 = D(S.start).getTime(), t1 = Math.max(add(D(S.start), WK*7).getTime(), TODAY.getTime());
+  const lo = Math.floor(Math.min(goal, ...ws.map(x=>x[1])) - 1), hi = Math.ceil(Math.max(goal, ...ws.map(x=>x[1])) + 1);
   const X = t => pl + (t - t0) / (t1 - t0) * (W - pl - pr), Y = v => pt + (hi - v) / (hi - lo) * (H - pt - pb);
   const pts = ws.map(([k,v]) => [X(D(k).getTime()), Y(v)]);
   const line = pts.map((p,i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
@@ -991,9 +1173,9 @@ function renderWeight(){
   for (let v = hi; v >= lo; v -= step) grid += `<line x1="${pl}" x2="${W-pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="rgba(255,255,255,.05)"/><text x="${pl-6}" y="${Y(v)+4}" text-anchor="end" font-size="10" fill="#5A6372" font-weight="700">${v}</text>`;
   $("chart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
     <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C8F542" stop-opacity=".28"/><stop offset="1" stop-color="#C8F542" stop-opacity="0"/></linearGradient></defs>
-    ${grid}<line x1="${pl}" x2="${W-pr}" y1="${Y(goal)}" y2="${Y(goal)}" stroke="#FF9F43" stroke-dasharray="4 5" stroke-width="1.5"/>
+    ${grid}${gw == null ? "" : `<line x1="${pl}" x2="${W-pr}" y1="${Y(goal)}" y2="${Y(goal)}" stroke="#FF9F43" stroke-dasharray="4 5" stroke-width="1.5"/>
     <text x="${W-pr}" y="${Y(goal)-6}" text-anchor="end" font-size="10" fill="#FF9F43" font-weight="800">цель ${goal.toFixed(1)}</text>
-    <path d="M${X(t0)} ${Y(start)} L${X(add(D(S.start), WEEKS*7).getTime())} ${Y(goal)}" stroke="rgba(255,255,255,.18)" stroke-dasharray="2 5" stroke-width="1.5" fill="none"/>
+    <path d="M${X(t0)} ${Y(start)} L${X(add(D(S.start), WK*7).getTime())} ${Y(goal)}" stroke="rgba(255,255,255,.18)" stroke-dasharray="2 5" stroke-width="1.5" fill="none"/>`}
     ${pts.length > 1 ? `<path d="${area}" fill="url(#ag)"/>` : ""}
     <path d="${line}" stroke="#C8F542" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
     ${pts.map((p,i) => `<circle cx="${p[0]}" cy="${p[1]}" r="${i === pts.length-1 ? 5 : 3}" fill="${i === pts.length-1 ? "#C8F542" : "#0A0C0F"}" stroke="#C8F542" stroke-width="2"/>`).join("")}
@@ -1340,6 +1522,11 @@ const countDays = fn => allDays().filter(fn).length;
 const sumWork = id => allDays().reduce((s, k) => s + workRaw(k, id), 0);
 const focusOf = k => (S.days[k] && S.days[k].f) || [];
 const focusMinDay = k => focusOf(k).reduce((s, f) => s + f[2], 0);
+function weightProgress(){ // сколько кг пройдено в сторону цели (похудение или набор)
+  const w = weights(), gw = goalWeight(); if (!w.length) return 0;
+  const s = w[0][1], vals = w.map(x => x[1]);
+  return gw != null && gw > s ? Math.max(0, Math.max(...vals) - s) : Math.max(0, s - Math.min(...vals));
+}
 const weightLost = () => { const w = weights(); return w.length ? Math.max(0, w[0][1] - Math.min(...w.map(x => x[1]))) : 0; };
 const minsLabel = m => m >= 60 ? Math.floor(m/60) + " ч " + (m % 60 ? (m % 60) + " мин" : "") : m + " мин";
 
@@ -1367,20 +1554,32 @@ function achList(){
   const wo = k => !!peek(k).wo, perf = k => habitPct(k) >= 1, li = levelInfo();
   const woN = countDays(wo), lost = weightLost(), focusH = allDays().reduce((s, k) => s + focusMinDay(k), 0) / 60;
   const goalsDone = F.goals.filter(g => goalProg(g) >= g.t).length;
-  const A = [
-    ["wo1","💪","Первая тренировка", woN, 1], ["wo10","🏋️","10 тренировок", woN, 10], ["wo30","🦾","30 тренировок", woN, 30],
-    ["wos7","🔥","7 тренировок подряд", maxStreak(wo), 7],
-    ["sug7","🍬","7 дней без сахара", maxStreak(k => peek(k).c.includes("nosugar")), 7],
-    ["per1","✨","Идеальный день", countDays(perf), 1], ["per7","🌟","7 идеальных дней", countDays(perf), 7],
-    ["zl10","✂️","10 нарезок ZLOY", sumWork("zloy"), 10], ["zl100","🎞","100 нарезок ZLOY", sumWork("zloy"), 100],
-    ["cl10","🎬","10 видео Claude", sumWork("claude"), 10], ["cl100","🏆","100 видео Claude", sumWork("claude"), 100],
-    ["pl7","🚀","План работы 7 дней подряд", maxStreak(k => workPct(k) >= 1), 7],
-    ["kg1","⚖️","Первый килограмм", lost, 1], ["kg5","📉","−5 кг", lost, 5], ["kg10","💎","−10 кг", lost, 10], ["kg15","👑","Цель −15 кг", lost, 15],
+  const A = [];
+  if (hasProgram()){
+    // серия: подряд выполненные плановые тренировки (дни отдыха пропускаются)
+    let best = 0, cur = 0;
+    for (const k of allDays()){ if (peek(k).wo){ cur++; best = Math.max(best, cur); } else if (!isRestDay(D(k)) && k !== TK) cur = 0; }
+    A.push(["wo1","💪","Первая тренировка", woN, 1], ["wo10","🏋️","10 тренировок", woN, 10], ["wo30","🦾","30 тренировок", woN, 30],
+      ["wos7","🔥","7 тренировок подряд", C.owner ? maxStreak(wo) : best, 7]);
+  }
+  if (ITEMS.some(i => i[0] === "nosugar")) A.push(["sug7","🍬","7 дней без сахара", maxStreak(k => peek(k).c.includes("nosugar")), 7]);
+  if (ITEMS.length) A.push(["per1","✨","Идеальный день", countDays(perf), 1], ["per7","🌟","7 идеальных дней", countDays(perf), 7]);
+  if (C.owner) A.push(["zl10","✂️","10 нарезок ZLOY", sumWork("zloy"), 10], ["zl100","🎞","100 нарезок ZLOY", sumWork("zloy"), 100],
+    ["cl10","🎬","10 видео Claude", sumWork("claude"), 10], ["cl100","🏆","100 видео Claude", sumWork("claude"), 100]);
+  else WORK.slice(0, 3).forEach(w => A.push(["w_" + w[0] + "_10", w[1], w[2] + " ×10", sumWork(w[0]), 10], ["w_" + w[0] + "_100", "🏆", w[2] + " ×100", sumWork(w[0]), 100]));
+  if (WORK_PLAN) A.push(["pl7","🚀","План работы 7 дней подряд", maxStreak(k => workPct(k) >= 1), 7]);
+  if (C.owner) A.push(["kg1","⚖️","Первый килограмм", lost, 1], ["kg5","📉","−5 кг", lost, 5], ["kg10","💎","−10 кг", lost, 10], ["kg15","👑","Цель −15 кг", lost, 15]);
+  else if (goalWeight() != null && weights().length){
+    const total = Math.abs(weights()[0][1] - goalWeight()), pr = weightProgress();
+    A.push(["kg1","⚖️","Первый килограмм", pr, 1]);
+    if (total >= 2) A.push(["kghalf","📈","Половина пути к цели", pr, Math.round(total / 2 * 10) / 10]);
+    if (total > 0) A.push(["kggoal","👑","Цель по весу", pr, Math.round(total * 10) / 10]);
+  }
+  A.push(
     ["fi1","💳","Первая операция", F.tx.length, 1], ["fi100","📒","100 операций", F.tx.length, 100],
     ["go1","🎯","Цель накоплена", goalsDone, 1],
     ["fo10","⏱","10 часов фокуса", focusH, 10], ["fo50","🧠","50 часов фокуса", focusH, 50],
-    ["lv5","⚡","Уровень 5", li.lvl, 5], ["lv10","🌌","Уровень 10", li.lvl, 10],
-  ];
+    ["lv5","⚡","Уровень 5", li.lvl, 5], ["lv10","🌌","Уровень 10", li.lvl, 10]);
   return A.map(([id, ic, n, v, need]) => ({id, ic, n, v: Math.min(v, need), need, ok: v >= need}));
 }
 let achTimer = null;
@@ -1402,19 +1601,20 @@ function insights(){
   const out = [], days = allDays().slice(-30), past = days.filter(k => k < TK);
   const avg = a => a.length ? a.reduce((s, x) => s + x, 0) / a.length : 0;
   const units = k => WORK.reduce((s, w) => s + workRaw(k, w[0]), 0);
+  const unitWord = C.owner ? "видео" : "дел по плану";
   // 1. тренировки → работа
   const wA = past.filter(k => peek(k).wo).map(units), wB = past.filter(k => !peek(k).wo).map(units);
-  if (wA.length >= 3 && wB.length >= 3){
+  if (WORK_PLAN && hasProgram() && wA.length >= 3 && wB.length >= 3){
     const a = avg(wA), b = avg(wB);
     if (b > 0 && Math.abs(a - b) / b >= .15) out.push({ic: a > b ? "💪" : "🤔", tone: a > b ? "good" : "warn",
-      t: `В дни с тренировкой ты делаешь на ${Math.round(Math.abs(a - b) / b * 100)}% ${a > b ? "больше" : "меньше"} видео`,
+      t: `В дни с тренировкой ты делаешь на ${Math.round(Math.abs(a - b) / b * 100)}% ${a > b ? "больше" : "меньше"} ${unitWord}`,
       d: `${a.toFixed(1)} против ${b.toFixed(1)} в среднем за день`});
-    else if (b === 0 && a > 0) out.push({ic: "💪", tone: "good", t: "Видео ты делаешь почти только в дни с тренировкой", d: "Спорт явно заряжает на работу"});
+    else if (b === 0 && a > 0) out.push({ic: "💪", tone: "good", t: `${C.owner ? "Видео ты делаешь" : "Дела по плану ты делаешь"} почти только в дни с тренировкой`, d: "Спорт явно заряжает на работу"});
   }
   // 2. сон → привычки
-  const hp = k => peek(k).c.filter(x => x !== "sleep").length / (ITEMS.length - 1);
+  const hp = k => peek(k).c.filter(x => x !== "sleep" && ITEMS.some(i => i[0] === x)).length / Math.max(1, ITEMS.length - 1);
   const sA = past.filter(k => peek(k).c.includes("sleep")).map(hp), sB = past.filter(k => !peek(k).c.includes("sleep") && peek(k).c.length).map(hp);
-  if (sA.length >= 3 && sB.length >= 3 && avg(sA) - avg(sB) >= .1)
+  if (ITEMS.some(i => i[0] === "sleep") && sA.length >= 3 && sB.length >= 3 && avg(sA) - avg(sB) >= .1)
     out.push({ic: "😴", tone: "good", t: `Когда спишь 7–8 часов, привычки выполняешь на ${Math.round(avg(sA)*100)}% против ${Math.round(avg(sB)*100)}%`, d: "Сон — главный рычаг дисциплины"});
   // 3. выходные vs будни
   const ex = {}; F.tx.filter(t => t.t === "e").forEach(t => ex[t.d] = (ex[t.d] || 0) + t.a);
@@ -1439,9 +1639,15 @@ function insights(){
   if (ws.length >= 4){
     const xs = ws.map(([k]) => (D(k) - TODAY) / 864e5), ys = ws.map(x => x[1]), mx = avg(xs), my = avg(ys);
     const sl = xs.reduce((s, x, i) => s + (x - mx) * (ys[i] - my), 0) / (xs.reduce((s, x) => s + (x - mx) ** 2, 0) || 1) * 7;
-    const all = weights(), goal = all[0][1] - GOAL, left = ys[ys.length - 1] - goal;
-    if (sl < -0.1) out.push({ic: "⚖️", tone: "good", t: `Худеешь на ${Math.abs(sl).toFixed(1).replace(".", ",")} кг в неделю`, d: left > 0 ? `До цели ~${Math.ceil(left / Math.abs(sl))} нед. при таком темпе` : "Цель уже достигнута 👑"});
-    else out.push({ic: "⚖️", tone: "warn", t: "Вес за 3 недели почти не меняется", d: "Урежь гарнир (−200 ккал) или добавь 2000 шагов"});
+    const goal = goalWeight(), now = ys[ys.length - 1], f1 = x => Math.abs(x).toFixed(1).replace(".", ",");
+    const wantUp = goal != null && goal > weights()[0][1];
+    if (goal == null){
+      if (Math.abs(sl) >= .1) out.push({ic: "⚖️", tone: "", t: `Вес ${sl < 0 ? "снижается" : "растёт"} на ${f1(sl)} кг в неделю`, d: "по последним 3 неделям"});
+    } else if (wantUp ? sl > 0.05 : sl < -0.1){
+      const left = Math.abs(goal - now), reached = wantUp ? now >= goal : now <= goal;
+      out.push({ic: "⚖️", tone: "good", t: `${wantUp ? "Набираешь" : "Худеешь на"} ${f1(sl)} кг в неделю`, d: reached ? "Цель уже достигнута 👑" : `До цели ~${Math.ceil(left / Math.abs(sl))} нед. при таком темпе`});
+    } else out.push({ic: "⚖️", tone: "warn", t: "Вес за 3 недели почти не меняется",
+      d: C.owner ? "Урежь гарнир (−200 ккал) или добавь 2000 шагов" : wantUp ? "Добавь 200–300 ккал в день — орехи, крупы, перекус" : "Урежь порции на 200 ккал или добавь 2000 шагов"});
   }
   // 7. лучший день недели для работы
   const byWd = Array.from({length: 7}, () => []);
@@ -1449,7 +1655,7 @@ function insights(){
   const wds = byWd.map((a, i) => [i, avg(a), a.length]).filter(x => x[2] >= 2);
   if (wds.length >= 3){
     const best = wds.sort((a, b) => b[1] - a[1])[0];
-    if (best[1] > 0) out.push({ic: "📅", tone: "", t: `Самый продуктивный день — ${WD_FULL[best[0]]}`, d: `в среднем ${best[1].toFixed(1)} видео`});
+    if (WORK_PLAN && best[1] > 0) out.push({ic: "📅", tone: "", t: `Самый продуктивный день — ${WD_FULL[best[0]]}`, d: `в среднем ${best[1].toFixed(1)} ${unitWord}`});
   }
   // 8. чаще всего пропускаешь
   const l14 = past.slice(-14);
@@ -1461,7 +1667,8 @@ function insights(){
   WORK.forEach(w => {
     const ses = days.flatMap(k => focusOf(k).filter(f => f[0] === w[0])), mins = ses.reduce((s, f) => s + f[2], 0);
     const n = days.reduce((s, k) => s + (focusOf(k).some(f => f[0] === w[0]) ? workRaw(k, w[0]) : 0), 0);
-    if (ses.length >= 3 && n >= 3) out.push({ic: "⏱", tone: "", t: `На ${w[0] === "zloy" ? "одну нарезку ZLOY" : "одно видео Claude"} уходит в среднем ${Math.round(mins / n)} мин`, d: `по ${ses.length} сессиям фокуса`});
+    const what = w[0] === "zloy" ? "одну нарезку ZLOY" : w[0] === "claude" ? "одно видео Claude" : "одно «" + w[2] + "»";
+    if (ses.length >= 3 && n >= 3) out.push({ic: "⏱", tone: "", t: `На ${what} уходит в среднем ${Math.round(mins / n)} мин`, d: `по ${ses.length} сессиям фокуса`});
   });
   const hrs = Array(24).fill(0); days.forEach(k => focusOf(k).forEach(f => hrs[Math.floor(f[1] / 100)] += f[2]));
   const bh = hrs.indexOf(Math.max(...hrs));
@@ -1512,7 +1719,8 @@ function dueBanner(){
 }
 
 /* ================= ФОКУС-ТАЙМЕР ================= */
-const FOCUS_W = [["zloy","✂️","Нарезка ZLOY"],["claude","🎬","Видео Claude"],["other","💼","Другое"]];
+const focusW = () => C.owner ? [["zloy","✂️","Нарезка ZLOY"],["claude","🎬","Видео Claude"],["other","💼","Другое"]] : WORK.map(w => [w[0], w[1], w[2]]).concat([["other","💼","Другое"]]);
+const fw = id => focusW().find(x => x[0] === id) || ["other","💼","Другое"];
 let FPICK = "zloy", FLAST = null;
 const fmtT = ms => { const s = Math.max(0, Math.floor(ms / 1000)), h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), ss = s % 60;
   return (h ? h + ":" + String(m).padStart(2, "0") : String(m).padStart(2, "0")) + ":" + String(ss).padStart(2, "0"); };
@@ -1520,25 +1728,28 @@ function renderFocus(){
   const T = S.timer, l30 = allDays().slice(-30);
   const todayMin = focusMinDay(TK);
   const allMin = l30.reduce((s, k) => s + focusMinDay(k), 0);
-  const zs = l30.reduce((s, k) => s + (focusOf(k).some(f => f[0] === "zloy") ? workRaw(k, "zloy") : 0), 0);
-  const zm = l30.reduce((s, k) => s + focusOf(k).filter(f => f[0] === "zloy").reduce((a, f) => a + f[2], 0), 0);
+  const fid = WORK.length ? WORK[0][0] : "other";
+  if (!focusW().some(x => x[0] === FPICK)) FPICK = focusW()[0][0];
+  const zs = l30.reduce((s, k) => s + (focusOf(k).some(f => f[0] === fid) ? workRaw(k, fid) : 0), 0);
+  const zm = l30.reduce((s, k) => s + focusOf(k).filter(f => f[0] === fid).reduce((a, f) => a + f[2], 0), 0);
+  const perLabel = C.owner ? "на нарезку" : WORK.length ? "на 1 × " + WORK[0][1] : "на задачу";
   let body;
   if (T){
-    const w = FOCUS_W.find(x => x[0] === T.w) || FOCUS_W[2];
+    const w = fw(T.w);
     body = `<div class="ftime run tick" data-t0="${T.t0}">${fmtT(Date.now() - T.t0)}</div><div class="fwhat">${w[1]} ${w[2]} · идёт фокус</div>
       <button class="btn orange" data-act="xfstop">■ Завершить сессию</button>`;
   } else if (FLAST){
-    const w = FOCUS_W.find(x => x[0] === FLAST.w);
+    const w = fw(FLAST.w);
     body = `<div class="ftime">${FLAST.m} мин</div><div class="fwhat">Сессия завершена${FLAST.w !== "other" ? " — засчитать результат?" : ""}</div>` +
       (FLAST.w !== "other" ? `<div class="fbtns" style="grid-template-columns:1fr 1fr"><button class="fbtn inc" data-act="xfcount">+1 ${w[1]} ${w[2]}</button><button class="fbtn tr" style="font-size:14px" data-act="xfdone">Нет</button></div>`
         : `<button class="btn ghost" data-act="xfdone">Готово</button>`);
   } else {
-    body = `<div class="hchips" style="justify-content:center;flex-wrap:wrap;overflow:visible;margin:12px 0">${FOCUS_W.map(w => `<button class="hc ${FPICK === w[0] ? "on" : ""}" data-act="xfpick:${w[0]}">${w[1]} ${w[2]}</button>`).join("")}</div>
+    body = `<div class="hchips" style="justify-content:center;flex-wrap:wrap;overflow:visible;margin:12px 0">${focusW().map(w => `<button class="hc ${FPICK === w[0] ? "on" : ""}" data-act="xfpick:${w[0]}">${w[1]} ${w[2]}</button>`).join("")}</div>
       <button class="btn main" style="margin-top:4px" data-act="xfstart">▶ Начать фокус</button>`;
   }
   $("wk-focus").innerHTML = `<div class="fh"><b>⏱ Фокус-таймер</b><small>сегодня ${minsLabel(todayMin)}</small></div>${body}
-    <div class="fstat"><div><b>${minsLabel(allMin)}</b><small>за 30 дней</small></div><div><b>${zs ? Math.round(zm / zs) + " мин" : "—"}</b><small>на нарезку</small></div><div><b>${focusOf(TK).length}</b><small>сессий сегодня</small></div></div>`;
-  const w = T && (FOCUS_W.find(x => x[0] === T.w) || FOCUS_W[2]);
+    <div class="fstat"><div><b>${minsLabel(allMin)}</b><small>за 30 дней</small></div><div><b>${zs ? Math.round(zm / zs) + " мин" : "—"}</b><small>${perLabel}</small></div><div><b>${focusOf(TK).length}</b><small>сессий сегодня</small></div></div>`;
+  const w = T && (fw(T.w));
   $("q-focus").innerHTML = T ? `<div class="qtimer"><b class="tick" data-t0="${T.t0}">${fmtT(Date.now() - T.t0)}</b><span>${w[1]} ${w[2]}</span><button data-act="xfstop">Стоп</button></div>` : "";
 }
 setInterval(() => document.querySelectorAll(".tick").forEach(e => e.textContent = fmtT(Date.now() - +e.dataset.t0)), 1000);
@@ -1553,7 +1764,8 @@ function weekStats(off){
   const ex = F.tx.filter(t => ks.includes(t.d));
   const best = ks.slice().sort((a, b) => dayScore(b) - dayScore(a))[0];
   return {m0, end: add(m0, 6), ks, wo: ks.filter(k => peek(k).wo).length,
-    zl: ks.reduce((s, k) => s + workRaw(k, "zloy"), 0), cl: ks.reduce((s, k) => s + workRaw(k, "claude"), 0),
+    woPlan: [0,1,2,3,4,5,6].filter(i => !(PROGRAM[SCHED[i]] || REST).rest).length,
+    work: WORK.map(w => [w[1], w[2], ks.reduce((s, k) => s + workRaw(k, w[0]), 0)]),
     hab: Math.round(ks.reduce((s, k) => s + habitPct(k), 0) / Math.max(1, ks.length) * 100),
     idx: Math.round(ks.reduce((s, k) => s + dayScore(k), 0) / Math.max(1, ks.length) * 100),
     dw: w0 != null && w1 != null && wIn.length ? w1 - w0 : null, spent: sumT(ex, "e"), earned: sumT(ex, "i"),
@@ -1582,12 +1794,17 @@ async function makeWrapped(off){
   const gr = c.createLinearGradient(cx - R, cy - R, cx + R, cy + R); gr.addColorStop(0, "#E4FF8A"); gr.addColorStop(1, "#9BC424");
   c.strokeStyle = gr; c.beginPath(); c.arc(cx, cy, R, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * Math.max(.01, st.idx / 100)); c.stroke();
   // плитки
-  const tiles = [
-    ["🏋️", st.wo + "/7", "тренировок"], ["✨", st.hab + "%", "привычек"],
-    ["✂️", String(st.zl), "нарезок ZLOY"], ["🎬", String(st.cl), "видео Claude"],
+  const pool = [];
+  if (hasProgram()) pool.push(["🏋️", st.wo + "/" + st.woPlan, "тренировок"]);
+  if (ITEMS.length) pool.push(["✨", st.hab + "%", "привычек"]);
+  pool.push(...(C.owner ? [["✂️", String(st.work[0][2]), "нарезок ZLOY"], ["🎬", String(st.work[1][2]), "видео Claude"]]
+    : st.work.slice(0, 2).map(w => [w[0], String(w[2]), w[1].toLowerCase()])));
+  const tiles = pool.concat([
     ["⚖️", st.dw == null ? "—" : (st.dw <= 0 ? "−" : "+") + Math.abs(st.dw).toFixed(1) + " кг", "вес за неделю"],
-    ["💳", moneyS(st.spent).replace(/ /g, " "), "потрачено"]];
-  tiles.forEach((t, i) => {
+    ["💳", moneyS(st.spent).replace(/ /g, " "), "потрачено"]]);
+  if (tiles.length < 6) tiles.push(["⏱", minsLabel(st.focus), "фокуса"]);
+  if (tiles.length < 6) tiles.push(["⚡", "+" + st.xp, "XP за неделю"]);
+  tiles.slice(0, 6).forEach((t, i) => {
     const x = 90 + (i % 2) * 465, y = 850 + Math.floor(i / 2) * 285;
     rr(c, x, y, 435, 255, 40); c.fillStyle = "#14181E"; c.fill(); c.strokeStyle = "rgba(255,255,255,.07)"; c.stroke();
     c.font = "60px sans-serif"; c.fillText(t[0], x + 40, y + 95);
@@ -1752,7 +1969,7 @@ function xAct(cmd, p1){
       FLAST = {w: S.timer.w, m}; S.timer = null; saveMeta(); hap("ok");
       document.querySelector('.tabs [data-act="tab:work"]').click(); return true;
     }
-    case "xfcount": { const o = day(TK); o.j[FLAST.w] = (o.j[FLAST.w] || 0) + 1; saveDay(TK); toast("✅ +1 " + FOCUS_W.find(x => x[0] === FLAST.w)[2]); FLAST = null; hap("ok"); return true; }
+    case "xfcount": { const o = day(TK); o.j[FLAST.w] = (o.j[FLAST.w] || 0) + 1; saveDay(TK); toast("✅ +1 " + fw(FLAST.w)[2]); FLAST = null; hap("ok"); return true; }
     case "xfdone": FLAST = null; hap(); return true;
   }
   return false;
@@ -1769,6 +1986,8 @@ function renderAll(){ renderToday(); renderWork(); renderTrain(); renderFin(); r
 function act(a, el){
   const [cmd, p1, p2] = a.split(":");
   if (cmd === "sclose"){ closeSheet(); hap(); return; }
+  if (cmd === "cfgopen"){ closeSheet(); openOnboarding(false, +p1 || 1); hap(); return; }
+  if (cmd.startsWith("ob") && obAct(cmd, p1, p2)) return;
   if (finAct(cmd, p1) || xAct(cmd, p1)){ renderAll(); rerenderSheet(); return; }
   if (cmd === "tab"){
     closeSheet();
@@ -1842,9 +2061,18 @@ async function apiPost(path, body){
 }
 function snapshot(){
   const td = F.tx.filter(t => t.d === TK);
-  return {date: TK, hab: peek(TK).c.length, zloy: workRaw(TK, "zloy"), claude: workRaw(TK, "claude"), wo: !!peek(TK).wo,
+  const cw = C.work || [];
+  return {date: TK, hab: peek(TK).c.filter(c => ITEMS.some(i => i[0] === c)).length, habN: ITEMS.length,
+    zloy: workRaw(TK, "zloy"), claude: workRaw(TK, "claude"), wo: !!peek(TK).wo,
+    work: cw.map(w => ({id: w.id, ic: w.ic, n: w.n, g: w.g, v: workRaw(TK, w.id), kw: w.kw || workKw(w.n)})),
+    prog: hasProgram(), sched: SCHED.map(t => { const P = PROGRAM[t] || REST; return P.rest ? "" : P.kind + " — " + P.title; }),
+    habits: ITEMS.map(i => [i[0], i[2]]), name: C.name || "",
     spent: sumT(td, "e"), earned: sumT(td, "i"), idx: dayIndex(TK), cur: F.cur,
     subs: F.subs.map(s => ({n: s.n, ic: s.ic, a: s.a, day: s.day, per: s.per, mon: s.mon}))};
+}
+// ключевые слова для распознавания дела в сообщениях боту: основы слов из названия
+function workKw(name){
+  return String(name).toLowerCase().replace(/ё/g, "е").split(/[^a-zа-я0-9]+/).filter(w => w.length >= 4).map(w => w.slice(0, Math.max(4, Math.min(6, w.length - 2))));
 }
 function applyItem(it){
   const d = it.d && it.d <= TK ? it.d : TK;
@@ -1857,7 +2085,7 @@ function applyItem(it){
   const o = day(d);
   if (it.k === "w" && it.v >= 40 && it.v <= 250) o.w = Math.round(it.v * 10) / 10;
   else if (it.k === "wo"){ setWorkout(d, true); return true; }
-  else if (it.k === "j" && (it.id === "zloy" || it.id === "claude")) o.j[it.id] = (o.j[it.id] || 0) + Math.max(1, Math.min(20, +it.n || 1));
+  else if (it.k === "j" && WORK.some(w => w[0] === it.id)) o.j[it.id] = (o.j[it.id] || 0) + Math.max(1, Math.min(20, +it.n || 1));
   else if (it.k === "h" && ITEMS.some(x => x[0] === it.id)){ if (!o.c.includes(it.id)) o.c.push(it.id); }
   else if (it.k === "t" && it.x) o.t.push({i: uid(), x: String(it.x).slice(0, 120), d: false});
   else return false;
@@ -1896,6 +2124,145 @@ async function shareStory(){
 }
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") serverSync(); });
 
+/* ================= НАСТРОЙКА / ОНБОРДИНГ ================= */
+const USER_ID = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 0;
+const WORK_PRESETS = [["📚","Учёба",2],["🎬","Видео",1],["✍️","Посты",1],["💻","Задачи по коду",3],["📞","Звонки клиентам",5],["🎨","Дизайны",1],["📖","Страниц книги",20],["🏃","Подходы к делу",3]];
+const OB_STEPS = ["Старт", "Работа", "Вес", "Тренировки", "Привычки", "Готово"];
+let OB = null;   // {step, first, d: черновик настроек}
+function openOnboarding(first, step){
+  const base = C ? JSON.parse(JSON.stringify(C)) : {v: 1, owner: false, name: (tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.first_name) || "",
+    work: [], wmode: "lose", wl: 0, wt: null, prog: "start3", habits: ["water","sleep","steps","nosugar","veg","read"], ch: [], kcal: 2000, prot: 120, food: "generic", weeks: 0};
+  const lw = weights().slice(-1)[0];
+  base.cw = base.cw || (lw ? lw[1] : ""); base.sex = base.sex || "m"; base.act = base.act || 1.375;
+  OB = {step: step || 0, first, d: base};
+  $("ob").classList.add("on"); document.body.style.overflow = "hidden"; renderOb();
+}
+function closeOnboarding(){ $("ob").classList.remove("on"); document.body.style.overflow = ""; OB = null; }
+function calcNorms(d){
+  const w = +d.cw, h = +d.h, a = +d.age;
+  if (!(w > 30 && h > 120 && a > 10)) return null;
+  const bmr = 10 * w + 6.25 * h - 5 * a + (d.sex === "f" ? -161 : 5), tdee = bmr * (+d.act || 1.375);
+  let kcal = d.wmode === "lose" ? tdee - 500 : d.wmode === "gain" ? tdee + 300 : tdee;
+  kcal = Math.max(d.sex === "f" ? 1200 : 1500, Math.round(kcal / 50) * 50);
+  const prot = Math.round(Math.min(220, w * (d.wmode === "gain" ? 2 : d.wmode === "lose" ? 1.8 : 1.6)) / 5) * 5;
+  return {kcal, prot};
+}
+function obWorkRows(d){
+  return d.work.map((w, i) => `<div class="card" style="padding:12px;margin-bottom:8px"><div class="wrow">
+      <input class="field ic" data-ob="w:${i}:ic" maxlength="4" value="${esc(w.ic)}">
+      <input class="field" data-ob="w:${i}:n" maxlength="28" placeholder="Название" value="${esc(w.n)}">
+      <button class="del" data-act="obwdel:${i}">×</button></div>
+      <div class="wrow" style="margin-top:10px;justify-content:space-between"><span style="color:var(--muted);font-size:13px;font-weight:700">Цель в день</span>
+      <div class="stp"><button data-act="obwdec:${i}">−</button><span>${w.g}</span><button class="plus" data-act="obwinc:${i}">+</button></div></div></div>`).join("");
+}
+function renderOb(){
+  const d = OB.d, s = OB.step, last = OB_STEPS.length - 1;
+  const head = OB.first
+    ? `<div class="obdots">${OB_STEPS.map((_, i) => `<i class="${i <= s ? "on" : ""}"></i>`).join("")}</div>`
+    : `<div class="obtop"><b class="h">⚙️ Настройки</b><button class="fgear" data-act="obclose">×</button></div>
+       <div class="fchips" style="margin-bottom:16px">${OB_STEPS.slice(1, last).map((n, i) => `<button class="fchip ${s === i + 1 ? "on" : ""}" data-act="obgo:${i + 1}">${n}</button>`).join("")}</div>`;
+  let body = "";
+  if (s === 0) body = `<div class="obhero"><div class="logo" style="font-size:44px">solve<i>.</i></div>
+      <h1 class="h">Твой цифровой дневник</h1><p>Работа, тренировки, привычки, финансы и прогресс — в одном месте. Настроим всё под тебя за минуту.</p></div>
+      <div class="lbl">Как тебя зовут?</div><input class="field" data-ob="name" maxlength="24" placeholder="Имя" value="${esc(d.name)}">`;
+  else if (s === 1) body = `<h2 class="h obh">💼 Что ты делаешь каждый день?</h2><p class="obp">Дела с ежедневной целью: учёба, посты, звонки, видео… У каждого будет счётчик, график и статистика.</p>
+      ${obWorkRows(d)}${d.work.length < 4 ? `<div class="lbl">Быстро добавить</div><div class="sgrid">${WORK_PRESETS.filter(p => !d.work.some(w => w.n === p[1])).map((p, i) =>
+        `<button class="hc" data-act="obwadd:${WORK_PRESETS.indexOf(p)}">${p[0]} ${p[1]}</button>`).join("")}<button class="hc" data-act="obwnew">＋ Своё</button></div>` : ""}
+      ${d.work.length ? "" : `<div class="amthint" style="text-align:left;margin-top:12px">Можно пропустить — тогда в «Работе» останутся только задачи дня.</div>`}`;
+  else if (s === 2){
+    const n = calcNorms(d);
+    body = `<h2 class="h obh">⚖️ Цель по весу и питание</h2><p class="obp">Посчитаю норму калорий и белка по формуле Миффлина — Сан-Жеора.</p>
+      <div class="sgrid" style="margin-bottom:6px">${[["lose","📉 Похудеть"],["gain","📈 Набрать"],["keep","⚖️ Держать форму"],["none","🙅 Не слежу"]].map(([k, t]) =>
+        `<button class="hc ${d.wmode === k ? "on" : ""}" data-act="obmode:${k}">${t}</button>`).join("")}</div>` +
+      (d.wmode === "none" ? `<div class="amthint" style="text-align:left;margin-top:10px">Ок — вес можно записывать, но без цели и нормы калорий.</div>` : `
+      <div class="obgrid">
+        <div><div class="lbl">Вес сейчас, кг</div><input class="field" data-ob="cw" inputmode="decimal" value="${esc(d.cw)}" placeholder="75"></div>
+        ${d.wmode === "keep" ? "" : `<div><div class="lbl">Цель, кг</div><input class="field" data-ob="wt" inputmode="decimal" value="${esc(d.wt || "")}" placeholder="${d.wmode === "gain" ? "80" : "68"}"></div>`}
+        <div><div class="lbl">Рост, см</div><input class="field" data-ob="h" inputmode="numeric" value="${esc(d.h || "")}" placeholder="178"></div>
+        <div><div class="lbl">Возраст</div><input class="field" data-ob="age" inputmode="numeric" value="${esc(d.age || "")}" placeholder="20"></div>
+      </div>
+      <div class="lbl">Пол</div><div class="sgrid"><button class="hc ${d.sex === "m" ? "on" : ""}" data-act="obsex:m">Мужской</button><button class="hc ${d.sex === "f" ? "on" : ""}" data-act="obsex:f">Женский</button></div>
+      <div class="lbl">Активность</div><div class="sgrid">${[[1.2,"Сидячая"],[1.375,"Немного"],[1.55,"Средняя"],[1.725,"Высокая"]].map(([v, t]) =>
+        `<button class="hc ${+d.act === v ? "on" : ""}" data-act="obact:${v}">${t}</button>`).join("")}</div>
+      <div class="card obcalc" id="ob-calc">${n ? `<small>Твоя норма</small><b>${n.kcal} ккал · ${n.prot} г белка</b><span>${d.wmode === "lose" ? "дефицит ~500 ккал" : d.wmode === "gain" ? "профицит ~300 ккал" : "поддержание"}</span>`
+        : `<small>Заполни вес, рост и возраст — посчитаю норму</small>`}</div>`);
+  }
+  else if (s === 3) body = `<h2 class="h obh">🏋️ Программа тренировок</h2><p class="obp">Нагрузка будет сама расти каждую неделю, если не пропускать тренировки.</p>
+      ${Object.entries(PRESETS).map(([k, p]) =>
+        `<button class="pc ${d.prog === k ? "on" : ""}" data-act="obprog:${k}"><div class="pi">${p.ic}</div><div><b>${p.n}</b><small>${p.d}</small>
+        <div class="pw">${p.s.map((t, i) => `<i class="${(p.p[t] || REST).rest ? "" : "on"}">${WD[i]}</i>`).join("")}</div></div></button>`).join("")}`;
+  else if (s === 4){
+    const base = habitBase(d);
+    body = `<h2 class="h obh">✨ Привычки на каждый день</h2><p class="obp">Выбери 5–8 штук — их будет удобно отмечать на экране «Сегодня».</p>
+      <div class="chips">${base.filter(h => h[0] !== "workout").map(h => `<button class="chip ${d.habits.includes(h[0]) ? "on" : ""}" data-act="obhab:${h[0]}"><span>${h[1]}</span>${esc(h[2])}<div class="chk">${CHECK(11)}</div></button>`).join("")}</div>
+      <div class="lbl">Своя привычка</div><div class="wrow"><input class="field ic" data-ob="nh-ic" maxlength="4" placeholder="🎯"><input class="field" data-ob="nh-n" maxlength="22" placeholder="Например: Растяжка"><button class="fbtn inc" style="width:52px;height:50px;flex:none" data-act="obhabadd">+</button></div>
+      ${d.prog !== "none" ? `<div class="amthint" style="text-align:left;margin-top:10px">🏋️ «Тренировка» добавится автоматически — она отмечается сама.</div>` : ""}`;
+  }
+  else body = `<div class="obhero"><div style="font-size:56px">🚀</div><h1 class="h">Всё готово${d.name ? ", " + esc(d.name) : ""}!</h1>
+      <p>Отмечай день в «Сегодня», пиши боту в чат, что сделал или потратил, — я всё запишу. Настройки всегда можно поменять: ⚙️ на экране «Сегодня».</p></div>
+      <div class="card" style="text-align:left">${[
+        ["💼", d.work.length ? d.work.map(w => w.ic + " " + esc(w.n) + " — " + w.g).join(", ") : "только задачи дня"],
+        ["⚖️", d.wmode === "none" ? "без цели по весу" : (d.wmode === "lose" ? "похудеть" : d.wmode === "gain" ? "набрать" : "держать форму") + (d.wt ? " до " + d.wt + " кг" : "") + " · " + d.kcal + " ккал"],
+        ["🏋️", (PRESETS[d.prog] || PRESETS.start3).n], ["✨", d.habits.length + " " + plural(d.habits.length, "привычка", "привычки", "привычек")]].map(([i, t]) =>
+        `<div class="sumrow"><span>${i}</span>${t}</div>`).join("")}</div>`;
+  const nav = OB.first
+    ? `<div class="obnav">${s > 0 ? `<button class="btn ghost" style="width:auto;padding:0 22px" data-act="obback">‹</button>` : ""}
+       <button class="btn main" data-act="${s === last ? "obsave" : "obnext"}">${s === 0 ? "Начать настройку" : s === last ? "Поехали 🚀" : "Дальше"}</button></div>`
+    : `<div class="obnav"><button class="btn main" data-act="obsave">Сохранить</button></div>`;
+  $("ob").innerHTML = `<div class="obw">${head}${body}${nav}</div>`;
+}
+function obAct(cmd, p1, p2){
+  if (!OB) return false;
+  const d = OB.d;
+  switch (cmd){
+    case "obnext": OB.step = Math.min(OB_STEPS.length - 1, OB.step + 1); break;
+    case "obback": OB.step = Math.max(0, OB.step - 1); break;
+    case "obgo": OB.step = +p1; break;
+    case "obclose": closeOnboarding(); hap(); return true;
+    case "obwadd": { const p = WORK_PRESETS[+p1]; if (d.work.length < 4) d.work.push({id: "w" + uid(), ic: p[0], n: p[1], g: p[2]}); break; }
+    case "obwnew": if (d.work.length < 4) d.work.push({id: "w" + uid(), ic: "⭐", n: "", g: 1}); break;
+    case "obwdel": d.work.splice(+p1, 1); break;
+    case "obwinc": d.work[+p1].g = Math.min(50, d.work[+p1].g + 1); break;
+    case "obwdec": d.work[+p1].g = Math.max(1, d.work[+p1].g - 1); break;
+    case "obmode": d.wmode = p1; break;
+    case "obsex": d.sex = p1; break;
+    case "obact": d.act = +p1; break;
+    case "obprog": d.prog = p1; break;
+    case "obhab": d.habits = d.habits.includes(p1) ? d.habits.filter(h => h !== p1) : d.habits.concat(p1); break;
+    case "obhabadd": {
+      const n = (d.nhn || "").trim(); if (!n){ toast("Введи название привычки"); return true; }
+      const id = "c" + uid(); d.ch = (d.ch || []).concat({id, ic: (d.nhic || "").trim() || "🎯", n, d: ""}); d.habits.push(id); d.nhn = d.nhic = ""; break;
+    }
+    case "obsave": {
+      d.work = d.work.filter(w => (w.n || "").trim()).map(w => Object.assign(w, {n: w.n.trim(), kw: w.kw && d.owner ? w.kw : workKw(w.n)}));
+      const n = calcNorms(d); if (n && d.wmode !== "none"){ d.kcal = n.kcal; d.prot = n.prot; }
+      if (d.wmode === "keep" || d.wmode === "none") d.wt = null;
+      if (d.wt) d.wt = +String(d.wt).replace(",", ".") || null;
+      if (d.wt) d.wl = 0;
+      const cw = +String(d.cw || "").replace(",", ".");
+      if (cw >= 30 && cw <= 300 && !weights().length){ day(TK).w = Math.round(cw * 10) / 10; saveDay(TK); }
+      delete d.nhn; delete d.nhic;
+      const first = OB.first;
+      C = d; saveCfg(); applyConfig(); closeOnboarding(); renderAll(); hap("ok");
+      toast(first ? "🚀 Добро пожаловать в solve." : "✓ Настройки сохранены");
+      if (first){ initHomeScreen(); serverSync(); }
+      return true;
+    }
+    default: return false;
+  }
+  hap(); renderOb(); $("ob").scrollTop = 0; return true;
+}
+document.addEventListener("input", e => {
+  const f = e.target.dataset && e.target.dataset.ob; if (!f || !OB) return;
+  const d = OB.d, v = e.target.value;
+  if (f.startsWith("w:")){ const [, i, k] = f.split(":"); d.work[+i][k] = v; return; }
+  if (f === "nh-ic") d.nhic = v; else if (f === "nh-n") d.nhn = v; else d[f] = v;
+  if (["cw", "h", "age"].includes(f) && $("ob-calc")){
+    const n = calcNorms(d);
+    $("ob-calc").innerHTML = n ? `<small>Твоя норма</small><b>${n.kcal} ккал · ${n.prot} г белка</b><span>${d.wmode === "lose" ? "дефицит ~500 ккал" : d.wmode === "gain" ? "профицит ~300 ккал" : "поддержание"}</span>` : `<small>Заполни вес, рост и возраст — посчитаю норму</small>`;
+  }
+});
+
 /* ================= ГЛАВНЫЙ ЭКРАН ================= */
 function initHomeScreen(){
   if (!tg || !tg.isVersionAtLeast || !tg.isVersionAtLeast("8.0") || typeof tg.addToHomeScreen !== "function") return;
@@ -1914,9 +2281,15 @@ function initHomeScreen(){
   if (tg){ try { tg.BackButton.onClick(closeSheet); } catch(e){} }
   if (tg){ try { tg.ready(); tg.expand(); tg.setHeaderColor && tg.setHeaderColor("#0A0C0F"); tg.setBackgroundColor && tg.setBackgroundColor("#0A0C0F"); tg.disableVerticalSwipes && tg.disableVerticalSwipes(); } catch(e){} }
   await load();
-  renderAll();
-  initHomeScreen();
-  serverSync();
+  // владелец получает свои зашитые настройки; остальные — проходят онбординг
+  if (!C && USER_ID === OWNER_ID){ C = ownerCfg(); saveCfg(); }
+  if (C){
+    applyConfig(); renderAll(); initHomeScreen(); serverSync();
+  } else {
+    C = {owner: false, work: [], habits: [], prog: "none", wmode: "none", kcal: 2000, prot: 120, food: "generic", weeks: 0};
+    applyConfig(); C = null;
+    openOnboarding(true, 0);
+  }
   const l = $("loader"); l.style.opacity = 0; setTimeout(() => l.remove(), 300);
 })();
 </script>

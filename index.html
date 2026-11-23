@@ -433,6 +433,43 @@ input{font:inherit;color:inherit}
 .sumrow{display:flex;gap:12px;padding:10px 0;font-size:14px;font-weight:600;color:#D5DAE2}
 .sumrow + .sumrow{border-top:1px solid var(--line)}
 
+/* ===== work schedule ===== */
+.wsch{display:block;width:100%;text-align:left;padding:16px;background:radial-gradient(90% 130% at 100% 0%, rgba(91,140,255,.18), transparent 60%),var(--card)}
+.wsch .wh{display:flex;align-items:center;gap:12px}
+.wsch .wi{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-size:20px;background:rgba(91,140,255,.18);flex:none}
+.wsch .wt{flex:1;min-width:0}
+.wsch .wt b{display:block;font-size:15px;font-weight:800}
+.wsch .wt small{display:block;color:var(--muted);font-size:12.5px;font-weight:600;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wsch .chev{color:var(--dim);font-size:22px}
+.wsnow{margin-top:12px;padding:10px 12px;border-radius:13px;background:rgba(255,255,255,.04);font-size:13px;font-weight:700;color:#D5DAE2}
+.wsnow b{color:var(--text)}
+.tline{position:relative;height:30px;margin-top:12px;border-radius:9px;background:rgba(255,255,255,.04);overflow:hidden}
+.tline i{position:absolute;top:4px;bottom:4px;border-radius:6px;opacity:.9}
+.tline .now{position:absolute;top:0;bottom:0;width:2px;background:#fff;box-shadow:0 0 8px #fff}
+.tlbl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);font-weight:800;margin-top:4px}
+.wkmini{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:12px}
+.wkmini div{text-align:center}
+.wkmini small{display:block;font-size:10px;font-weight:800;color:var(--dim);text-transform:uppercase}
+.wkmini .bx{height:34px;border-radius:9px;background:rgba(255,255,255,.04);margin:4px 0 3px;position:relative;overflow:hidden}
+.wkmini .bx i{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(180deg,#8FB3FF,var(--blue));border-radius:9px 9px 0 0}
+.wkmini .td small{color:var(--blue)}
+.wkmini em{font-style:normal;font-size:10px;font-weight:700;color:var(--muted)}
+.wsline{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:11px 14px;margin-bottom:10px;border-radius:15px;border:1px solid rgba(91,140,255,.3);background:rgba(91,140,255,.09);font-size:13px;font-weight:700;color:#D5DAE2}
+.wsline b{color:var(--text)}
+.wsline span{margin-left:auto;color:var(--muted);font-size:12px;white-space:nowrap}
+.wsblk{display:grid;grid-template-columns:34px 1fr 28px;gap:8px;align-items:center;padding:12px;margin-bottom:8px;border-radius:16px;background:var(--card);border:1px solid var(--line)}
+.wsblk .dot{width:30px;height:30px;border-radius:10px;border:2px solid rgba(255,255,255,.15)}
+.wsblk .del{color:var(--dim);font-size:22px}
+.wsblk .tm{grid-column:2 / 4;display:flex;align-items:center;gap:8px}
+.wsblk .tm input{flex:1;min-width:0;height:42px;border-radius:12px;background:var(--card2);border:1px solid var(--line);padding:0 10px;font-weight:800;font-size:15px;outline:none;color-scheme:dark;text-align:center}
+.wsblk .tm span{color:var(--dim);font-weight:800}
+.wsblk .nm{height:42px;border-radius:12px;background:var(--card2);border:1px solid var(--line);padding:0 12px;font-weight:700;outline:none;width:100%}
+.wsdays{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:14px}
+.wsdays button{height:44px;border-radius:13px;background:var(--card);border:1px solid var(--line);font-weight:800;font-size:12.5px;color:var(--muted);position:relative}
+.wsdays button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.wsdays button i{position:absolute;left:50%;bottom:5px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--blue)}
+.wsdays button.on i{background:#fff}
+
 /* ===== food log ===== */
 .qeat{display:flex;align-items:center;gap:13px;width:100%;text-align:left;margin-top:12px;margin-bottom:0;padding:14px 16px;
   background:linear-gradient(110deg,rgba(255,159,67,.14),transparent 70%),var(--card)}
@@ -535,7 +572,7 @@ input{font:inherit;color:inherit}
     <div id="q-ins"></div>
 
     <div class="sec"><h2 class="h">💼 Работа</h2><button data-act="tab:work">Подробнее ›</button></div>
-    <div id="q-focus"></div>
+    <div id="q-ws"></div>
     <div class="card" style="padding:6px 16px" id="q-work"></div>
 
     <div class="sec"><h2 class="h">💳 Финансы</h2><button data-act="tab:fin">Подробнее ›</button></div>
@@ -555,7 +592,7 @@ input{font:inherit;color:inherit}
   <section class="screen" id="s-work">
     <div class="top"><div><div class="date" id="wk-date"></div><h1 class="h">Работа</h1></div><div class="pill" id="wk-streak"></div></div>
     <div class="card wkhead" id="wk-head"></div>
-    <div class="card fcs" id="wk-focus"></div>
+    <button class="card wsch" id="wk-sched" data-act="wsopen"></button>
     <div id="wk-counters"></div>
 
     <div class="sec"><h2 class="h">Задачи дня</h2><span id="wk-tcount"></span></div>
@@ -1606,7 +1643,6 @@ function achList(){
   A.push(
     ["fi1","💳","Первая операция", F.tx.length, 1], ["fi100","📒","100 операций", F.tx.length, 100],
     ["go1","🎯","Цель накоплена", goalsDone, 1],
-    ["fo10","⏱","10 часов фокуса", focusH, 10], ["fo50","🧠","50 часов фокуса", focusH, 50],
     ["lv5","⚡","Уровень 5", li.lvl, 5], ["lv10","🌌","Уровень 10", li.lvl, 10]);
   return A.map(([id, ic, n, v, need]) => ({id, ic, n, v: Math.min(v, need), need, ok: v >= need}));
 }
@@ -1752,6 +1788,102 @@ const fw = id => focusW().find(x => x[0] === id) || ["other","💼","Друго�
 let FPICK = "zloy", FLAST = null;
 const fmtT = ms => { const s = Math.max(0, Math.floor(ms / 1000)), h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), ss = s % 60;
   return (h ? h + ":" + String(m).padStart(2, "0") : String(m).padStart(2, "0")) + ":" + String(ss).padStart(2, "0"); };
+/* ================= ГРАФИК РАБОТЫ ================= */
+const WS_COLORS = ["#5B8CFF", "#C8F542", "#A78BFA", "#FF9F43", "#FF5C6C", "#06D6A0", "#F72585", "#FFD166"];
+const wsAll = () => (C && Array.isArray(C.ws) && C.ws.length === 7) ? C.ws : (C.ws = [[], [], [], [], [], [], []]);
+const tmin = s => { const [h, m] = String(s || "0:0").split(":").map(Number); return (h || 0) * 60 + (m || 0); };
+const blkEnd = b => { const s = tmin(b.s), e = tmin(b.e); return e <= s ? e + 1440 : e; };   // смена через полночь
+const durLabel = m => { m = Math.max(0, Math.round(m)); const h = Math.floor(m / 60), r = m % 60; return h ? h + " ч" + (r ? " " + r + " мин" : "") : r + " мин"; };
+const dayHours = i => wsAll()[i].reduce((s, b) => s + (blkEnd(b) - tmin(b.s)), 0) / 60;
+function wsStatus(i, nowM){
+  const bl = wsAll()[i].slice().sort((a, b) => tmin(a.s) - tmin(b.s));
+  if (!bl.length) return {kind: "off"};
+  const cur = bl.find(b => nowM >= tmin(b.s) && nowM < blkEnd(b));
+  if (cur) return {kind: "now", b: cur, left: blkEnd(cur) - nowM};
+  const next = bl.find(b => tmin(b.s) > nowM);
+  if (next) return {kind: "next", b: next, in: tmin(next.s) - nowM};
+  return {kind: "done"};
+}
+function renderSched(){
+  const ws = wsAll(), i = wd(TODAY), today = ws[i].slice().sort((a, b) => tmin(a.s) - tmin(b.s));
+  const now = new Date(), nowM = now.getHours() * 60 + now.getMinutes(), any = ws.some(d => d.length);
+  const st = wsStatus(i, nowM);
+  const statusTxt = st.kind === "now" ? `Сейчас: <b>${esc(st.b.n || "Работа")}</b> · до конца ${durLabel(st.left)}`
+    : st.kind === "next" ? `Дальше: <b>${esc(st.b.n || "Работа")}</b> в ${st.b.s} · через ${durLabel(st.in)}`
+    : st.kind === "done" ? "На сегодня всё — можно отдыхать 🎉" : "Сегодня по графику выходной 😌";
+  let html;
+  if (!any){
+    html = `<div class="wh"><div class="wi">🗓</div><div class="wt"><b>График работы</b><small>Смены, пары, встречи — задай как удобно</small></div><span class="chev">›</span></div>`;
+  } else {
+    const lo = today.length ? Math.min(...today.map(b => tmin(b.s))) : 480, hi = today.length ? Math.max(...today.map(blkEnd)) : 1080;
+    const a = Math.max(0, Math.floor(lo / 60) * 60 - 60), z = Math.min(1440 * 2, Math.ceil(hi / 60) * 60 + 60), span = z - a;
+    const P = m => ((m - a) / span * 100).toFixed(2) + "%";
+    const bars = today.map(b => `<i style="left:${P(tmin(b.s))};width:calc(${((blkEnd(b) - tmin(b.s)) / span * 100).toFixed(2)}% - 2px);background:${b.c || WS_COLORS[0]}"></i>`).join("");
+    const nowBar = today.length && nowM >= a && nowM <= z ? `<div class="now" style="left:${P(nowM)}"></div>` : "";
+    const maxH = Math.max(1, ...ws.map((_, k) => dayHours(k)));
+    html = `<div class="wh"><div class="wi">🗓</div><div class="wt"><b>График</b><small>${today.length ? "Сегодня: " + today.map(b => b.s + "–" + b.e).join(", ") : "Сегодня выходной"}</small></div><span class="chev">›</span></div>
+      <div class="wsnow">${statusTxt}</div>
+      ${today.length ? `<div class="tline">${bars}${nowBar}</div><div class="tlbl"><span>${String(Math.floor(a / 60) % 24).padStart(2, "0")}:00</span><span>${String(Math.floor(z / 60) % 24).padStart(2, "0")}:00</span></div>` : ""}
+      <div class="wkmini">${ws.map((d, k) => { const h = dayHours(k);
+        return `<div class="${k === i ? "td" : ""}"><small>${WD[k]}</small><div class="bx">${h ? `<i style="height:${Math.max(12, h / maxH * 100)}%"></i>` : ""}</div><em>${h ? (Math.round(h * 10) / 10) + "ч" : "—"}</em></div>`; }).join("")}</div>`;
+  }
+  $("wk-sched").innerHTML = html;
+  $("q-ws").innerHTML = today.length ? `<button class="wsline" data-act="wsopen">🗓 ${st.kind === "now" ? `<b>${esc(st.b.n || "Работа")}</b> до ${st.b.e}` : st.kind === "next" ? `<b>${esc(st.b.n || "Работа")}</b> в ${st.b.s}` : `<b>На сегодня всё</b>`}
+    <span>${st.kind === "now" ? "осталось " + durLabel(st.left) : st.kind === "next" ? "через " + durLabel(st.in) : today.map(b => b.s + "–" + b.e).join(", ")}</span></button>` : "";
+}
+let WS = {d: 0};
+let wsSaveT = null;
+function wsSave(){ clearTimeout(wsSaveT); wsSaveT = setTimeout(() => { saveCfg(); pushSnap(); }, 500); renderSched(); }
+function sheetWs(){
+  const ws = wsAll(), d = WS.d, bl = ws[d];
+  const PRESETS_WS = [
+    ["🏢", "Пн–Пт 9:00–18:00", () => ws.forEach((_, k) => ws[k] = k < 5 ? [{s: "09:00", e: "18:00", n: "Работа", c: WS_COLORS[0]}] : [])],
+    ["🎓", "Учёба + работа", () => ws.forEach((_, k) => ws[k] = k < 5 ? [{s: "08:30", e: "14:00", n: "Учёба", c: WS_COLORS[2]}, {s: "15:00", e: "20:00", n: "Работа", c: WS_COLORS[0]}] : [])],
+    ["🌙", "Смены 8:00–20:00", () => ws.forEach((_, k) => ws[k] = [0, 1, 4, 5].includes(k) ? [{s: "08:00", e: "20:00", n: "Смена", c: WS_COLORS[3]}] : [])],
+  ];
+  WS.presets = PRESETS_WS;
+  return sheetHead("🗓 График работы") +
+    `<div class="wsdays">${WD.map((n, k) => `<button class="${k === d ? "on" : ""}" data-act="wsday:${k}">${n}${ws[k].length ? "<i></i>" : ""}</button>`).join("")}</div>
+    <div class="lbl" style="margin-top:0">${WD_FULL[d][0].toUpperCase() + WD_FULL[d].slice(1)} · ${bl.length ? durLabel(dayHours(d) * 60) : "выходной"}</div>
+    ${bl.map((b, k) => `<div class="wsblk"><button class="dot" style="background:${b.c || WS_COLORS[0]}" data-act="wscol:${k}" aria-label="Цвет"></button>
+      <input class="nm" data-ws="n:${k}" maxlength="24" placeholder="Работа, пары, смена…" value="${esc(b.n || "")}">
+      <button class="del" data-act="wsdel:${k}">×</button>
+      <div class="tm"><input type="time" data-ws="s:${k}" value="${b.s}"><span>—</span><input type="time" data-ws="e:${k}" value="${b.e}"></div></div>`).join("") ||
+      `<div class="card empty" style="padding:16px">Свободный день. Добавь блок — смену, пары, встречу.</div>`}
+    <button class="btn ghost" style="margin-top:4px;border-style:dashed;color:var(--blue)" data-act="wsadd">＋ Добавить блок</button>
+    <div class="lbl">Быстро</div>
+    <div class="sgrid"><button class="hc" data-act="wscopy:wk">📋 Как этот — на будни</button><button class="hc" data-act="wscopy:all">📋 На все дни</button><button class="hc" data-act="wsclear">😌 Сделать выходным</button></div>
+    <div class="lbl">Шаблоны на неделю</div>
+    <div class="sgrid">${PRESETS_WS.map((p, k) => `<button class="hc" data-act="wspre:${k}">${p[0]} ${p[1]}</button>`).join("")}<button class="hc" data-act="wspre:x">🧹 Очистить всё</button></div>
+    <button class="btn main" data-act="sclose">Готово</button>`;
+}
+function wsAct(cmd, p1){
+  const ws = wsAll();
+  switch (cmd){
+    case "wsopen": WS = {d: wd(TODAY)}; openSheet(sheetWs); hap(); return true;
+    case "wsday": WS.d = +p1; hap(); break;
+    case "wsadd": { const bl = ws[WS.d], last = bl.slice().sort((a, b) => blkEnd(b) - blkEnd(a))[0];
+      const s = last ? Math.min(1380, blkEnd(last) % 1440 + 60) : 540, e = Math.min(1439, s + (last ? 120 : 540));
+      const f = m => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
+      bl.push({s: f(s), e: f(e), n: last ? "" : "Работа", c: WS_COLORS[bl.length % WS_COLORS.length]}); break; }
+    case "wsdel": ws[WS.d].splice(+p1, 1); break;
+    case "wscol": { const b = ws[WS.d][+p1]; b.c = WS_COLORS[(WS_COLORS.indexOf(b.c) + 1) % WS_COLORS.length]; break; }
+    case "wscopy": { const src = JSON.stringify(ws[WS.d]); ws.forEach((_, k) => { if (k !== WS.d && (p1 === "all" || k < 5)) ws[k] = JSON.parse(src); }); toast(p1 === "all" ? "📋 Скопировал на все дни" : "📋 Скопировал на будни"); break; }
+    case "wsclear": ws[WS.d] = []; break;
+    case "wspre": if (p1 === "x") ws.forEach((_, k) => ws[k] = []); else WS.presets[+p1][2](); toast("✓ Шаблон применён"); break;
+    default: return false;
+  }
+  ws[WS.d].sort((a, b) => tmin(a.s) - tmin(b.s));
+  hap(); wsSave(); return true;
+}
+document.addEventListener("input", e => {
+  const f = e.target.dataset && e.target.dataset.ws; if (!f || !C) return;
+  const [k, i] = f.split(":"), b = wsAll()[WS.d][+i]; if (!b) return;
+  b[k] = e.target.value; wsSave();
+});
+document.addEventListener("change", e => { if (e.target.dataset && e.target.dataset.ws){ wsAll()[WS.d].sort((a, b) => tmin(a.s) - tmin(b.s)); rerenderSheet(); } });
+setInterval(() => { if (C && document.visibilityState === "visible") renderSched(); }, 60000);
+
 function renderFocus(){
   const T = S.timer, l30 = allDays().slice(-30);
   const todayMin = focusMinDay(TK);
@@ -1903,7 +2035,7 @@ function renderExtras(){
         <div class="l1"><span>${esc(s.n)}</span><b>${money(s.a)}</b></div>
         <div class="l2"><span>${s.per === "y" ? "раз в год" : "каждый месяц"} · ${nx.getDate()} ${MON[nx.getMonth()]}</span><span class="${dd <= 1 ? "r" : ""}">${dd === 0 ? "сегодня" : dd === 1 ? "завтра" : "через " + dd + " дн."}</span></div></div></button>`; }).join("")
     : `<div class="empty">Добавь связь, YouTube, Spotify и т.п. — Solve напомнит о списании и запишет его в один тап</div>`;
-  renderFocus();
+  renderSched();
   checkAch();
 }
 
@@ -2023,6 +2155,7 @@ function act(a, el){
     const o = day(TK); o.fd = (o.fd || []).concat({i: uid(), n, g: 0, kcal: k, p: 0, f: 0, c: 0}); saveDay(TK); hap("ok"); renderAll(); return;
   }
   if (cmd.startsWith("ob") && obAct(cmd, p1, p2)) return;
+  if (wsAct(cmd, p1)){ if (cmd !== "wsopen") rerenderSheet(); return; }
   if (finAct(cmd, p1) || xAct(cmd, p1)){ renderAll(); rerenderSheet(); return; }
   if (cmd === "tab"){
     closeSheet();
@@ -2105,6 +2238,7 @@ function snapshot(){
     spent: sumT(td, "e"), earned: sumT(td, "i"), idx: dayIndex(TK), cur: F.cur,
     acc: F.acc.map(a => ({i: a.i, n: a.n, ic: a.ic, b: Math.round(bal(a.i) * 100) / 100})),
     eat: eatToday(TK), kcalGoal: C.kcal || 2000,
+    ws: wsAll().map(d => d.map(b => ({s: b.s, e: b.e, n: b.n || ""}))),
     subs: F.subs.map(s => ({n: s.n, ic: s.ic, a: s.a, day: s.day, per: s.per, mon: s.mon}))};
 }
 const foodOf = k => (S.days[k] && S.days[k].fd) || [];

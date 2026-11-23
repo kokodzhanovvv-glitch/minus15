@@ -433,6 +433,32 @@ input{font:inherit;color:inherit}
 .sumrow{display:flex;gap:12px;padding:10px 0;font-size:14px;font-weight:600;color:#D5DAE2}
 .sumrow + .sumrow{border-top:1px solid var(--line)}
 
+/* ===== food log ===== */
+.qeat{display:flex;align-items:center;gap:13px;width:100%;text-align:left;margin-top:12px;margin-bottom:0;padding:14px 16px;
+  background:linear-gradient(110deg,rgba(255,159,67,.14),transparent 70%),var(--card)}
+.qeat .ei{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-size:20px;background:rgba(255,159,67,.16);flex:none}
+.qeat .et{flex:1;min-width:0}
+.qeat .et b{display:block;font-weight:800;font-size:14.5px}
+.qeat .et small{color:var(--muted);font-size:12px;font-weight:600}
+.qeat .bar{height:6px;margin-top:7px}
+.qeat .bar i{background:linear-gradient(90deg,#FFB86B,var(--orange))}
+.qeat .bar i.over{background:var(--red)}
+.ftoday{padding:18px;background:radial-gradient(90% 120% at 100% 0%, rgba(255,159,67,.16), transparent 60%),var(--card)}
+.ftoday .big{display:flex;align-items:baseline;gap:8px;margin:6px 0 10px}
+.ftoday .big b{font-family:Unbounded;font-size:32px;font-weight:600}
+.ftoday .big span{color:var(--muted);font-weight:700}
+.macros{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.macros div{background:rgba(255,255,255,.04);border-radius:12px;padding:9px;text-align:center}
+.macros b{display:block;font-family:Unbounded;font-size:14px;font-weight:600}
+.macros small{color:var(--muted);font-size:10.5px;font-weight:700}
+.meal{display:flex;align-items:center;gap:12px;padding:10px 0}
+.meal + .meal{border-top:1px solid var(--line)}
+.meal .mn{flex:1;min-width:0}
+.meal .mn b{display:block;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meal .mn small{color:var(--muted);font-size:11.5px;font-weight:600}
+.meal .mk{font-family:Unbounded;font-size:13.5px;font-weight:600;white-space:nowrap}
+.meal .del{color:var(--dim);font-size:20px;width:28px}
+
 /* ===== bottom sheet ===== */
 .sheet-wrap{position:fixed;inset:0;z-index:40;display:none}
 .sheet-wrap.on{display:block}
@@ -521,6 +547,7 @@ input{font:inherit;color:inherit}
     <div class="sec"><h2 class="h">✨ Привычки</h2><span id="q-hcount"></span></div>
     <div class="chips" id="q-habits"></div>
 
+    <button class="card qeat" id="q-food" data-act="eatopen"></button>
     <div class="card wq" style="margin-top:12px" id="q-weight"></div>
   </section>
 
@@ -555,6 +582,7 @@ input{font:inherit;color:inherit}
       <div class="plan" id="plan"></div>
     </div>
     <div id="t-food" style="display:none">
+      <div id="food-today"></div>
       <div class="tiles">
         <div class="tile"><small>Калории в день</small><b class="g" id="food-kcal">2200</b></div>
         <div class="tile"><small>Белок в день</small><b><span id="food-prot" style="font-size:inherit;color:inherit;font-family:inherit">160</span> <span>г</span></b></div>
@@ -1980,13 +2008,20 @@ document.addEventListener("input", e => {
   else if (b === "sb-n") SUB.n = v; else if (b === "sb-a") SUB.a = v; else if (b === "sb-day") SUB.day = v;
 });
 
-function renderAll(){ renderToday(); renderWork(); renderTrain(); renderFin(); renderQFin(); renderProg(); renderExtras(); pushSnap(); }
+function renderAll(){ renderToday(); renderWork(); renderTrain(); renderFin(); renderQFin(); renderProg(); renderExtras(); renderEat(); pushSnap(); }
 
 /* ================= ДЕЙСТВИЯ ================= */
 function act(a, el){
   const [cmd, p1, p2] = a.split(":");
   if (cmd === "sclose"){ closeSheet(); hap(); return; }
   if (cmd === "cfgopen"){ closeSheet(); openOnboarding(false, +p1 || 1); hap(); return; }
+  if (cmd === "eatopen"){ TMODE = "f"; document.querySelectorAll("#seg-t button").forEach(b => b.classList.toggle("on", b.dataset.act === "segt:f")); act("tab:train"); renderTrain(); return; }
+  if (cmd === "mealdel"){ const o = day(TK); o.fd = (o.fd || []).filter(f => f.i !== p1); saveDay(TK); hap(); renderAll(); return; }
+  if (cmd === "mealadd"){
+    const n = $("meal-n").value.trim(), k = Math.round(+$("meal-k").value);
+    if (!n || !(k > 0 && k < 5000)){ toast("Введи название и калории"); return; }
+    const o = day(TK); o.fd = (o.fd || []).concat({i: uid(), n, g: 0, kcal: k, p: 0, f: 0, c: 0}); saveDay(TK); hap("ok"); renderAll(); return;
+  }
   if (cmd.startsWith("ob") && obAct(cmd, p1, p2)) return;
   if (finAct(cmd, p1) || xAct(cmd, p1)){ renderAll(); rerenderSheet(); return; }
   if (cmd === "tab"){
@@ -2068,26 +2103,66 @@ function snapshot(){
     prog: hasProgram(), sched: SCHED.map(t => { const P = PROGRAM[t] || REST; return P.rest ? "" : P.kind + " — " + P.title; }),
     habits: ITEMS.map(i => [i[0], i[2]]), name: C.name || "",
     spent: sumT(td, "e"), earned: sumT(td, "i"), idx: dayIndex(TK), cur: F.cur,
+    acc: F.acc.map(a => ({i: a.i, n: a.n, ic: a.ic, b: Math.round(bal(a.i) * 100) / 100})),
+    eat: eatToday(TK), kcalGoal: C.kcal || 2000,
     subs: F.subs.map(s => ({n: s.n, ic: s.ic, a: s.a, day: s.day, per: s.per, mon: s.mon}))};
+}
+const foodOf = k => (S.days[k] && S.days[k].fd) || [];
+const eatToday = k => foodOf(k).reduce((s, f) => s + (f.kcal || 0), 0);
+function renderEat(){
+  const fd = foodOf(TK), kc = eatToday(TK), goal = C.kcal || 2000, prot = fd.reduce((s, f) => s + (f.p || 0), 0);
+  const pct = Math.min(100, kc / goal * 100), over = kc > goal;
+  $("q-food").innerHTML = `<div class="ei">🍽</div><div class="et"><b>${kc} / ${goal} ккал</b>
+    <small>${fd.length ? `${fd.length} ${plural(fd.length, "приём", "приёма", "приёмов")} · белок ${prot} / ${C.prot || 120} г` : "Пришли боту фото еды — посчитаю калории"}</small>
+    <div class="bar"><i class="${over ? "over" : ""}" style="width:${pct}%"></i></div></div><span style="color:var(--muted);font-size:22px">›</span>`;
+  const m = k => fd.reduce((s, f) => s + (f[k] || 0), 0);
+  $("food-today").innerHTML = `<div class="card ftoday"><small style="color:var(--muted);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.06em">Съедено сегодня</small>
+    <div class="big"><b class="${over ? "r" : ""}">${kc}</b><span>/ ${goal} ккал${over ? " · перебор " + (kc - goal) : " · осталось " + (goal - kc)}</span></div>
+    <div class="bar"><i style="width:${pct}%;background:${over ? "var(--red)" : "linear-gradient(90deg,#FFB86B,var(--orange))"}"></i></div>
+    <div class="macros"><div><b>${m("p")}</b><small>белок, г</small></div><div><b>${m("f")}</b><small>жиры, г</small></div><div><b>${m("c")}</b><small>углеводы, г</small></div></div></div>
+    <div class="card" style="padding:4px 16px 14px">
+      ${fd.length ? fd.map(f => `<div class="meal"><div class="ce" style="background:rgba(255,159,67,.15)">${f.src === "bot" ? "📸" : "🍽"}</div>
+        <div class="mn"><b>${esc(f.n)}</b><small>${f.g ? "~" + f.g + " г · " : ""}Б ${f.p || 0} · Ж ${f.f || 0} · У ${f.c || 0}</small></div>
+        <div class="mk">${f.kcal}</div><button class="del" data-act="mealdel:${f.i}">×</button></div>`).join("")
+        : `<div class="empty" style="padding:14px 0 6px">📸 Сфоткай еду и отправь боту — он посчитает калории и запишет сюда.<br>Или напиши: «съел плов, большая тарелка».</div>`}
+      <div class="addt"><input id="meal-n" placeholder="Что съел" maxlength="40"><input id="meal-k" inputmode="numeric" placeholder="ккал" style="max-width:76px;flex:none"><button data-act="mealadd">+</button></div>
+    </div>`;
 }
 // ключевые слова для распознавания дела в сообщениях боту: основы слов из названия
 function workKw(name){
   return String(name).toLowerCase().replace(/ё/g, "е").split(/[^a-zа-я0-9]+/).filter(w => w.length >= 4).map(w => w.slice(0, Math.max(4, Math.min(6, w.length - 2))));
 }
 function applyItem(it){
+  if (it.k === "undo") return undoItem(it.ref, it.o || {});
   const d = it.d && it.d <= TK ? it.d : TK;
   if (it.k === "f"){
     if (!F.acc.length) return false;
-    const ac = accOf(F.last) ? F.last : F.acc[0].i;
-    F.tx.push({i: uid(), t: it.t === "i" ? "i" : "e", a: +it.a, ac, to: null, c: it.c || (it.t === "i" ? "otheri" : "other"), n: it.n || "", d});
+    const ac = accOf(it.ac) ? it.ac : accOf(F.last) ? F.last : F.acc[0].i;
+    if (F.tx.some(t => t.i === it.id)) return false;
+    F.tx.push({i: it.id || uid(), t: it.t === "i" ? "i" : "e", a: +it.a, ac, to: null, c: it.c || (it.t === "i" ? "otheri" : "other"), n: it.n || "", d});
     saveFin(d); return true;
   }
   const o = day(d);
   if (it.k === "w" && it.v >= 40 && it.v <= 250) o.w = Math.round(it.v * 10) / 10;
   else if (it.k === "wo"){ setWorkout(d, true); return true; }
-  else if (it.k === "j" && WORK.some(w => w[0] === it.id)) o.j[it.id] = (o.j[it.id] || 0) + Math.max(1, Math.min(20, +it.n || 1));
+  else if (it.k === "j" && WORK.some(w => w[0] === it.id)) o.j[it.id] = (o.j[it.id] || 0) + Math.max(1, Math.min(50, +it.n || 1));
   else if (it.k === "h" && ITEMS.some(x => x[0] === it.id)){ if (!o.c.includes(it.id)) o.c.push(it.id); }
-  else if (it.k === "t" && it.x) o.t.push({i: uid(), x: String(it.x).slice(0, 120), d: false});
+  else if (it.k === "t" && it.x) o.t.push({i: it.id || uid(), x: String(it.x).slice(0, 120), d: false});
+  else if (it.k === "food" && it.kcal > 0){ o.fd = (o.fd || []).filter(f => f.i !== it.id).concat({i: it.id || uid(), n: it.n, g: it.g || 0, kcal: +it.kcal, p: +it.p || 0, f: +it.f || 0, c: +it.c || 0, src: "bot"}); }
+  else return false;
+  saveDay(d); return true;
+}
+// отмена записи, сделанной через бота (ref — id исходной записи)
+function undoItem(ref, o){
+  const d = o.d && o.d <= TK ? o.d : TK;
+  if (o.k === "f"){ const t = F.tx.find(x => x.i === ref); if (!t) return false; F.tx = F.tx.filter(x => x.i !== ref); saveFin(t.d); return true; }
+  const dd = day(d);
+  if (o.k === "food") dd.fd = (dd.fd || []).filter(f => f.i !== ref);
+  else if (o.k === "j") dd.j[o.id] = Math.max(0, (dd.j[o.id] || 0) - (+o.n || 1));
+  else if (o.k === "h") dd.c = dd.c.filter(c => c !== o.id);
+  else if (o.k === "w"){ if (dd.w === Math.round(o.v * 10) / 10) delete dd.w; }
+  else if (o.k === "wo"){ setWorkout(d, false); return true; }
+  else if (o.k === "t") dd.t = dd.t.filter(t => t.i !== ref);
   else return false;
   saveDay(d); return true;
 }
@@ -2098,22 +2173,28 @@ function pushSnap(){
   snapTimer = setTimeout(() => apiPost("/api/sync", {snap: snapshot()}).catch(() => {}), 4000);
 }
 let syncing = false;
-async function serverSync(){
-  if (!apiOn() || syncing) return;
+// pre — уже отправленный запрос (стартует параллельно с загрузкой данных, чтобы записи из чата появлялись сразу)
+async function serverSync(pre){
+  if (!apiOn() || syncing || !C) return;
   syncing = true;
   try {
-    const r = await apiPost("/api/sync", {});
+    const r = (pre && await pre) || await apiPost("/api/sync", {});
     const seen = Array.isArray(S.imp) ? S.imp : [];
     const items = r.items || [], ack = [], fresh = [];
-    items.forEach(it => { ack.push(it.id); if (!seen.includes(it.id)){ applyItem(it); fresh.push(it.id); } });
+    items.forEach(it => { ack.push(it.id); if (!seen.includes(it.id)){ applyItem(it); fresh.push(it); } });
     if (fresh.length){
-      S.imp = seen.concat(fresh).slice(-200); saveMeta();
-      renderAll(); hap("ok"); toast("📥 Из чата с ботом: " + fresh.length + " " + plural(fresh.length, "запись", "записи", "записей"));
+      S.imp = seen.concat(fresh.map(i => i.id)).slice(-200); saveMeta();
+      renderAll(); hap("ok");
+      const und = fresh.filter(i => i.k === "undo").length, add = fresh.length - und;
+      toast(add ? "📥 Из чата: " + add + " " + plural(add, "запись", "записи", "записей") + (und ? " · ↩️ " + und : "") : "↩️ Отменено из чата: " + und);
     }
-    await apiPost("/api/sync", {ack, snap: snapshot()});
+    if (ack.length) await apiPost("/api/sync", {ack, snap: snapshot()});
   } catch(e){}
   syncing = false;
 }
+// пока приложение открыто — проверяем чат каждые 5 секунд
+setInterval(() => { if (document.visibilityState === "visible") serverSync(); }, 5000);
+try { tg && tg.onEvent && tg.onEvent("activated", () => serverSync()); } catch(e){}
 async function shareStory(){
   if (!apiOn() || !WR.img) return;
   toast("📤 Готовлю сторис…");
@@ -2280,11 +2361,12 @@ function initHomeScreen(){
 (async () => {
   if (tg){ try { tg.BackButton.onClick(closeSheet); } catch(e){} }
   if (tg){ try { tg.ready(); tg.expand(); tg.setHeaderColor && tg.setHeaderColor("#0A0C0F"); tg.setBackgroundColor && tg.setBackgroundColor("#0A0C0F"); tg.disableVerticalSwipes && tg.disableVerticalSwipes(); } catch(e){} }
+  const pre = apiOn() ? apiPost("/api/sync", {}).catch(() => null) : null;   // запрос к чату — сразу, параллельно с загрузкой
   await load();
   // владелец получает свои зашитые настройки; остальные — проходят онбординг
   if (!C && USER_ID === OWNER_ID){ C = ownerCfg(); saveCfg(); }
   if (C){
-    applyConfig(); renderAll(); initHomeScreen(); serverSync();
+    applyConfig(); renderAll(); initHomeScreen(); serverSync(pre);
   } else {
     C = {owner: false, work: [], habits: [], prog: "none", wmode: "none", kcal: 2000, prot: 120, food: "generic", weeks: 0};
     applyConfig(); C = null;

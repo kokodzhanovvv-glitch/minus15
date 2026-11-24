@@ -897,11 +897,13 @@ body.v2 .v2badge{display:inline-flex;align-items:center;height:22px;padding:0 8p
     </div>
     <div class="card"><div class="heat" id="heat"></div><div class="legend" id="legend"></div></div>
     <div class="tiles" id="tiles"></div>
+    <div id="p-wsec">
     <div class="sec"><h2 class="h">Вес</h2><span id="w-avg"></span></div>
     <div class="card">
       <div class="wstats" id="wstats"></div>
       <div class="chart" id="chart"></div>
       <div class="winput"><input id="w-in" type="number" inputmode="decimal" step="0.1" placeholder="Вес сегодня, кг"><button data-act="wsave:w-in">Сохранить</button></div>
+    </div>
     </div>
   </section>
 </div>
@@ -1304,6 +1306,7 @@ function renderToday(){
     `<button class="chip ${o.c.includes(id) ? "on" : ""}" data-act="habit:${id}"><span>${ic}</span>${s}<div class="chk">${CHECK(11)}</div></button>`).join("");
 
   const w = o.w;
+  $("q-weight").style.display = weightOn() ? "" : "none";
   $("q-weight").innerHTML = `<div class="qi">⚖️</div><div class="qt"><b>${w ? w.toFixed(1) + " кг" : "Вес"}</b><small>${w ? "записан · можно изменить" : "утром натощак"}</small></div>
     <input id="wq-in" type="number" inputmode="decimal" step="0.1" placeholder="${w ? w.toFixed(1) : (weights().slice(-1)[0] || [0, C.owner ? 97.5 : 70])[1].toFixed(1)}"><button data-act="wsave:wq-in">✓</button>`;
 }
@@ -1494,6 +1497,7 @@ function renderProg(){
   renderWeight();
 }
 function renderWeight(){
+  $("p-wsec").style.display = weightOn() ? "" : "none"; if (!weightOn()) return;
   const ws = weights();
   if (!ws.length){ $("wstats").innerHTML = ""; $("chart").innerHTML = `<div class="empty">Запиши вес утром натощак — здесь появится график</div>`; $("w-avg").textContent = ""; return; }
   const start = ws[0][1], last = ws[ws.length-1][1], gw = goalWeight(), goal = gw == null ? last : gw, WK = WEEKS || 8;
@@ -1916,7 +1920,8 @@ function achList(){
     ["cl10","🎬","10 видео Claude", sumWork("claude"), 10], ["cl100","🏆","100 видео Claude", sumWork("claude"), 100]);
   else WORK.slice(0, 3).forEach(w => A.push(["w_" + w[0] + "_10", w[1], w[2] + " ×10", sumWork(w[0]), 10], ["w_" + w[0] + "_100", "🏆", w[2] + " ×100", sumWork(w[0]), 100]));
   if (WORK_PLAN) A.push(["pl7","🚀","План работы 7 дней подряд", maxStreak(k => workPct(k) >= 1), 7]);
-  if (C.owner) A.push(["kg1","⚖️","Первый килограмм", lost, 1], ["kg5","📉","−5 кг", lost, 5], ["kg10","💎","−10 кг", lost, 10], ["kg15","👑","Цель −15 кг", lost, 15]);
+  if (!weightOn()){}
+  else if (C.owner) A.push(["kg1","⚖️","Первый килограмм", lost, 1], ["kg5","📉","−5 кг", lost, 5], ["kg10","💎","−10 кг", lost, 10], ["kg15","👑","Цель −15 кг", lost, 15]);
   else if (goalWeight() != null && weights().length){
     const total = Math.abs(weights()[0][1] - goalWeight()), pr = weightProgress();
     A.push(["kg1","⚖️","Первый килограмм", pr, 1]);
@@ -1983,7 +1988,7 @@ function insights(){
     out.push({ic: curS < prevS ? "📉" : "📈", tone: curS < prevS ? "good" : "warn", t: `Тратишь на ${Math.round(Math.abs(curS - prevS) / prevS * 100)}% ${curS < prevS ? "меньше" : "больше"}, чем в прошлом месяце`, d: `${money(curS)} против ${money(prevS)} к ${dn}-му числу`});
   }
   // 6. тренд веса
-  const ws = weights().filter(([k]) => D(k) >= add(TODAY, -21));
+  const ws = weightOn() ? weights().filter(([k]) => D(k) >= add(TODAY, -21)) : [];
   if (ws.length >= 4){
     const xs = ws.map(([k]) => (D(k) - TODAY) / 864e5), ys = ws.map(x => x[1]), mx = avg(xs), my = avg(ys);
     const sl = xs.reduce((s, x, i) => s + (x - mx) * (ys[i] - my), 0) / (xs.reduce((s, x) => s + (x - mx) ** 2, 0) || 1) * 7;
@@ -2831,8 +2836,7 @@ async function makeWrapped(off){
   if (ITEMS.length) pool.push(["✨", st.hab + "%", "привычек"]);
   if (secOn("work") && st.work.length) pool.push(...(C.owner && st.work.length > 1 ? [["✂️", String(st.work[0][2]), "нарезок ZLOY"], ["🎬", String(st.work[1][2]), "видео Claude"]]
     : st.work.slice(0, 2).map(w => [w[0], String(w[2]), w[1].toLowerCase()])));
-  const tiles = pool.concat([
-    ["⚖️", st.dw == null ? "—" : (st.dw <= 0 ? "−" : "+") + Math.abs(st.dw).toFixed(1) + " кг", "вес за неделю"]].concat(secOn("fin") ? [["💳",moneyS(st.spent).replace(/ /g, " "), "потрачено"]] : []));
+  const tiles = pool.concat((weightOn() ? [["⚖️", st.dw == null ? "—" : (st.dw <= 0 ? "−" : "+") + Math.abs(st.dw).toFixed(1) + " кг", "вес за неделю"]] : []).concat(secOn("fin") ? [["💳",moneyS(st.spent).replace(/ /g, " "), "потрачено"]] : []));
   if (tiles.length < 6) tiles.push(["⏱", minsLabel(st.focus), "фокуса"]);
   if (tiles.length < 6) tiles.push(["⚡", "+" + st.xp, "XP за неделю"]);
   tiles.slice(0, 6).forEach((t, i) => {
@@ -3122,7 +3126,7 @@ function snapshot(){
   return {date: TK, hab: peek(TK).c.filter(c => ITEMS.some(i => i[0] === c)).length, habN: ITEMS.length,
     zloy: workRaw(TK, "zloy"), claude: workRaw(TK, "claude"), wo: !!peek(TK).wo,
     work: cw.map(w => ({id: w.id, ic: w.ic, n: w.n, g: w.g, v: workRaw(TK, w.id), kw: w.kw || workKw(w.n)})),
-    prog: hasProgram(), sched: SCHED.map(t => { const P = PROGRAM[t] || REST; return P.rest ? "" : P.kind + " — " + P.title; }),
+    prog: hasProgram(), train: secOn("train"), sched: SCHED.map(t => { const P = PROGRAM[t] || REST; return P.rest ? "" : P.kind + " — " + P.title; }),
     habits: ITEMS.map(i => [i[0], i[2]]), name: C.name || "",
     spent: sumT(td, "e"), earned: sumT(td, "i"), idx: dayIndex(TK), cur: F.cur,
     acc: F.acc.map(a => ({i: a.i, n: a.n, ic: a.ic, b: Math.round(bal(a.i) * 100) / 100})),
@@ -3246,12 +3250,13 @@ const SECTIONS = [
   ["fin", "💳", "Финансы", "Счета, траты, бюджеты и цели"],
   ["habits", "✨", "Привычки", "Ежедневные галочки: вода, сон, шаги…"],
 ];
+const weightOn = () => secOn("train");
 const secOf = (cfg, k) => !cfg || !cfg.sec || cfg.sec[k] !== false;
 const secOn = k => secOf(C, k);
 function obSteps(d){
   const on = k => secOf(d, k);
-  return OB.first ? ["start", "sec", on("work") && "work", "weight", on("train") && "train", on("habits") && "habits", "done"].filter(Boolean)
-    : ["sec", on("work") && "work", "weight", on("train") && "train", on("habits") && "habits", "notif", "lang", "dev"].filter(Boolean);
+  return OB.first ? ["start", "sec", on("work") && "work", on("train") && "weight", on("train") && "train", on("habits") && "habits", "done"].filter(Boolean)
+    : ["sec", on("work") && "work", on("train") && "weight", on("train") && "train", on("habits") && "habits", "notif", "lang", "dev"].filter(Boolean);
 }
 let OB = null;   // {step, first, d: черновик настроек}
 function openOnboarding(first, step){
@@ -3351,7 +3356,7 @@ function renderOb(){
       <p>Отмечай день в «Сегодня», пиши боту в чат, что сделал или потратил, — я всё запишу. Настройки всегда можно поменять: ⚙️ на экране «Сегодня».</p></div>
       <div class="card" style="text-align:left">${[
         secOf(d, "work") && ["💼", d.work.length ? d.work.map(w => w.ic + " " + esc(w.n) + " — " + w.g).join(", ") : "только задачи дня"],
-        ["⚖️", d.wmode === "none" ? "без цели по весу" : (d.wmode === "lose" ? "похудеть" : d.wmode === "gain" ? "набрать" : "держать форму") + (d.wt ? " до " + d.wt + " кг" : "") + " · " + d.kcal + " ккал"],
+        secOf(d, "train") && ["⚖️", d.wmode === "none" ? "без цели по весу" : (d.wmode === "lose" ? "похудеть" : d.wmode === "gain" ? "набрать" : "держать форму") + (d.wt ? " до " + d.wt + " кг" : "") + " · " + d.kcal + " ккал"],
         secOf(d, "train") && ["🏋️", (PRESETS[d.prog] || PRESETS.start3).n], secOf(d, "food") && ["🍽", "Калории по фото и норма на день"], secOf(d, "fin") && ["💳", "Счета, траты, бюджеты и цели"],
         secOf(d, "habits") && ["✨", d.habits.length + " " + plural(d.habits.length, "привычка", "привычки", "привычек")]].filter(Boolean).map(([i, t]) =>
         `<div class="sumrow"><span>${i}</span>${t}</div>`).join("")}</div>`;

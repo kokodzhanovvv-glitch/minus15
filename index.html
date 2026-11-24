@@ -439,6 +439,39 @@ input{font:inherit;color:inherit}
 .jvbtns .btn{height:54px}
 .jvamt{margin:4px 0 2px}
 .jvamt input{width:1.3em;max-width:78%}
+.stb{display:inline-flex;align-items:center;height:26px;padding:0 9px;border-radius:9px;font-size:11.5px;font-weight:800;background:var(--card2);color:var(--muted);white-space:nowrap}
+.stb.adm{background:linear-gradient(135deg,rgba(91,140,255,.25),rgba(200,245,66,.18));color:var(--text);border:1px solid rgba(91,140,255,.35)}
+.stb.vip{background:linear-gradient(135deg,#D9A21E,#FFE68A);color:#4a3205}
+.stb.tester{background:rgba(91,140,255,.18);color:#9DB8FF}
+.stb.ban{background:rgba(229,72,77,.18);color:#FF8A8A}
+#admv{position:fixed;inset:0;z-index:39;display:none;overflow-y:auto;background:var(--bg)}
+#admv.on{display:block;animation:fade .2s ease}
+.adgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:14px 0 10px}
+.adt{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:9px 10px}
+.adt b{display:block;font-family:Unbounded;font-size:18px;font-weight:600}
+.adt small{display:block;color:var(--muted);font-size:10.5px;font-weight:700;line-height:1.25;margin-top:2px}
+.adt.big{background:linear-gradient(135deg,rgba(200,245,66,.16),rgba(91,140,255,.08)),var(--card)} .adt.big b{color:var(--lime)}
+.adt.g b{color:#5BE08A} .adt.r b{color:#FF8A8A}
+.adq{margin-bottom:8px}
+.adf{margin:0 0 10px;padding:0}
+.adu{display:flex;gap:12px;align-items:center;width:100%;text-align:left;padding:10px 0;border-bottom:1px solid var(--line)}
+.adu:last-child{border-bottom:0}
+.ava{position:relative;width:40px;height:40px;border-radius:13px;display:grid;place-items:center;font-weight:800;font-size:16px;background:var(--card2);flex:none}
+.ava.vip{background:linear-gradient(135deg,#D9A21E,#FFE68A);color:#4a3205} .ava.tester{background:rgba(91,140,255,.25)} .ava.ban{background:rgba(229,72,77,.25)}
+.ava i{position:absolute;right:-2px;bottom:-2px;width:11px;height:11px;border-radius:50%;background:#5BE08A;border:2px solid var(--card)}
+.admt{flex:1;min-width:0}
+.admt b{display:block;font-size:14.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admt small{display:block;color:var(--muted);font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.adr{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.adr:last-child{border-bottom:0}
+.adr span{color:var(--muted);font-weight:700;flex:none}
+.adr b{font-weight:700;text-align:right;min-width:0;overflow-wrap:anywhere}
+.adr.und{opacity:.45;text-decoration:line-through}
+.adnot{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12.5px;font-weight:600;margin:8px 2px 4px}
+.lnk{color:var(--lime);font-weight:800}
+#banv{position:fixed;inset:0;z-index:60;background:var(--bg);display:grid;place-items:center;text-align:center;padding:30px}
+#banv h2{margin:12px 0 8px}
+#banv p{color:var(--muted);font-weight:600}
 #jarv{position:fixed;inset:0;z-index:40;display:none;background:radial-gradient(120% 70% at 50% 35%,#1b2416 0%,var(--bg) 62%)}
 #jarv.on{display:block;animation:fade .25s ease}
 .jvw{max-width:520px;margin:0 auto;height:100%;display:flex;flex-direction:column;padding:18px 16px calc(16px + var(--safe-b))}
@@ -660,7 +693,7 @@ input{font:inherit;color:inherit}
   <section class="screen on" id="s-today">
     <div class="top">
       <div><div class="logo">solve<i>.</i></div><div class="date" id="t-date" style="margin-top:8px"></div></div>
-      <div style="display:flex;gap:8px;align-items:center"><div class="pill" id="t-week"></div><button class="fgear" data-act="cfgopen:sec" aria-label="Настройки">⚙️</button></div>
+      <div style="display:flex;gap:8px;align-items:center"><span id="t-st"></span><div class="pill" id="t-week"></div><button class="fgear" data-act="cfgopen:sec" aria-label="Настройки">⚙️</button></div>
     </div>
 
     <div id="hs"></div>
@@ -1588,7 +1621,7 @@ function openSheet(fn, focusId){
   try { tg.BackButton.show(); } catch(e){}
   if (focusId) setTimeout(() => { const el = $(focusId); el && el.focus(); }, 250);
 }
-function closeSheet(){ SH = null; $("sheet").classList.remove("on"); if (isOn("jarv") || isOn("shelfv")) return; document.body.style.overflow = ""; try { tg.BackButton.hide(); } catch(e){} }
+function closeSheet(){ SH = null; $("sheet").classList.remove("on"); if (isOn("jarv") || isOn("shelfv") || isOn("admv")) return; document.body.style.overflow = ""; try { tg.BackButton.hide(); } catch(e){} }
 const rerenderSheet = () => { if (SH) $("sheet-body").innerHTML = SH(); };
 const sheetHead = t => `<div class="hnd"></div><h3 class="h">${t}<button data-act="sclose">×</button></h3>`;
 
@@ -2381,6 +2414,126 @@ function jvGo(){
   renderFin(); renderQFin();
 }
 
+/* ================= АДМИН-ПАНЕЛЬ (только владелец) ================= */
+let ST = "";                       // статус текущего пользователя (vip / tester / ban)
+const ST_LABEL = {"": "Обычный", vip: "⭐ VIP", tester: "🧪 Тестер", ban: "🚫 Заблокирован"};
+const isAdmin = () => USER_ID === OWNER_ID;
+let ADM = {data: null, q: "", f: "all", cur: null, user: null, msg: ""};
+function setStatusBadge(st){
+  ST = st || ""; const el = $("t-st"); if (!el) return;
+  el.innerHTML = isAdmin() ? `<button class="stb adm" data-act="adm">🛡 Админ</button>` : ST === "vip" ? `<span class="stb vip">⭐ VIP</span>` : ST === "tester" ? `<span class="stb tst">🧪 Тестер</span>` : "";
+}
+function showBanned(){
+  let el = $("banv"); if (el) return;
+  el = document.createElement("div"); el.id = "banv";
+  el.innerHTML = `<div><div style="font-size:54px">🚫</div><h2 class="h">Доступ ограничен</h2><p>Твой аккаунт в solve. заблокирован. Если это ошибка — напиши разработчику.</p></div>`;
+  document.body.appendChild(el);
+}
+const agoS = ts => { if (!ts) return "—"; const m = Math.round((Date.now() - ts) / 60e3); if (m < 2) return "только что"; if (m < 60) return m + " мин назад"; const h = Math.round(m / 60); if (h < 24) return h + " ч назад"; const d = Math.round(h / 24); return d + " " + plural(d, "день", "дня", "дней") + " назад"; };
+const dateS = ts => ts ? new Date(ts).toLocaleDateString("ru-RU", {day: "numeric", month: "short", year: "numeric"}) : "—";
+async function admLoad(){
+  try { ADM.data = await apiPost("/api/admin", {op: "list"}); } catch(e){ ADM.data = {error: true}; }
+  if (isOn("admv")) admRender();
+}
+function openAdmin(){
+  if (!isAdmin()) return;
+  let el = $("admv"); if (!el){ el = document.createElement("div"); el.id = "admv"; document.body.appendChild(el); }
+  el.classList.add("on"); document.body.style.overflow = "hidden"; try { tg.BackButton.show(); } catch(e){}
+  admRender(); admLoad(); hap();
+}
+function closeAdmin(){ const el = $("admv"); if (el){ el.classList.remove("on"); el.innerHTML = ""; } document.body.style.overflow = ""; try { tg.BackButton.hide(); } catch(e){} }
+function admRender(){
+  const el = $("admv"); if (!el) return; const d = ADM.data;
+  let body;
+  if (!d && !apiOn()) body = `<div class="card empty">Админ-панель работает только внутри Telegram.</div>`;
+  else if (!d) body = `<div class="card empty">Загружаю пользователей…</div>`;
+  else if (d.error) body = `<div class="card empty">Не удалось загрузить. <button class="lnk" data-act="admreload">Повторить</button></div>`;
+  else {
+    const s = d.stats, q = ADM.q.trim().toLowerCase(), now = Date.now();
+    let us = d.users.slice().sort((a, b) => (b.ls || 0) - (a.ls || 0));
+    if (ADM.f === "act") us = us.filter(u => u.ls && now - u.ls < 7 * 864e5);
+    if (ADM.f === "vip") us = us.filter(u => u.st === "vip" || u.st === "tester");
+    if (ADM.f === "ban") us = us.filter(u => u.st === "ban");
+    if (q) us = us.filter(u => (u.name + " " + u.ln + " " + u.un + " " + u.id).toLowerCase().includes(q));
+    const tile = (n, l, c) => `<div class="adt ${c || ""}"><b>${n}</b><small>${l}</small></div>`;
+    body = `<div class="adgrid">${tile(s.total, "всего пользователей", "big")}${tile(s.d1, "активны за сутки", "g")}${tile(s.d7, "за 7 дней")}${tile(s.new7, "новых за неделю")}
+        ${tile(s.app, "открывали приложение")}${tile(s.recs, "записей ботом")}${tile(s.rem, "с уведомлениями")}${tile(s.vip + s.tester, "VIP и тестеры")}${tile(s.ban, "заблокировано", s.ban ? "r" : "")}</div>
+      <input class="field adq" id="adm-q" placeholder="Поиск: имя, @юзернейм, id" value="${esc(ADM.q)}">
+      <div class="hchips adf">${[["all", "Все"], ["act", "Активные"], ["vip", "VIP / тестеры"], ["ban", "Заблокированные"]].map(([k, n]) => `<button class="hc ${ADM.f === k ? "on" : ""}" data-act="admf:${k}">${n}</button>`).join("")}</div>
+      <div class="card" style="padding:4px 14px">${us.length ? us.map(u => {
+        const on = u.ls && now - u.ls < 864e5;
+        return `<button class="adu" data-act="admu:${u.id}"><div class="ava ${u.st}">${esc((u.name || "?")[0].toUpperCase())}${on ? "<i></i>" : ""}</div>
+          <div class="admt"><b>${esc(u.name || "Без имени")} ${esc(u.ln || "")}${u.owner ? " 👑" : ""}</b><small>${u.un ? "@" + esc(u.un) + " · " : ""}${agoS(u.ls)}${u.recs ? " · " + u.recs + " зап." : ""}</small></div>
+          ${u.st ? `<span class="stb ${u.st}">${ST_LABEL[u.st]}</span>` : u.app ? "" : `<span class="stb">только бот</span>`}</button>`; }).join("") : `<div class="empty" style="padding:16px 0">Никого не найдено</div>`}</div>`;
+  }
+  el.innerHTML = `<div class="shw"><div class="jvtop"><button class="fgear" data-act="admreload">↻</button><b class="h shh">🛡 Админ-панель</b><button class="fgear" data-act="admclose">×</button></div>${body}</div>`;
+  const qi = $("adm-q"); if (qi) qi.oninput = () => { ADM.q = qi.value; const pos = qi.selectionStart; admRender(); const n = $("adm-q"); n.focus(); n.setSelectionRange(pos, pos); };
+}
+async function admOpenUser(id){
+  ADM.cur = id; ADM.user = null; ADM.msg = ""; openSheet(sheetAdmUser);
+  try { ADM.user = await apiPost("/api/admin", {op: "user", id}); } catch(e){ ADM.user = {error: true}; }
+  if (ADM.cur === id) rerenderSheet();
+}
+function sheetAdmUser(){
+  const lite = ADM.data && ADM.data.users ? ADM.data.users.find(u => u.id === ADM.cur) : null, d = ADM.user;
+  const nm = lite ? (lite.name || "Без имени") + " " + (lite.ln || "") : String(ADM.cur);
+  let h = sheetHead("👤 " + esc(nm));
+  if (!d) return h + `<div class="empty">Загружаю…</div>`;
+  if (d.error) return h + `<div class="empty">Не удалось загрузить</div>`;
+  const u = d.u || {}, sn = d.snap, owner = ADM.cur === OWNER_ID, row = (a, b) => `<div class="adr"><span>${a}</span><b>${b}</b></div>`;
+  const nt = u.nt || {};
+  h += `<div class="card" style="padding:4px 14px;margin-bottom:10px">
+      ${row("Telegram", u.un ? `<a class="lnk" href="https://t.me/${esc(u.un)}" target="_blank">@${esc(u.un)}</a>` : "нет юзернейма")}
+      ${row("ID", ADM.cur)}${row("Язык Telegram", esc(u.lc || "—"))}
+      ${row("Впервые", dateS(u.fs))}${row("Был(а)", agoS(lite ? lite.ls : u.ls))}
+      ${row("Уведомления", u.rem ? "вкл" + (nt.am === false ? " · без утра" : "") + (nt.pm === false ? " · без вечера" : "") + (nt.subs === false ? " · без подписок" : "") : "выкл")}
+      ${row("Записей ботом", lite ? lite.recs : "—")}</div>`;
+  if (!owner) h += `<div class="lbl" style="margin-top:4px">Статус</div><div class="hchips">${Object.entries(ST_LABEL).map(([k, n]) => `<button class="hc ${(u.st || "") === k ? "on" : ""}" data-act="admst:${k}">${n}</button>`).join("")}</div>
+      <label class="adnot"><input type="checkbox" id="adm-notify" checked> Сообщить пользователю о новом статусе</label>`;
+  if (sn){
+    const cur = sn.cur || "сом", m = v => Math.round(v || 0).toLocaleString("ru-RU") + " " + cur;
+    h += `<div class="lbl">Данные из приложения · ${esc(sn.date || "")}</div><div class="card" style="padding:4px 14px">
+      ${row("Имя в solve.", esc(sn.name || "—"))}${row("Индекс дня", sn.idx != null ? sn.idx : "—")}
+      ${row("Привычки", (sn.hab || 0) + " из " + (sn.habN || 0))}${row("Тренировка сегодня", sn.wo ? "✓ сделана" : sn.prog ? "нет" : "раздел выключен")}
+      ${row("Потрачено сегодня", m(sn.spent))}${row("Доход сегодня", m(sn.earned))}
+      ${sn.kcalGoal ? row("Калории", Math.round(sn.eat || 0) + " / " + sn.kcalGoal) : ""}
+      ${(sn.work || []).length ? row("Дела", sn.work.map(w => `${w.ic} ${esc(w.n)} ${w.v || 0}/${w.g}`).join("<br>")) : ""}
+      ${(sn.acc || []).length ? row("Счета", sn.acc.map(a => `${a.ic} ${esc(a.n)}: ${m(a.b)}`).join("<br>")) : ""}
+      ${(sn.subs || []).length ? row("Подписки", sn.subs.map(x => `${esc(x.n)} — ${m(x.a)}`).join("<br>")) : ""}
+      ${(sn.habits || []).length ? row("Его привычки", sn.habits.map(x => esc(x[1] || x[0])).join(", ")) : ""}</div>`;
+  } else h += `<div class="lbl">Данные из приложения</div><div class="card empty" style="padding:14px">Приложение ещё не открывал — пользуется только ботом.</div>`;
+  if ((d.recent || []).length) h += `<div class="lbl">Последние записи через бота</div><div class="card" style="padding:4px 14px">${d.recent.map(r => {
+      const it = r.it || {}, k = it.k || it.t || "", ic = k === "food" ? "🍽" : it.t === "i" ? "💰" : it.t === "e" ? "💳" : k === "w" || k === "weight" ? "⚖️" : "📝";
+      const what = it.n || it.name || it.c || k; const amt = it.a ? " · " + Math.round(it.a).toLocaleString("ru-RU") : it.kcal ? " · " + it.kcal + " ккал" : it.v ? " · " + it.v : "";
+      return `<div class="adr ${r.undone ? "und" : ""}"><span>${new Date(r.ts).toLocaleString("ru-RU", {day: "numeric", month: "short", hour: "2-digit", minute: "2-digit"})}</span><b>${ic} ${esc(String(what))}${amt}</b></div>`; }).join("")}</div>`;
+  if (!owner && u.chat) h += `<div class="lbl">Написать от имени бота</div><textarea class="field" id="adm-msg" rows="3" maxlength="3500" placeholder="Текст сообщения" style="height:auto;padding:12px">${esc(ADM.msg)}</textarea>
+      <button class="btn main" data-act="admsend">${ADM.sendArm ? "Точно отправить? Нажми ещё раз" : "✉️ Отправить сообщение"}</button>`;
+  return h;
+}
+async function admAct(a, p1){
+  switch (a){
+    case "adm": openAdmin(); return true;
+    case "admclose": closeAdmin(); hap(); return true;
+    case "admreload": ADM.data = null; admRender(); admLoad(); hap(); return true;
+    case "admf": ADM.f = p1; admRender(); hap(); return true;
+    case "admu": admOpenUser(+p1); hap(); return true;
+    case "admst": {
+      const notify = !!($("adm-notify") || {}).checked;
+      try { const r = await apiPost("/api/admin", {op: "status", id: ADM.cur, st: p1, notify: notify && p1 !== "ban"});
+        if (r.ok){ if (ADM.user && ADM.user.u) ADM.user.u.st = p1; const lu = ADM.data.users.find(u => u.id === ADM.cur); if (lu) lu.st = p1;
+          toast("Статус: " + ST_LABEL[p1]); rerenderSheet(); admRender(); hap("ok"); } else toast("Не получилось: " + (r.error || "")); } catch(e){ toast("Нет связи"); }
+      return true; }
+    case "admsend": {
+      const t = (($("adm-msg") || {}).value || "").trim(); ADM.msg = t;
+      if (!t){ toast("Напиши текст"); return true; }
+      if (!ADM.sendArm){ ADM.sendArm = true; rerenderSheet(); hap("medium"); return true; }
+      ADM.sendArm = false;
+      try { const r = await apiPost("/api/admin", {op: "msg", id: ADM.cur, text: t}); if (r.ok){ ADM.msg = ""; toast("✉️ Отправлено"); hap("ok"); } else toast("Не доставлено: " + (r.err || r.error || "")); } catch(e){ toast("Нет связи"); }
+      rerenderSheet(); return true; }
+  }
+  return false;
+}
+
 /* ================= ПОДПИСКИ ================= */
 const SUB_ICONS = ["📺","🎵","☁️","📱","🎮","🤖","🎬","📦","🌐","🏋️"];
 function subPeriod(s, d){ return s.per === "y" ? String(d.getFullYear()) : K(d).slice(0,7); }
@@ -2776,6 +2929,7 @@ function renderAll(){ renderToday(); renderWork(); renderTrain(); renderFin(); r
 function act(a, el){
   const [cmd, p1, p2] = a.split(":");
   if (cmd === "sclose"){ closeSheet(); hap(); return; }
+  if (cmd.startsWith("adm")){ if (isAdmin()) admAct(cmd, p1); return; }
   if (cmd === "openig"){
     const url = "https://www.instagram.com/kokodzhanovv/?hl=ru"; hap("medium");
     try { if (tg && tg.openLink) tg.openLink(url); else window.open(url, "_blank"); } catch(e){ window.open(url, "_blank"); }
@@ -2860,6 +3014,7 @@ const API = "https://solve-bot.solve-app.workers.dev";
 const apiOn = () => hasCloud && API.startsWith("https://");
 async function apiPost(path, body){
   const r = await fetch(API + path, {method: "POST", headers: {"content-type": "application/json"}, body: JSON.stringify(Object.assign({initData: tg.initData}, body))});
+  if (r.status === 403 && path === "/api/sync"){ const j = await r.json().catch(() => ({})); if (j.error === "banned") showBanned(); }
   if (!r.ok) throw new Error("api " + r.status);
   return r.json();
 }
@@ -2955,6 +3110,7 @@ async function serverSync(pre){
   try {
     const r = (pre && await pre) || await apiPost("/api/sync", {});
     const seen = Array.isArray(S.imp) ? S.imp : [];
+    if (r.st !== undefined && r.st !== ST) setStatusBadge(r.st);
     if (r.nt && C && !notifPending){ const n = notifOf(), m = Object.assign({}, n, r.nt); if (["on", "am", "pm", "subs"].some(k => !!m[k] !== !!n[k])){ C.notif = m; saveCfg(); } }
     const items = r.items || [], ack = [], fresh = [];
     items.forEach(it => { ack.push(it.id); if (!seen.includes(it.id)){ applyItem(it); fresh.push(it); } });
@@ -3180,14 +3336,15 @@ function initHomeScreen(){
 
 /* ================= СТАРТ ================= */
 (async () => {
-  if (tg){ try { tg.BackButton.onClick(() => { if (isOn("sheet")) closeSheet(); else if (isOn("jarv")) closeJar(); else if (isOn("shelfv")) closeShelf(); else closeSheet(); }); } catch(e){} }
+  if (tg){ try { tg.BackButton.onClick(() => { if (isOn("sheet")) closeSheet(); else if (isOn("admv")) closeAdmin(); else if (isOn("jarv")) closeJar(); else if (isOn("shelfv")) closeShelf(); else closeSheet(); }); } catch(e){} }
   if (tg){ try { tg.ready(); tg.expand(); tg.setHeaderColor && tg.setHeaderColor("#0A0C0F"); tg.setBackgroundColor && tg.setBackgroundColor("#0A0C0F"); tg.disableVerticalSwipes && tg.disableVerticalSwipes(); } catch(e){} }
   const pre = apiOn() ? apiPost("/api/sync", {}).catch(() => null) : null;   // запрос к чату — сразу, параллельно с загрузкой
   await load();
   // владелец получает свои зашитые настройки; остальные — проходят онбординг
   if (!C && USER_ID === OWNER_ID){ C = ownerCfg(); saveCfg(); }
   if (C){
-    applyConfig(); renderAll(); initHomeScreen(); serverSync(pre);
+    applyConfig(); renderAll(); initHomeScreen(); serverSync(pre); setStatusBadge(ST);
+    if (isAdmin() && /admin/.test(location.hash)) setTimeout(openAdmin, 300);
   } else {
     C = {owner: false, work: [], habits: [], prog: "none", wmode: "none", kcal: 2000, prot: 120, food: "generic", weeks: 0};
     applyConfig(); C = null;

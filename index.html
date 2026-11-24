@@ -2636,6 +2636,7 @@ function jarStep(J, dt){
   const tilt = J.th + (J.big ? devTilt : 0);
   const sT = -Math.tan(tilt) + Math.max(-1.2, Math.min(1.2, (J.ax + (J.big ? devJerk : 0)) * .05));
   const svPrev = J.sv;
+  if (J.big && Math.abs(J.sv) > 1.1 && J.t - (J.lastSlosh || 0) > .32){ J.lastSlosh = J.t; sfx("slosh", Math.min(1, Math.abs(J.sv) / 4)); }
   J.sv += (-36 * (J.s - sT) - 6.5 * J.sv) * dt; J.s += J.sv * dt;
   const N = J.N, u = J.u, v = J.v, ex = (J.sv - svPrev) * .007;
   v[0] += ex; v[N - 1] -= ex;
@@ -2656,7 +2657,8 @@ function jarStep(J, dt){
   const surf = surfOf(J), gx = Math.sin(tilt);
   const agit = Math.min(3, Math.abs(J.sv) * .3 + Math.abs(J.thv) * .4);
   if (Math.random() < dt * (J.big ? 1.6 : .5) * (1 + agit * 3)) jarBubble(J, false);
-  J.bub = J.bub.filter(b => { b.y -= b.vy * dt * .55 * (1 + b.r * 20); b.x += Math.sin(J.t * 3 + b.ph) * .03 * dt - gx * .05 * dt; return b.y > surf(b.x) + b.r; });
+  J.bub = J.bub.filter(b => { b.y -= b.vy * dt * .55 * (1 + b.r * 20); b.x += Math.sin(J.t * 3 + b.ph) * .03 * dt - gx * .05 * dt; const alive = b.y > surf(b.x) + b.r;
+    if (!alive && J.big && Math.random() < .45) sfx("bub", .5 + b.r * 25); return alive; });
   if (Math.random() < dt * 3) J.glints.push({x: (Math.random() * 2 - 1) * .3, t: 0});
   J.glints = J.glints.filter(g => (g.t += dt) < .9);
 }
@@ -2847,41 +2849,69 @@ function jarOnAccel(){
 
 
 /* ---------- звуки (синтез, без файлов) ---------- */
-const SND = {ctx: null, on: LS.get("solve_snd") !== "0", noise: null, last: {}};
+const SND = {ctx: null, on: LS.get("solve_snd") !== "0", noise: null, last: {}, dry: null, rev: null, rustle: []};
 function sndCtx(){
   if (!SND.on) return null;
   try { if (!SND.ctx) SND.ctx = new (window.AudioContext || window.webkitAudioContext)(); if (SND.ctx.state === "suspended") SND.ctx.resume(); } catch(e){ return null; }
-  if (!SND.noise){ const n = SND.ctx.sampleRate, b = SND.ctx.createBuffer(1, n, n), d = b.getChannelData(0); for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1; SND.noise = b; }
-  return SND.ctx;
+  const a = SND.ctx, sr = a.sampleRate;
+  if (!SND.noise){ const b = a.createBuffer(1, sr * 2, sr), d = b.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; SND.noise = b; }
+  if (!SND.dry){
+    // мягкий компрессор + маленькая «комната» (сгенерированная реверберация) — звуки звучат живо, а не синтетически
+    const comp = a.createDynamicsCompressor(); comp.threshold.value = -20; comp.ratio.value = 3; comp.attack.value = .004; comp.release.value = .2; comp.connect(a.destination);
+    const len = Math.round(sr * 1.3), ir = a.createBuffer(2, len, sr);
+    for (let ch = 0; ch < 2; ch++){ const d = ir.getChannelData(ch); let y = 0; for (let i = 0; i < len; i++){ const x = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3.4); y = y * .55 + x * .45; d[i] = i < sr * .008 ? 0 : y; } }
+    const conv = a.createConvolver(); conv.buffer = ir; const wet = a.createGain(); wet.gain.value = .9; conv.connect(wet); wet.connect(comp);
+    const dry = a.createGain(); dry.gain.value = 1; dry.connect(comp); SND.dry = dry; SND.rev = conv;
+    // шелест бумаги: заранее собранные «потрескивания»
+    for (let v = 0; v < 4; v++){ const L = Math.round(sr * .32), b = a.createBuffer(1, L, sr), d = b.getChannelData(0);
+      for (let i = 0; i < L; i++){ const env = Math.sin(Math.PI * i / L); d[i] = (Math.random() * 2 - 1) * .08 * env; }
+      for (let k = 0; k < 26; k++){ const p = Math.floor(Math.random() * L * .92), amp = .3 + Math.random() * .7, dl = Math.floor(sr * (.002 + Math.random() * .006));
+        for (let j = 0; j < dl && p + j < L; j++) d[p + j] += (Math.random() * 2 - 1) * amp * Math.pow(1 - j / dl, 2); }
+      SND.rustle.push(b); }
+  }
+  return a;
 }
 function sfx(kind, k){
   k = k == null ? 1 : k; const a = sndCtx(); if (!a) return;
-  const now = a.currentTime; if (SND.last[kind] && now - SND.last[kind] < .045) return; SND.last[kind] = now;
-  const out = a.createGain(); out.gain.value = .9; out.connect(a.destination);
-  const tone = (f, t0, dur, g, type, f2) => { const o = a.createOscillator(), e = a.createGain(); o.type = type || "sine"; o.frequency.setValueAtTime(f, now + t0); if (f2) o.frequency.exponentialRampToValueAtTime(f2, now + t0 + dur);
-    e.gain.setValueAtTime(0, now + t0); e.gain.linearRampToValueAtTime(g, now + t0 + .006); e.gain.exponentialRampToValueAtTime(.0001, now + t0 + dur); o.connect(e); e.connect(out); o.start(now + t0); o.stop(now + t0 + dur + .02); };
-  const noise = (t0, dur, g, type, f, q) => { const s = a.createBufferSource(), fl = a.createBiquadFilter(), e = a.createGain(); s.buffer = SND.noise; fl.type = type; fl.frequency.value = f; fl.Q.value = q || 1;
-    e.gain.setValueAtTime(0, now + t0); e.gain.linearRampToValueAtTime(g, now + t0 + dur * .25); e.gain.exponentialRampToValueAtTime(.0001, now + t0 + dur); s.connect(fl); fl.connect(e); e.connect(out); s.start(now + t0, Math.random() * .5); s.stop(now + t0 + dur + .02); };
-  const r = 1 + (Math.random() - .5) * .25;
-  if (kind === "clink"){ tone(2400 * r, 0, .22, .045 * k); tone(3650 * r, 0, .14, .025 * k); tone(5200 * r, 0, .07, .012 * k); }
-  else if (kind === "drop"){ tone(1900 * r, 0, .18, .035 * k); tone(2900 * r, .01, .12, .018 * k); }
-  else if (kind === "plop"){ tone(520 * r, 0, .16, .07 * k, "sine", 170); noise(0, .22, .03 * k, "lowpass", 700, .7); }
-  else if (kind === "rustle"){ noise(0, .2, .035 * k, "bandpass", 3200 * r, .7); noise(.06, .14, .02 * k, "bandpass", 5200 * r, .9); }
-  else if (kind === "slosh"){ noise(0, .55, .07 * k, "lowpass", 420, .8); tone(140, 0, .4, .03 * k, "sine", 90); }
-  else if (kind === "tap"){ tone(900, 0, .05, .03); }
-  else if (kind === "whoosh"){ noise(0, 1.3, .09, "bandpass", 300, .6); tone(90, 0, 1.2, .05, "sine", 420); tone(600, .2, 1, .02, "sine", 1500); }
-  else if (kind === "mbox"){ [1318.5, 1567.98, 1975.5, 1567.98, 1318.5, 987.77, 1174.66, 1318.5].forEach((f, i) => { tone(f, i * .19, .9, .035, "triangle"); tone(f * 2, i * .19, .3, .008, "sine"); }); }
+  const now = a.currentTime, gap = kind === "bub" ? .07 : kind === "slosh" ? .2 : .045;
+  if (SND.last[kind] && now - SND.last[kind] < gap) return; SND.last[kind] = now;
+  const route = (node, wet) => { node.connect(SND.dry); if (wet){ const g = a.createGain(); g.gain.value = wet; node.connect(g); g.connect(SND.rev); } };
+  const tone = (f, t0, dur, g, type, f2, wet, att) => { const o = a.createOscillator(), e = a.createGain(); o.type = type || "sine"; o.frequency.setValueAtTime(f, now + t0); if (f2) o.frequency.exponentialRampToValueAtTime(f2, now + t0 + Math.min(dur, f2 > f ? dur * .6 : dur));
+    e.gain.setValueAtTime(0, now + t0); e.gain.linearRampToValueAtTime(g, now + t0 + (att || .006)); e.gain.exponentialRampToValueAtTime(.0001, now + t0 + dur); o.connect(e); route(e, wet); o.start(now + t0); o.stop(now + t0 + dur + .03); };
+  const noise = (t0, dur, g, type, f, q, wet, f2) => { const s = a.createBufferSource(), fl = a.createBiquadFilter(), e = a.createGain(); s.buffer = SND.noise; fl.type = type; fl.frequency.setValueAtTime(f, now + t0); if (f2) fl.frequency.exponentialRampToValueAtTime(f2, now + t0 + dur); fl.Q.value = q || 1;
+    e.gain.setValueAtTime(0, now + t0); e.gain.linearRampToValueAtTime(g, now + t0 + dur * .25); e.gain.exponentialRampToValueAtTime(.0001, now + t0 + dur); s.connect(fl); fl.connect(e); route(e, wet); s.start(now + t0, Math.random() * 1.2); s.stop(now + t0 + dur + .03); };
+  const r = 1 + (Math.random() - .5) * .18, R = Math.random;
+  // металл/стекло: неровные обертоны с разным затуханием + короткий щелчок удара
+  const ring = (f, g, decay, wet, ratios, gains) => { (ratios || [1, 2.32, 4.25, 6.63]).forEach((m, i) => tone(f * m * (1 + (R() - .5) * .01), 0, decay * [1, .62, .36, .2][i], g * (gains || [1, .5, .28, .16])[i], "sine", null, wet, .0015));
+    noise(0, .018, g * 1.4, "highpass", 5200, .7, wet * .5); };
+  // пузырёк: синус, высота которого быстро растёт (так звучит настоящий лопающийся/всплывающий пузырь)
+  const bubble = (t0, f, g, dur, wet) => tone(f, t0, dur, g, "sine", f * (1.6 + R() * .6), wet, .003);
+  // калимба: тёплая нота с обертонами
+  const kal = (f, t0, g, dur) => { tone(f, t0, dur, g, "sine", null, .45, .003); tone(f * 2.01, t0, dur * .35, g * .22, "sine", null, .45, .002); tone(f * 4.2, t0, dur * .12, g * .07, "sine", null, .3, .001); };
+
+  if (kind === "clink"){ if (R() < .45) ring(1900 * r, .045 * k, .75, .38, [1, 2.76, 5.4, 8.9], [1, .4, .2, .1]); else ring(3100 * r, .04 * k, .38, .3); }
+  else if (kind === "drop"){ ring(3600 * r, .032 * k, .3, .3); tone(240 * r, 0, .06, .015 * k, "sine", 160, .2); }
+  else if (kind === "rustle"){ const s = a.createBufferSource(), hp = a.createBiquadFilter(), bp = a.createBiquadFilter(), e = a.createGain();
+    s.buffer = SND.rustle[(R() * SND.rustle.length) | 0]; s.playbackRate.value = .85 + R() * .3; hp.type = "highpass"; hp.frequency.value = 1400; bp.type = "peaking"; bp.frequency.value = 4200; bp.gain.value = 4; bp.Q.value = .6;
+    e.gain.value = .045 * k; s.connect(hp); hp.connect(bp); bp.connect(e); route(e, .18); s.start(now); }
+  else if (kind === "plop"){ bubble(0, 360 * r, .06 * k, .16, .3); bubble(.045, 560 * r, .03 * k, .11, .3); tone(150, 0, .09, .025 * k, "sine", 90, .15); noise(0, .14, .012 * k, "lowpass", 900, .7, .2, 400); }
+  else if (kind === "bub"){ bubble(0, (1100 + R() * 1300), .04 * k, .05 + R() * .03, .35); }
+  else if (kind === "slosh"){ noise(0, .55, .075 * k, "lowpass", 700, 1.1, .3, 260); noise(.08, .4, .025 * k, "bandpass", 420, 1.4, .3, 220);
+    const n = 3 + ((R() * 3) | 0); for (let i = 0; i < n; i++) bubble(.05 + R() * .35, 210 + R() * 320, .022 * k, .09 + R() * .06, .35); }
+  else if (kind === "tap"){ tone(1500, 0, .035, .02, "sine", 900, .15, .001); noise(0, .012, .015, "bandpass", 3000, 1.5, .1); }
+  else if (kind === "chime"){ [1046.5, 1318.5, 1568, 2093].forEach((f, i) => kal(f, i * .075, .034 * k, 1.1)); }
+  else if (kind === "win"){ [784, 988, 1175, 1568, 1976, 2349].forEach((f, i) => kal(f, i * .085, .036, 1.4)); noise(.1, 1.2, .006, "highpass", 7000, .5, .6); }
+  else if (kind === "whoosh"){ noise(0, 1.3, .09, "bandpass", 300, .6, .3, 1600); tone(90, 0, 1.2, .045, "sine", 420, .3); tone(600, .2, 1, .018, "sine", 1500, .4); }
+  else if (kind === "mbox"){ [1318.5, 1567.98, 1975.5, 1567.98, 1318.5, 987.77, 1174.66, 1318.5].forEach((f, i) => kal(f, i * .19, .03, 1)); }
   else if (kind === "radio"){ noise(0, .12, .03, "bandpass", 1800, 2); tone(1200, .02, .05, .02, "square"); }
-  else if (kind === "choo"){ [0, .32, .64, .96, 1.28].forEach(d => noise(d, .18, .045, "bandpass", 700, 1.2)); tone(784, 1.5, .5, .035, "triangle"); tone(988, 1.5, .5, .03, "triangle"); }
-  else if (kind === "portal"){ noise(0, .45, .07, "bandpass", 900, .8); tone(220, 0, .45, .05, "sawtooth", 1400); tone(660, .05, .3, .02, "sine", 2200); }
-  else if (kind === "poof"){ noise(0, .25, .07, "lowpass", 1200, .7); tone(500, 0, .2, .03, "sine", 120); }
+  else if (kind === "choo"){ [0, .32, .64, .96, 1.28].forEach(d => noise(d, .18, .045, "bandpass", 700, 1.2, .2)); tone(784, 1.5, .5, .035, "triangle", null, .3); tone(988, 1.5, .5, .03, "triangle", null, .3); }
+  else if (kind === "portal"){ noise(0, .45, .07, "bandpass", 900, .8, .3, 2400); tone(220, 0, .45, .045, "sawtooth", 1400, .25); tone(660, .05, .3, .02, "sine", 2200, .3); }
+  else if (kind === "poof"){ noise(0, .25, .07, "lowpass", 1200, .7, .25, 300); tone(500, 0, .2, .03, "sine", 120, .2); }
   else if (kind === "schwifty"){ [392, 392, 523, 466, 392, 349, 392].forEach((f, i) => tone(f, i * .16, .14, .045, "square")); [98, 98, 131, 117].forEach((f, i) => tone(f, i * .32, .3, .05, "triangle")); }
   else if (kind === "coin"){ tone(988, 0, .07, .045, "square"); tone(1319, .07, .28, .045, "square"); }
   else if (kind === "up"){ [523, 659, 784, 1047, 784, 1047].forEach((f, i) => tone(f, i * .09, .16, .04, "square")); }
   else if (kind === "beep"){ tone(440, 0, .18, .05, "square"); }
   else if (kind === "go"){ tone(880, 0, .45, .06, "square"); }
-  else if (kind === "chime"){ [1046.5, 1318.5, 1568, 2093].forEach((f, i) => { tone(f, i * .085, .7, .05 * k, "sine"); tone(f * 2, i * .085, .35, .012 * k, "triangle"); }); }
-  else if (kind === "win"){ [784, 988, 1175, 1568, 1976, 2349].forEach((f, i) => tone(f, i * .07, 1.1, .05, "sine")); noise(0, .8, .02, "highpass", 6000, .5); }
 }
 
 /* ---------- полка целей ---------- */

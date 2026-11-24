@@ -2825,7 +2825,7 @@ function applyTheme(){
 }
 function themeCards(){
   const cur = curTheme();
-  return `<div class="thgrid">${THEMES.map(t => `<button class="thc ${cur === t.id ? "on" : ""}" data-act="settheme:${t.id || "solve"}">
+  return `<div class="thgrid">${THEMES.map(t => `<button class="thc ${cur === t.id ? "on" : ""}" data-act="obtheme:${t.id || "solve"}">
     <div class="thp" style="background:${t.bg}"><i style="background:${t.card}"></i><i style="background:${t.card};width:70%"></i><u style="background:${t.acc}"></u><em style="background:${t.acc2 || t.acc};box-shadow:0 0 10px ${t.acc2 || t.acc}"></em></div>
     <span class="ok">✓</span><b>${t.n}</b><small>${t.d}</small></button>`).join("")}</div>`;
 }
@@ -3572,7 +3572,7 @@ function obAct(cmd, p1, p2){
     case "obback": { const st = obSteps(d); OB.step = st[Math.max(0, st.indexOf(OB.step) - 1)]; break; }
     case "obgo": OB.step = p1; break;
     case "obsec": d.sec[p1] = !secOf(d, p1); if (!Object.values(d.sec).some(Boolean)) d.sec[p1] = true; break;
-    case "settheme": { const t = p1 === "solve" ? "" : p1; LS.set("solve_theme", t); applyTheme(); hap("ok"); toast("🎨 Тема «" + (THEMES.find(x => x.id === t) || THEMES[0]).n + "»"); break; }
+    case "obtheme": { const t = p1 === "solve" ? "" : p1; LS.set("solve_theme", t); applyTheme(); hap("ok"); toast("🎨 Тема «" + (THEMES.find(x => x.id === t) || THEMES[0]).n + "»"); break; }
     case "obnt": { const n = notifOf(); if (p1 === "on") n.on = !n.on; else { if (!n.on){ n.on = true; n.am = n.pm = n.subs = false; } n[p1] = !n[p1]; if (!n.am && !n.pm && !n.subs) n.on = false; }
       C.notif = n; d.notif = n; saveCfg(); sendNotif(); toast(n.on ? "🔔 Уведомления включены" : "🔕 Уведомления выключены"); hap(); break; }
     case "oblang": d.lang = p1; setLang(p1); if (!OB.first && C){ C.lang = p1; saveCfg(); renderAll(); } break;

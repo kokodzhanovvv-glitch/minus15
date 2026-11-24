@@ -1228,6 +1228,11 @@ html[data-theme="rick"] .top .date{color:#8FE3C8}
 .pv-space .neb{position:absolute;right:-20px;bottom:-30px;width:140px;height:90px;border-radius:50%;background:radial-gradient(rgba(155,140,255,.35),transparent 70%)}
 .pv-space .shoot{position:absolute;top:18px;left:70%;width:60px;height:1.5px;background:linear-gradient(90deg,#fff,transparent);transform:rotate(-25deg);animation:pvShoot 3s ease-in infinite}
 @keyframes pvShoot{0%{transform:translate(0,0) rotate(-25deg);opacity:0}10%{opacity:1}40%,100%{transform:translate(-150px,70px) rotate(-25deg);opacity:0}}
+.thbtn{position:relative;display:grid;place-items:center}
+.thsw{width:20px;height:20px;border-radius:50%;background:conic-gradient(#FF5C6C,#FFB86B,#C8F542,#2EE6C8,#5B8CFF,#A78BFA,#FF5C6C);box-shadow:inset 0 0 0 3px var(--card),0 0 10px rgba(var(--lr),.35);animation:thSpin 8s linear infinite}
+@keyframes thSpin{to{transform:rotate(360deg)}}
+.thdot{position:absolute;top:5px;right:5px;width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 0 2px var(--card);animation:thPing 1.6s ease-out infinite}
+@keyframes thPing{0%{box-shadow:0 0 0 2px var(--card),0 0 0 2px rgba(255,92,108,.6)}100%{box-shadow:0 0 0 2px var(--card),0 0 0 10px rgba(255,92,108,0)}}
 </style>
 </head>
 <body>
@@ -1238,7 +1243,7 @@ html[data-theme="rick"] .top .date{color:#8FE3C8}
   <section class="screen on" id="s-today">
     <div class="top">
       <div><div class="logo" data-act="logotap">solve<i>.</i></div><div class="date" id="t-date" style="margin-top:8px"></div></div>
-      <div style="display:flex;gap:8px;align-items:center"><span id="t-st"></span><div class="pill" id="t-week"></div><button class="fgear" data-act="cfgopen:sec" aria-label="Настройки">⚙️</button></div>
+      <div style="display:flex;gap:8px;align-items:center"><span id="t-st"></span><div class="pill" id="t-week"></div><button class="fgear thbtn" data-act="thpick" aria-label="Оформление"><span class="thsw"></span><i class="thdot" id="thdot"></i></button><button class="fgear" data-act="cfgopen:sec" aria-label="Настройки">⚙️</button></div>
     </div>
 
     <div id="hs"></div>
@@ -4350,6 +4355,7 @@ function act(a, el){
     try { if (tg && tg.openLink) tg.openLink(url); else window.open(url, "_blank"); } catch(e){ window.open(url, "_blank"); }
     return;
   }
+  if (cmd === "thpick"){ LS.set("solve_thseen", "1"); const d = $("thdot"); if (d) d.style.display = "none"; closeSheet(); openOnboarding(false, "theme"); hap(); return; }
   if (cmd === "cfgopen"){ closeSheet(); openOnboarding(false, p1 || "sec"); hap(); return; }
   if (cmd === "eatopen"){ TMODE = "f"; document.querySelectorAll("#seg-t button").forEach(b => b.classList.toggle("on", b.dataset.act === "segt:f")); act("tab:train"); renderTrain(); return; }
   if (cmd === "mealdel"){ const o = day(TK); o.fd = (o.fd || []).filter(f => f.i !== p1); saveDay(TK); hap(); renderAll(); return; }
@@ -4776,7 +4782,7 @@ function initHomeScreen(){
   // владелец получает свои зашитые настройки; остальные — проходят онбординг
   if (!C && USER_ID === OWNER_ID){ C = ownerCfg(); saveCfg(); }
   if (C){
-    applyTheme(); applyV2(); applyBeta(); applyConfig(); renderAll(); initHomeScreen(); serverSync(pre); setStatusBadge(ST);
+    applyTheme(); applyV2(); applyBeta(); applyConfig(); renderAll(); if (LS.get("solve_thseen") === "1" && $("thdot")) $("thdot").style.display = "none"; initHomeScreen(); serverSync(pre); setStatusBadge(ST);
     if (isAdmin() && /admin/.test(location.hash)) setTimeout(openAdmin, 300);
   } else {
     C = {owner: false, work: [], habits: [], prog: "none", wmode: "none", kcal: 2000, prot: 120, food: "generic", weeks: 0};

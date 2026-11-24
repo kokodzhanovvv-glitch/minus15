@@ -3078,10 +3078,6 @@ TBGK.alatoo = {
     const sk = c.createLinearGradient(0, 0, 0, H * .7); sk.addColorStop(0, "#0A1430"); sk.addColorStop(.45, "#2E3A6E"); sk.addColorStop(.8, "#C86A5A"); sk.addColorStop(1, "#F2B05A");
     c.fillStyle = sk; c.fillRect(0, 0, W, H);
     for (const s of this.st){ c.fillStyle = `rgba(255,255,255,${(.3 + .4 * Math.sin(t + s.x)) * (1 - s.y / (H * .3))})`; c.fillRect(s.x, s.y, s.r, s.r); }
-    if (alaPerfect()){ const vx = W * .6, vy = 34, p = .75 + .25 * Math.sin(t * 2);
-      const vg = c.createRadialGradient(vx, vy, 0, vx, vy, 40); vg.addColorStop(0, `rgba(255,250,225,${p})`); vg.addColorStop(.15, `rgba(255,236,170,${.5 * p})`); vg.addColorStop(1, "rgba(255,230,160,0)");
-      c.fillStyle = vg; c.fillRect(vx - 40, vy - 40, 80, 80); c.strokeStyle = `rgba(255,250,230,${.7 * p})`; c.lineWidth = 1;
-      c.beginPath(); c.moveTo(vx - 22, vy); c.lineTo(vx + 22, vy); c.moveTo(vx, vy - 22); c.lineTo(vx, vy + 22); c.stroke(); }
     const sun = c.createRadialGradient(W * .5, H * .5, 0, W * .5, H * .5, W * .6); sun.addColorStop(0, "rgba(255,200,120,.45)"); sun.addColorStop(1, "rgba(255,160,90,0)");
     c.fillStyle = sun; c.fillRect(0, 0, W, H);
     const cols = [["#3C4775", "#1B2244"], ["#2A3157", "#141A33"], ["#1A2040", "#0B0F22"]];
@@ -3091,31 +3087,107 @@ TBGK.alatoo = {
       if (li === 0) this.cl.forEach(k => { k.x += k.v * dt; if (k.x - k.w > W) k.x = -k.w; const cg = c.createRadialGradient(k.x, k.y, 0, k.x, k.y, k.w * .5); cg.addColorStop(0, "rgba(255,225,215,.22)"); cg.addColorStop(1, "rgba(255,225,215,0)");
         c.fillStyle = cg; c.beginPath(); c.ellipse(k.x, k.y, k.w * .5, k.w * .12, 0, 0, 7); c.fill(); });
     });
+    cholponDraw(c, W, H, t, Math.min(...this.r[0]));
   }
 };
 const alaPerfect = () => { if (window.DEV_CHOLPON) return true; try { return ITEMS.length > 0 && habitPct(TK) >= 1; } catch(e){ return false; } };
-// ===== Сакура: летят лепестки, ветка цветёт от серии =====
+// ===== Чолпон: утренняя звезда над Ала-Тоо — рождается из-за гор, вспыхивает и сияет =====
+const CHOL = {on: false, t0: 0, sp: Array.from({length: 16}, (_, i) => ({a: i / 16 * 6.28, r: 26 + Math.random() * 40, s: .15 + Math.random() * .35, ph: Math.random() * 6.28}))};
+function cholponDraw(c, W, H, t, ridgeTop){
+  const on = alaPerfect();
+  if (on && !CHOL.on){ CHOL.on = true; CHOL.t0 = t; } else if (!on){ CHOL.on = false; return; }
+  const age = t - CHOL.t0, sx = W * .64, sy = 46, R = Math.min(W, 420) / 420;
+  // 1) рождение: луч поднимается из-за пика к месту звезды
+  if (age < 1.6){ const k = age / 1.6, e = 1 - Math.pow(1 - k, 3), py = ridgeTop + (sy - ridgeTop) * e;
+    const lg = c.createLinearGradient(sx, ridgeTop, sx, py); lg.addColorStop(0, "rgba(255,220,150,0)"); lg.addColorStop(1, `rgba(255,245,220,${.9})`);
+    c.strokeStyle = lg; c.lineWidth = 3 + 4 * (1 - k); c.beginPath(); c.moveTo(sx, ridgeTop); c.lineTo(sx, py); c.stroke();
+    const hg = c.createRadialGradient(sx, py, 0, sx, py, 26); hg.addColorStop(0, "rgba(255,250,235,1)"); hg.addColorStop(1, "rgba(255,230,170,0)"); c.fillStyle = hg; c.fillRect(sx - 26, py - 26, 52, 52);
+    return; }
+  const b = age - 1.6, burst = Math.max(0, 1 - b / 1.4), p = .82 + .18 * Math.sin(t * 2.2) * Math.sin(t * .7), S = R * (1 + burst * .35);
+  // 2) вспышка: расходящиеся кольца
+  if (burst > 0){ for (let i = 0; i < 3; i++){ const rr = (b * 120 + i * 26) * R; c.strokeStyle = `rgba(255,236,190,${burst * (.5 - i * .14)})`; c.lineWidth = 2; c.beginPath(); c.arc(sx, sy, rr, 0, 7); c.stroke(); } }
+  // 3) луч на горы — звезда освещает вершины
+  const beam = c.createLinearGradient(sx, sy, sx, ridgeTop + 60); beam.addColorStop(0, `rgba(255,236,190,${.16 * p})`); beam.addColorStop(1, "rgba(255,236,190,0)");
+  c.fillStyle = beam; c.beginPath(); c.moveTo(sx - 4, sy); c.lineTo(sx - 70 * R, ridgeTop + 60); c.lineTo(sx + 70 * R, ridgeTop + 60); c.lineTo(sx + 4, sy); c.fill();
+  // 4) большое мягкое сияние
+  const glow = c.createRadialGradient(sx, sy, 0, sx, sy, 110 * S); glow.addColorStop(0, `rgba(255,248,228,${.55 * p})`); glow.addColorStop(.18, `rgba(255,226,160,${.32 * p})`); glow.addColorStop(.5, `rgba(255,190,120,${.1 * p})`); glow.addColorStop(1, "rgba(255,180,110,0)");
+  c.fillStyle = glow; c.fillRect(sx - 110 * S, sy - 110 * S, 220 * S, 220 * S);
+  // 5) пульсирующие ореолы
+  for (let i = 0; i < 2; i++){ const rr = (30 + i * 22 + Math.sin(t * 1.5 + i) * 4) * S; c.strokeStyle = `rgba(255,238,200,${(.22 - i * .08) * p})`; c.lineWidth = 1.2; c.beginPath(); c.arc(sx, sy, rr, 0, 7); c.stroke(); }
+  // 6) лучи-иглы: 4 длинных медленно вращаются, 4 коротких мерцают
+  const spike = (ang, len, w, a) => { c.save(); c.translate(sx, sy); c.rotate(ang); const g = c.createLinearGradient(0, 0, len, 0); g.addColorStop(0, `rgba(255,252,240,${a})`); g.addColorStop(1, "rgba(255,230,170,0)");
+    c.fillStyle = g; c.beginPath(); c.moveTo(0, -w); c.lineTo(len, 0); c.lineTo(0, w); c.closePath(); c.fill(); c.restore(); };
+  const rot = t * .06;
+  for (let i = 0; i < 4; i++) spike(rot + i * Math.PI / 2, (78 + 10 * Math.sin(t * 1.3 + i)) * S, 3.2 * S, .95 * p);
+  for (let i = 0; i < 4; i++) spike(-rot * 1.5 + Math.PI / 4 + i * Math.PI / 2, (40 + 8 * Math.sin(t * 2.1 + i * 2)) * S, 2 * S, .7 * p);
+  // 7) кружащие искры
+  for (const s of CHOL.sp){ s.a += s.s * .016; const x = sx + Math.cos(s.a) * s.r * S, y = sy + Math.sin(s.a) * s.r * .55 * S, tw = .5 + .5 * Math.sin(t * 4 + s.ph);
+    c.fillStyle = `rgba(255,246,220,${.85 * tw})`; c.beginPath(); c.arc(x, y, 1.1 + tw, 0, 7); c.fill(); }
+  // 8) ядро
+  const core = c.createRadialGradient(sx, sy, 0, sx, sy, 9 * S); core.addColorStop(0, "#FFFFFF"); core.addColorStop(.5, "rgba(255,246,215,.95)"); core.addColorStop(1, "rgba(255,220,150,0)");
+  c.fillStyle = core; c.beginPath(); c.arc(sx, sy, 9 * S, 0, 7); c.fill();
+  // 9) подпись
+  c.font = `800 ${9 * Math.max(1, R)}px Manrope, sans-serif`; c.textAlign = "center"; c.fillStyle = `rgba(255,236,200,${.55 * p})`;
+  c.fillText("Ч О Л П О Н", sx, sy + 28); c.textAlign = "start";
+}
+// ===== Сакура: ветка из сотен цветков, лепестковая метель на порывах ветра =====
 TBGK.sakura = {
-  init(W, H){ this.p = Array.from({length: 26}, () => this.np(W, H, true)); let st = 0; try { st = streakOf(k => dayScore(k) >= .7); } catch(e){} this.bl = window.DEV_SAK != null ? window.DEV_SAK : Math.min(14, st); },
-  np(W, H, any){ return {x: RND() * W, y: any ? RND() * H : -20, r: 5 + RND() * 5, a: RND() * 6.28, va: (RND() - .5) * 2, vy: 18 + RND() * 22, sw: RND() * 6.28}; },
+  init(W, H){
+    let st = 0; try { st = streakOf(k => dayScore(k) >= .7); } catch(e){}
+    this.bl = window.DEV_SAK != null ? window.DEV_SAK : Math.min(14, st);
+    this.br = [[W + 14, 34, W * .6, 72, 10], [W * .6, 72, W * .36, 56, 6], [W * .78, 60, W * .7, 128, 5], [W * .52, 68, W * .46, 112, 3.5], [W * .9, 44, W * .96, 96, 4], [W * .42, 60, W * .28, 84, 2.5]];
+    // точки для цветков вдоль веток (детерминированно)
+    let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+    this.spots = [];
+    for (let i = 0; i < 90; i++){ const b = this.br[i % this.br.length], k = .12 + rnd() * .88, [x1, y1, x2, y2] = b, cx = (x1 + x2) / 2, cy = Math.min(y1, y2) - 12;
+      const x = (1 - k) * (1 - k) * x1 + 2 * (1 - k) * k * cx + k * k * x2, y = (1 - k) * (1 - k) * y1 + 2 * (1 - k) * k * cy + k * k * y2;
+      this.spots.push({x: x + (rnd() - .5) * 16, y: y + (rnd() - .5) * 14, r: 5 + rnd() * 4, rot: rnd() * 6.28, bud: rnd() < .25}); }
+    this.p = []; this.gust = 0;
+  },
+  np(W, H, fromBranch){
+    const z = .55 + RND() * .8;
+    if (fromBranch){ const s = this.spots[(RND() * this.spots.length) | 0]; return {x: s.x, y: s.y, z, r: (4 + RND() * 4) * z, a: RND() * 6.28, va: (RND() - .5) * 3, fl: RND() * 6.28, fs: 2 + RND() * 4, c: (RND() * 4) | 0}; }
+    return {x: RND() * W * 1.3 - W * .3, y: -20 - RND() * 60, z, r: (4 + RND() * 4) * z, a: RND() * 6.28, va: (RND() - .5) * 3, fl: RND() * 6.28, fs: 2 + RND() * 4, c: (RND() * 4) | 0};
+  },
   draw(c, W, H, t, dt){
+    const lvl = (this.bl || 0) / 14;
     c.fillStyle = "#F6F0E7"; c.fillRect(0, 0, W, H);
-    // ветка тушью
-    c.save(); c.strokeStyle = "rgba(40,28,22,.85)"; c.lineCap = "round";
-    const br = [[W + 10, 40, W * .62, 70, 9], [W * .62, 70, W * .42, 58, 5], [W * .75, 63, W * .7, 120, 4], [W * .55, 66, W * .5, 104, 3]];
-    br.forEach(([x1, y1, x2, y2, w]) => { c.lineWidth = w; c.beginPath(); c.moveTo(x1, y1); c.quadraticCurveTo((x1 + x2) / 2, Math.min(y1, y2) - 12, x2, y2); c.stroke(); });
+    if (lvl > .6){ const hz = c.createRadialGradient(W * .7, 70, 0, W * .7, 70, W * .9); hz.addColorStop(0, `rgba(255,190,210,${(lvl - .6) * .5})`); hz.addColorStop(1, "rgba(255,190,210,0)"); c.fillStyle = hz; c.fillRect(0, 0, W, H); }
+    // ветер: спокойный фон + сильные порывы, которые растут вместе с цветением
+    const gustRaw = Math.pow(Math.max(0, Math.sin(t * .33) * Math.sin(t * .17 + 1)), 2);
+    this.gust += (gustRaw - this.gust) * Math.min(1, dt * 2);
+    const wind = 14 + 26 * lvl + this.gust * (60 + 220 * lvl), sway = this.gust * 3 * lvl;
+    // ветки качаются на ветру
+    c.save(); c.strokeStyle = "rgba(40,28,22,.88)"; c.lineCap = "round";
+    this.br.forEach(([x1, y1, x2, y2, w], i) => { const dy = Math.sin(t * 1.4 + i) * sway; c.lineWidth = w; c.beginPath(); c.moveTo(x1, y1); c.quadraticCurveTo((x1 + x2) / 2, Math.min(y1, y2) - 12, x2, y2 + dy); c.stroke(); });
     c.restore();
-    const spots = [[.66, 64], [.6, 72], [.5, 62], [.45, 57], [.72, 95], [.7, 118], [.53, 90], [.5, 104], [.8, 52], [.86, 48], [.57, 60], [.75, 70], [.42, 55], [.64, 80]];
-    for (let i = 0; i < Math.max(2, this.bl); i++){ const [fx, y] = spots[i % spots.length], x = fx * W; flower(c, x, y, i < this.bl ? 7 : 4, i < this.bl ? 1 : .35); }
-    for (const p of this.p){ p.y += p.vy * dt; p.sw += dt; p.x += Math.sin(p.sw * 1.3) * 22 * dt + 8 * dt; p.a += p.va * dt;
-      if (p.y > H + 20) Object.assign(p, this.np(W, H, false));
-      c.save(); c.translate(p.x, p.y); c.rotate(p.a); const g = c.createLinearGradient(-p.r, 0, p.r, 0); g.addColorStop(0, "rgba(255,183,207,.95)"); g.addColorStop(1, "rgba(244,132,170,.85)");
-      c.fillStyle = g; c.beginPath(); c.ellipse(0, 0, p.r, p.r * .55, 0, 0, 7); c.fill(); c.restore(); }
+    const n = Math.max(3, Math.round(lvl * this.spots.length));
+    for (let i = 0; i < this.spots.length; i++){ const s = this.spots[i], on = i < n, wob = Math.sin(t * 1.4 + i) * sway * .6;
+      if (on) flower(c, s.x, s.y + wob, s.bud ? s.r * .55 : s.r, 1, s.rot + Math.sin(t + i) * .1 * lvl);
+      else if (i < n + 10) flower(c, s.x, s.y, 3, .25, s.rot); }
+    // лепестки: количество растёт с цветением — от 25 до ~260
+    const want = Math.round(25 + lvl * lvl * 235);
+    while (this.p.length < want) this.p.push(this.np(W, H, RND() < .35 * lvl));
+    if (this.p.length > want) this.p.length = want;
+    if (this.gust > .35 && lvl > .3) for (let k = 0; k < 3; k++){ const i = (RND() * this.p.length) | 0, q = this.p[i]; if (q && q.y > H * .5) Object.assign(q, this.np(W, H, true)); }
+    const cols = ["rgba(255,196,214,.95)", "rgba(249,168,194,.92)", "rgba(255,217,228,.95)", "rgba(244,143,177,.9)"];
+    for (const p of this.p){
+      const swirl = Math.sin(p.y * .018 + t * 1.6 + p.z * 3) * (18 + 40 * this.gust);
+      p.x += ((wind + swirl) * p.z) * dt; p.y += (22 + 26 * p.z - this.gust * 14 * lvl + Math.cos(p.x * .02 + t) * 8) * dt;
+      p.a += (p.va + this.gust * 4) * dt; p.fl += p.fs * dt;
+      if (p.y > H + 20 || p.x > W + 40) Object.assign(p, this.np(W, H, RND() < .3 * lvl));
+      const sx = Math.abs(Math.cos(p.fl)) * .85 + .15;
+      c.save(); c.translate(p.x, p.y); c.rotate(p.a); c.scale(sx, 1); c.fillStyle = cols[p.c];
+      c.beginPath(); c.moveTo(0, -p.r); c.bezierCurveTo(p.r * .9, -p.r * .7, p.r * .7, p.r * .8, 0, p.r); c.bezierCurveTo(-p.r * .7, p.r * .8, -p.r * .9, -p.r * .7, 0, -p.r * .55); c.closePath(); c.fill();
+      c.restore(); }
   }
 };
-function flower(c, x, y, r, a){ c.save(); c.translate(x, y); c.globalAlpha = a;
-  for (let i = 0; i < 5; i++){ c.rotate(Math.PI * 2 / 5); c.fillStyle = "#F7A8C2"; c.beginPath(); c.ellipse(0, -r * .7, r * .45, r * .7, 0, 0, 7); c.fill(); }
-  c.fillStyle = "#C8102E"; c.beginPath(); c.arc(0, 0, r * .22, 0, 7); c.fill(); c.restore(); }
+function flower(c, x, y, r, a, rot){ c.save(); c.translate(x, y); c.rotate(rot || 0); c.globalAlpha = a;
+  for (let i = 0; i < 5; i++){ c.rotate(Math.PI * 2 / 5); c.fillStyle = i % 2 ? "#F9B4CA" : "#F7A0BC"; c.beginPath(); c.ellipse(0, -r * .7, r * .48, r * .72, 0, 0, 7); c.fill(); }
+  c.fillStyle = "#FFE9F0"; c.beginPath(); c.arc(0, 0, r * .3, 0, 7); c.fill();
+  c.fillStyle = "#C8102E"; for (let i = 0; i < 5; i++){ const an = i * 1.256; c.beginPath(); c.arc(Math.cos(an) * r * .22, Math.sin(an) * r * .22, r * .06 + .4, 0, 7); c.fill(); }
+  c.restore(); }
+
 /* ===== Коралина: дождливый реальный мир и Другой мир с садом и поездом к ужину ===== */
 const CORA = {other: false, since: 0, twist: false, train: null, grow: 0};
 // --- реальный мир: холм с розовым домом, мёртвое дерево, капли на стекле, чёрный кот ---

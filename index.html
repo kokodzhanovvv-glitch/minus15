@@ -3453,6 +3453,7 @@ function coraPortal(){
 }
 function coraSwap(toOther){
   CORA.other = toOther; CORA.twist = false; CORA.since = toOther ? Date.now() : 0; CORA.grow = 0; CORA.train = null;
+  LS.set("solve_cora", toOther ? "ow" : "");
   const h = document.documentElement; h.classList.toggle("ow", toOther); h.classList.remove("twist");
   TBGK.coraline.grey = 0; renderCoraCard();
   if (toOther){ h.classList.add("cora-reveal"); sfx("mbox"); setTimeout(coraTrain, 1500); setTimeout(() => h.classList.remove("cora-reveal"), 4200);
@@ -3659,7 +3660,8 @@ function applyTheme(){
   const t = curTheme(), th = THEMES.find(x => x.id === t) || THEMES[0];
   if (t) document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
   if (t === "bat" && !document.getElementById("f-oswald")){ const l = document.createElement("link"); l.id = "f-oswald"; l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap"; document.head.appendChild(l); }
-  if (t !== "coraline"){ CORA.other = false; document.documentElement.classList.remove("ow", "twist", "cora-reveal"); } else renderCoraCard();
+  if (t !== "coraline"){ CORA.other = false; document.documentElement.classList.remove("ow", "twist", "cora-reveal"); }
+  else { if (LS.get("solve_cora") === "ow" && !CORA.other){ CORA.other = true; CORA.since = Date.now(); CORA.grow = 1; document.documentElement.classList.add("ow"); } renderCoraCard(); }
   themeFont(t); themeBg(t === "space" || t === "bat" || TBGK[t] ? t : "");
   if (t === "coraline") try { tg.setHeaderColor && tg.setHeaderColor(CORA.other ? "#0C0F12" : "#2B3740"); } catch(e){}
 

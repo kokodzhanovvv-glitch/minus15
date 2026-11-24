@@ -2882,7 +2882,7 @@ const ST_LABEL = {"": "Обычный", vip: "⭐ VIP", tester: "🧪 Тесте
 const isAdmin = () => USER_ID === OWNER_ID;
 let ADM = {data: null, q: "", f: "all", cur: null, user: null, msg: ""};
 const v2On = () => (isAdmin() || window.__dev) && LS.get("solve_v2") !== "0";
-const betaOn = () => (isAdmin() || window.__dev) && LS.get("solve_beta") !== "0";
+const betaOn = () => LS.get("solve_beta") !== "0";
 function applyBeta(){ document.body.classList.toggle("beta", betaOn()); }
 // бета: одна карточка дня вместо уровня + колец
 function renderBHero(){

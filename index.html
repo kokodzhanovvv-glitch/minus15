@@ -494,15 +494,7 @@ body.v2 #q-food{--lime:var(--c-food);--acc:var(--c-food);--acc-rgb:46,211,183;--
 body.v2 #q-weight{--lime:var(--c-weight);--acc:var(--c-weight);--acc-rgb:125,211,252;--lr:125,211,252}
 body.v2 #s-today{--acc:var(--c-today);--acc-rgb:200,245,66;--lr:200,245,66}
 body.v2 .btn.main{color:var(--on)}
-/* шапка раздела — цветная плашка с иконкой и подсказкой, что здесь */
-body.v2 .screen:not(#s-today)>.top{position:relative;padding:16px 16px 16px 72px;border-radius:24px;margin:0 0 16px;min-height:76px;align-items:center;
-  background:linear-gradient(120deg,rgba(var(--acc-rgb),.22),rgba(var(--acc-rgb),.04) 70%),var(--card);border:1px solid rgba(var(--acc-rgb),.3)}
-body.v2 .screen:not(#s-today)>.top::before{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:15px;display:grid;place-items:center;font-size:24px;
-  background:rgba(var(--acc-rgb),.2);border:1px solid rgba(var(--acc-rgb),.35)}
-body.v2 #s-work>.top::before{content:"💼"}
-body.v2 #s-train>.top::before{content:"🏋️"}
-body.v2 #s-fin>.top::before{content:"💳"}
-body.v2 #s-prog>.top::before{content:"📈"}
+/* шапка раздела — просто цветной текст и подсказка, без плашки */
 body.v2 .screen>.top h1{color:var(--acc)}
 body.v2 .top .hint{color:var(--muted);font-size:12px;font-weight:600;margin-top:4px;line-height:1.3}
 /* заголовки блоков — цветная метка слева */
@@ -3089,7 +3081,7 @@ const ST_LABEL = {"": "Обычный", vip: "⭐ VIP", tester: "🧪 Тесте
 const isOwner = () => USER_ID === OWNER_ID;
 const isAdmin = () => isOwner() || ST === "creator";
 let ADM = {data: null, q: "", f: "all", cur: null, user: null, msg: ""};
-const v2On = () => (isAdmin() || window.__dev) ? LS.get("solve_v2") !== "0" : (ST === "tester" && LS.get("solve_lab_v2") === "1");
+const v2On = () => (isAdmin() || window.__dev) ? LS.get("solve_v2") !== "0" : true; // новый дизайн — для всех
 const betaOn = () => LS.get("solve_beta") !== "0";
 function applyBeta(){ document.body.classList.toggle("beta", betaOn()); }
 // бета: одна карточка дня вместо уровня + колец
@@ -3150,7 +3142,7 @@ function admRender(){
           <div class="admt"><b>${esc(u.name || "Без имени")} ${esc(u.ln || "")}${u.owner ? " 👑" : ""}</b><small>${u.un ? "@" + esc(u.un) + " · " : ""}${agoS(u.ls)}${u.recs ? " · " + u.recs + " зап." : ""}</small></div>
           ${u.st ? `<span class="stb ${u.st}">${ST_LABEL[u.st]}</span>` : u.app ? "" : `<span class="stb">только бот</span>`}</button>`; }).join("") : `<div class="empty" style="padding:16px 0">Никого не найдено</div>`}</div>`;
   }
-  const v2 = `<button class="card v2tog ${v2On() ? "on" : ""}" data-act="admv2"><div class="pi">🎨</div><div style="flex:1"><b>Новый дизайн <span class="tst">тест</span></b><small>${v2On() ? "Включён — видишь только ты. Нажми, чтобы вернуть старый" : "Цвет у каждого раздела и подсказки. Видишь только ты"}</small></div><span class="tgl ${v2On() ? "on" : ""}"><i></i></span></button>`;
+  const v2 = `<button class="card v2tog ${v2On() ? "on" : ""}" data-act="admv2"><div class="pi">🎨</div><div style="flex:1"><b>Новый дизайн</b><small>${v2On() ? "Включён у всех. Нажми, чтобы у тебя вернуть старый" : "Цвет у каждого раздела и подсказки. Видишь только ты"}</small></div><span class="tgl ${v2On() ? "on" : ""}"><i></i></span></button>`;
   const bt = `<button class="card v2tog ${betaOn() ? "on" : ""}" data-act="admbeta"><div class="pi">🧪</div><div style="flex:1"><b>Бета: компактная версия <span class="tst">тест</span></b><small>${betaOn() ? "Включена — видишь только ты. Нажми, чтобы вернуть как было" : "Меньше блоков, одна карточка дня, всё короче"}</small></div><span class="tgl ${betaOn() ? "on" : ""}"><i></i></span></button>`;
   el.innerHTML = `<div class="shw"><div class="jvtop"><button class="fgear" data-act="admreload">↻</button><b class="h shh">🛡 Админ-панель</b><button class="fgear" data-act="admclose">×</button></div>${bt}${v2}${body}</div>`;
   const qi = $("adm-q"); if (qi) qi.oninput = () => { ADM.q = qi.value; const pos = qi.selectionStart; admRender(); const n = $("adm-q"); n.focus(); n.setSelectionRange(pos, pos); };
@@ -3948,7 +3940,6 @@ function sheetLab(){
   const row = (k, ic, t, d) => `<button class="pc sect ${labOn(k) ? "on" : ""}" data-act="labtog:${k}"><div class="pi">${ic}</div><div style="flex:1"><b>${t}</b><small>${d}</small></div><span class="tgl ${labOn(k) ? "on" : ""}"><i></i></span></button>`;
   return sheetHead("🧪 Лаборатория") +
     `<p class="obp">Ты тестер solve. — здесь функции, которые ещё не вышли для всех. Включай, смотри и пиши, что думаешь.</p>` +
-    row("v2", "🎨", "Новый дизайн", "Свой цвет у каждого раздела и подсказки") +
     row("devthemes", "🛠", "Тестовые настройки тем", "Ползунок цветения сакуры, Чолпон, двери Коралины — в «Оформлении»") +
     row("early", "🚀", "Ранний доступ к темам", "Темы, которые ещё в разработке") +
     `<div class="lbl" style="margin-top:14px">🐞 Нашёл баг или есть идея?</div>

@@ -441,7 +441,8 @@ input{font:inherit;color:inherit}
 .jvamt{margin:4px 0 2px}
 .jvamt input{width:1.3em;max-width:78%}
 .stb{display:inline-flex;align-items:center;height:26px;padding:0 9px;border-radius:9px;font-size:11.5px;font-weight:800;background:var(--card2);color:var(--muted);white-space:nowrap}
-.stb.adm{background:linear-gradient(135deg,rgba(91,140,255,.25),rgba(var(--lr),.18));color:var(--text);border:1px solid rgba(91,140,255,.35)}
+.stb.creator{background:linear-gradient(135deg,#6B3BD6,#B48CFF 50%,#FFD36E);color:#1A0B2E;border:0;box-shadow:0 0 14px rgba(180,140,255,.45)}
+.stb.tester{background:linear-gradient(135deg,rgba(91,140,255,.25),rgba(var(--lr),.18));color:var(--text);border:1px solid rgba(91,140,255,.35)}
 .stb.vip{background:linear-gradient(135deg,#D9A21E,#FFE68A);color:#4a3205}
 .stb.tester{background:rgba(91,140,255,.18);color:#9DB8FF}
 .stb.ban{background:rgba(229,72,77,.18);color:#FF8A8A}
@@ -3084,8 +3085,9 @@ function jvGo(){
 
 /* ================= АДМИН-ПАНЕЛЬ (только владелец) ================= */
 let ST = (() => { try { return localStorage.getItem("solve_st") || ""; } catch(e){ return ""; } })();                       // статус текущего пользователя (vip / tester / ban)
-const ST_LABEL = {"": "Обычный", vip: "⭐ VIP", tester: "🧪 Тестер", ban: "🚫 Заблокирован"};
-const isAdmin = () => USER_ID === OWNER_ID;
+const ST_LABEL = {"": "Обычный", vip: "⭐ VIP", tester: "🧪 Тестер", creator: "👑 Создатель", ban: "🚫 Заблокирован"};
+const isOwner = () => USER_ID === OWNER_ID;
+const isAdmin = () => isOwner() || ST === "creator";
 let ADM = {data: null, q: "", f: "all", cur: null, user: null, msg: ""};
 const v2On = () => (isAdmin() || window.__dev) ? LS.get("solve_v2") !== "0" : (ST === "tester" && LS.get("solve_lab_v2") === "1");
 const betaOn = () => LS.get("solve_beta") !== "0";
@@ -3172,7 +3174,9 @@ function sheetAdmUser(){
       ${row("Впервые", dateS(u.fs))}${row("Был(а)", agoS(lite ? lite.ls : u.ls))}
       ${row("Уведомления", u.rem ? "вкл" + (nt.am === false ? " · без утра" : "") + (nt.pm === false ? " · без вечера" : "") + (nt.subs === false ? " · без подписок" : "") : "выкл")}
       ${row("Записей ботом", lite ? lite.recs : "—")}</div>`;
-  if (!owner) h += `<div class="lbl" style="margin-top:4px">Статус</div><div class="hchips">${Object.entries(ST_LABEL).map(([k, n]) => `<button class="hc ${(u.st || "") === k ? "on" : ""}" data-act="admst:${k}">${n}</button>`).join("")}</div>
+  const lockSt = owner || (u.st === "creator" && !isOwner());
+  if (lockSt && !owner) h += `<div class="lbl" style="margin-top:4px">Статус</div><div class="card empty" style="padding:12px 14px">👑 Создатель — изменить может только владелец</div>`;
+  if (!lockSt) h += `<div class="lbl" style="margin-top:4px">Статус</div><div class="hchips">${Object.entries(ST_LABEL).filter(([k]) => k !== "creator" || isOwner()).map(([k, n]) => `<button class="hc ${(u.st || "") === k ? "on" : ""}" data-act="admst:${k}">${n}</button>`).join("")}</div>
       <label class="adnot"><input type="checkbox" id="adm-notify" checked> Сообщить пользователю о новом статусе</label>`;
   if (sn){
     const cur = sn.cur || "сом", m = v => Math.round(v || 0).toLocaleString("ru-RU") + " " + cur;
@@ -3934,7 +3938,7 @@ const isVip = () => isAdmin() || ST === "vip" || window.__dev;
 function setStatusBadge(st){
   ST = st || ""; LS.set("solve_st", ST);
   const el = $("t-st"); if (el)
-    el.innerHTML = isAdmin() ? `<button class="stb adm" data-act="adm">🛡 Админ</button>` : ST === "vip" ? `<button class="stb vip" data-act="vipinfo">👑 VIP</button>` : ST === "tester" ? `<button class="stb tester" data-act="lab">🧪 Тестер</button>` : "";
+    el.innerHTML = isOwner() ? `<button class="stb adm" data-act="adm">🛡 Админ</button>` : ST === "creator" ? `<button class="stb creator" data-act="adm">👑 Создатель</button>` : ST === "vip" ? `<button class="stb vip" data-act="vipinfo">👑 VIP</button>` : ST === "tester" ? `<button class="stb tester" data-act="lab">🧪 Тестер</button>` : "";
   document.documentElement.classList.toggle("is-vip", ST === "vip" || isAdmin());
   if (window.applyV2){ applyV2(); }
 }

@@ -659,120 +659,119 @@ body.beta .achi .ae{width:46px;height:46px;font-size:21px;border-radius:15px}
 .sumrow + .sumrow{border-top:1px solid var(--line)}
 
 /* ===== developer ===== */
-/* ===== визитки в «Разработчик»: золотая карта и карта отдела маркетинга ===== */
-.bcards{display:grid;gap:24px;padding:12px 8px 8px;perspective:1200px}
-.bcard{position:relative;width:100%;aspect-ratio:1.586;container-type:inline-size;cursor:pointer;-webkit-tap-highlight-color:transparent;perspective:1200px}
-.bthumb{transition:transform .35s cubic-bezier(.2,.8,.3,1.2)}
+/* ===== визитки в «Разработчик»: CEO (матовое шлифованное золото) и отдел маркетинга (шоколад с потёками) ===== */
+.bcards{display:grid;gap:26px;padding:14px 10px 10px}
+.bcard{position:relative;width:100%;aspect-ratio:1.586;container-type:inline-size;cursor:pointer;-webkit-tap-highlight-color:transparent;perspective:1100px}
+.bthumb{transition:transform .4s cubic-bezier(.2,.8,.3,1.2)}
 .bthumb:active{transform:scale(.965)}
-.bc-in{position:absolute;inset:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;--sx:30%;--sy:40%;--h:0deg}
-.bthumb .bc-in{animation:bcIdle 10s ease-in-out infinite}
-.bthumb.b2 .bc-in{animation-delay:-5s}
-@keyframes bcIdle{0%,100%{transform:rotateY(-8deg) rotateX(5deg)}50%{transform:rotateY(8deg) rotateX(-4deg)}}
-.bc-face{position:absolute;inset:0;border-radius:5.5cqw;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.bc-front{transform:translateZ(3px)}
-.bc-back{transform:rotateY(180deg) translateZ(3px)}
-/* толщина: слои ребра — карта выглядит массивной, когда её поворачиваешь */
-.bc-edge{position:absolute;inset:0;border-radius:5.5cqw;pointer-events:none}
-.bc-gold .bc-edge{background:linear-gradient(90deg,#8A5E18,#E2B550 30%,#9C6B1C 60%,#D9A63A)}
-.bc-poop .bc-edge{background:linear-gradient(90deg,#2A1606,#5A3313 40%,#2E1908)}
-.bc-glint{position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 38%,rgba(255,255,255,.5) 48%,rgba(255,255,255,.1) 53%,transparent 62%);background-size:300% 100%;animation:bcGlint 6.5s cubic-bezier(.45,0,.2,1) infinite;mix-blend-mode:overlay}
-@keyframes bcGlint{0%,40%{background-position:130% 0}80%,100%{background-position:-30% 0}}
-.bc-sheen{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--sx) var(--sy),rgba(255,255,255,.5),rgba(255,255,255,0) 48%);mix-blend-mode:soft-light}
-.bc-holo{position:absolute;inset:0;pointer-events:none;background:conic-gradient(from var(--h) at var(--sx) var(--sy),#ff9ab844,#ffe08a44,#9ef0c044,#8ec5ff44,#d79bff44,#ff9ab844);mix-blend-mode:color-dodge;opacity:.3}
-/* выпуклая рамка-бортик */
-.bc-bevel{position:absolute;inset:0;border-radius:5.5cqw;pointer-events:none;box-shadow:inset .5cqw .5cqw .6cqw rgba(255,255,255,.45),inset -.6cqw -.6cqw .9cqw rgba(0,0,0,.35)}
-.bc-frame{position:absolute;inset:3.4cqw;border-radius:3cqw;pointer-events:none;box-shadow:inset .3cqw .3cqw .3cqw rgba(0,0,0,.28),inset -.3cqw -.3cqw .3cqw rgba(255,255,255,.4),.25cqw .25cqw .3cqw rgba(255,255,255,.35),-.2cqw -.2cqw .3cqw rgba(0,0,0,.2)}
-.bc-poop .bc-frame{box-shadow:inset .3cqw .3cqw .3cqw rgba(0,0,0,.45),inset -.3cqw -.3cqw .3cqw rgba(255,210,160,.18),.25cqw .25cqw .3cqw rgba(255,210,160,.15)}
-.bc-spk i{position:absolute;width:3.2cqw;height:3.2cqw;background:#FFFDF0;z-index:3;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);
-  filter:drop-shadow(0 0 1cqw #fff);animation:bcTw 5s ease-in-out infinite;opacity:0}
-@keyframes bcTw{0%,100%{transform:scale(0) rotate(0);opacity:0}40%{transform:scale(1) rotate(60deg);opacity:1}65%{transform:scale(0) rotate(120deg);opacity:0}}
-/* имя — слева, выпуклыми буквами */
-.bc-name{position:absolute;left:8.5cqw;bottom:9.5cqw;text-align:left;font-family:Unbounded;font-weight:800;font-size:6.9cqw;line-height:1.12;letter-spacing:.05em;text-transform:uppercase;z-index:4}
-.bc-sub{display:block;font-size:.4em;font-weight:700;letter-spacing:.34em;margin-bottom:1.8cqw;opacity:.95}
+.bc-in{position:absolute;inset:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;--gx:50%;--gy:30%;--ga:100deg;--gs:.4;--hx:50%;--hy:50%}
+.bc-face{position:absolute;inset:0;border-radius:4.6cqw;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.bc-front{transform:translateZ(1.7px)}
+.bc-back{transform:rotateY(180deg) translateZ(1.7px)}
+.bc-edge{position:absolute;inset:0;border-radius:4.6cqw;pointer-events:none}
+.bthumb{filter:drop-shadow(0 2.6cqw 4cqw rgba(0,0,0,.45))}
+/* блик: реальный свет — пятно и полоса смещаются против наклона, яркость зависит от угла */
+.bc-glare{position:absolute;inset:0;pointer-events:none;z-index:6;opacity:var(--gs);
+  background:radial-gradient(ellipse 55% 75% at var(--gx) var(--gy),rgba(255,255,255,.55),rgba(255,255,255,.12) 40%,transparent 70%);mix-blend-mode:soft-light}
+.bc-band{position:absolute;inset:-30%;pointer-events:none;z-index:6;opacity:calc(var(--gs) * 1.1);
+  background:linear-gradient(var(--ga),transparent 38%,rgba(255,251,235,.0) 42%,rgba(255,251,235,.75) 49%,rgba(255,251,235,.15) 53%,transparent 60%);
+  background-size:100% 100%;transform:translateX(calc(var(--gx) - 50%));mix-blend-mode:overlay}
 
-/* --- золото --- */
-.bc-gold .bc-face{background:linear-gradient(125deg,#6E4A12 0%,#C8962F 16%,#F5D98A 30%,#FFF6D2 39%,#E2B550 50%,#9C6B1C 66%,#E9C66B 82%,#7A5214 100%);background-size:260% 260%;animation:bcGold 12s ease-in-out infinite}
-.bthumb.bc-gold,.bcv-stage .bc-gold{filter:drop-shadow(0 3cqw 5cqw rgba(0,0,0,.45))}
-@keyframes bcGold{0%,100%{background-position:0% 30%}50%{background-position:100% 70%}}
-.bc-gold .bc-face::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,transparent 1px 3px),repeating-linear-gradient(0deg,rgba(90,60,10,.05) 0 1px,transparent 1px 4px);mix-blend-mode:overlay}
-.emb{color:#5E3D0B}
-.bc-bevel,.bc-frame{display:none}
-.bc-logo{position:absolute;left:8.5cqw;top:8cqw;font-family:Unbounded;font-weight:800;font-size:5cqw;letter-spacing:-.02em;z-index:4}
-.bc-logo i{font-style:normal;color:#A3262A}
-.bc-seal{position:absolute;right:8cqw;top:7cqw;width:12cqw;height:12cqw;border-radius:50%;z-index:4;display:grid;place-items:center;font-size:5.6cqw;
-  background:radial-gradient(circle at 35% 30%,#FFF3C4,#D9A63A 55%,#8A5E18);box-shadow:0 .4cqw 1cqw rgba(80,50,5,.3)}
-.bc-seal b{display:block;color:#6B460E;animation:bcSpin 40s linear infinite}
+/* ---------- CEO: шлифованное золото ---------- */
+.bc-gold .bc-edge{background:linear-gradient(90deg,#7C5A22,#D9B66A 35%,#8E6A2C 60%,#C9A35A)}
+.bc-gold .bc-face{background:
+  linear-gradient(125deg,#A57A33 0%,#D8B46C 22%,#EED7A0 42%,#F7E6BC 50%,#D9B46A 62%,#B58A42 80%,#C89F57 100%)}
+.bc-brush{position:absolute;inset:0;pointer-events:none;opacity:.55;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.003 0.85' numOctaves='2' seed='7'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");background-size:100% 100%}
+/* анизотропный отблеск шлифовки: вертикальная световая полоса бежит поперёк при повороте */
+.bc-aniso{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:calc(.25 + var(--gs) * .6);
+  background:linear-gradient(90deg,transparent calc(var(--hx) - 28%),rgba(255,236,190,.35) calc(var(--hx) - 9%),rgba(255,248,225,.7) var(--hx),rgba(255,236,190,.35) calc(var(--hx) + 9%),transparent calc(var(--hx) + 28%))}
+.etch{color:#5A3D12;text-shadow:0 .14cqw 0 rgba(255,246,220,.45)}
+.bc-wm{position:absolute;text-align:left;left:8cqw;top:7.4cqw;font-family:Unbounded;font-weight:800;font-size:4.8cqw;letter-spacing:-.02em;z-index:4}
+.bc-wm i{font-style:normal;color:#8E2A22}
+.bc-nm{position:absolute;left:8cqw;bottom:8.6cqw;text-align:left;font-family:Unbounded;font-weight:700;font-size:6.2cqw;line-height:1.14;letter-spacing:.06em;text-transform:uppercase;z-index:4}
+.bc-role{display:flex;align-items:center;gap:2cqw;font-size:.44em;font-weight:800;letter-spacing:.5em;margin-bottom:2.2cqw}
+.bc-role::after{content:"";width:9cqw;height:.22cqw;background:currentColor;opacity:.55}
+/* голограмма-наклейка: радужный перелив зависит от угла */
+.bc-foil{position:absolute;right:7.6cqw;top:6.8cqw;width:14cqw;height:10.5cqw;border-radius:1.8cqw;overflow:hidden;z-index:4;
+  background:repeating-linear-gradient(calc(var(--ga) - 60deg),rgba(255,255,255,0) 0 .35cqw,rgba(255,255,255,.28) .35cqw .5cqw),
+    linear-gradient(calc(var(--ga) + 30deg),#f5a3d9,#ffe08a,#9ff0c6,#8fc4ff,#c9a3ff,#f5a3d9,#ffe08a);
+  background-size:100% 100%,420% 420%;background-position:0 0,var(--gx) var(--gy);filter:saturate(1.15) brightness(1.05);
+  box-shadow:inset 0 0 0 .22cqw rgba(255,255,255,.55),0 .25cqw .6cqw rgba(60,40,10,.3)}
+.bc-foil b{position:absolute;inset:0;display:grid;place-items:center;font-family:Unbounded;font-weight:800;font-size:4.4cqw;color:rgba(255,255,255,.75);mix-blend-mode:overlay}
+.bc-gold .bc-back{background:linear-gradient(125deg,#B58A42,#E2C384 35%,#F4E1B4 50%,#D2AB62 65%,#9E7633)}
+.bc-guil{position:absolute;inset:0;opacity:.55;background:repeating-radial-gradient(circle at 50% 50%,rgba(90,60,15,.22) 0 .12cqw,transparent .12cqw 1.1cqw)}
+.bc-guil::after{content:"";position:absolute;inset:0;background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(255,248,225,.14) 0 3deg,transparent 3deg 6deg);animation:bcSpin 90s linear infinite}
 @keyframes bcSpin{to{transform:rotate(360deg)}}
-.bc-gold .bc-back{background:linear-gradient(125deg,#7A5214,#D9A63A 30%,#FFF0BE 45%,#C8962F 60%,#6E4A12);background-size:220% 220%;animation:bcGold 14s ease-in-out infinite reverse}
-.bc-guil{position:absolute;inset:0;background:repeating-radial-gradient(circle at 50% 50%,rgba(110,70,15,.16) 0 .35cqw,transparent .35cqw 2.4cqw),repeating-conic-gradient(from 0deg at 50% 50%,rgba(255,246,210,.12) 0 4deg,transparent 4deg 8deg);animation:bcSpin 120s linear infinite;opacity:.8}
-.bc-mono{position:absolute;inset:0;display:grid;place-items:center;font-family:Unbounded;font-weight:800;font-size:20cqw;letter-spacing:-.04em;z-index:4}
-.bc-mono span{display:grid;place-items:center;width:40cqw;height:40cqw;border-radius:50%;background:radial-gradient(circle at 40% 30%,rgba(255,250,225,.6),rgba(210,160,60,.3) 60%,transparent 72%);}
-.bc-bsm{position:absolute;bottom:6.5cqw;left:0;right:0;text-align:center;font-family:Unbounded;font-weight:800;font-size:3.6cqw;letter-spacing:.4em;z-index:4}
+.bc-mono{position:absolute;inset:0;display:grid;place-items:center;z-index:4;text-align:center}
+.bc-mono span{display:grid;place-items:center;width:34cqw;height:34cqw;border-radius:50%;border:.3cqw solid rgba(90,60,15,.5);font-family:Unbounded;font-weight:800;font-size:13cqw;letter-spacing:-.03em;
+  background:radial-gradient(circle at 40% 30%,rgba(255,250,230,.5),rgba(216,180,108,.2) 70%)}
+.bc-bsm{position:absolute;bottom:7cqw;left:0;right:0;text-align:center;font-family:Unbounded;font-weight:800;font-size:3cqw;letter-spacing:.5em;z-index:4}
 
-/* --- отдел маркетинга --- */
-.bc-poop .bc-face{background:radial-gradient(circle at 18% 30%,#84522B 0 8%,transparent 30%),radial-gradient(circle at 82% 74%,#5E3516 0 12%,transparent 34%),radial-gradient(circle at 60% 18%,#8E5A2C 0 5%,transparent 20%),linear-gradient(135deg,#4A2A10,#6B3F1A 45%,#3A200B)}
-.bthumb.bc-poop,.bcv-stage .bc-poop{filter:drop-shadow(0 3cqw 5cqw rgba(0,0,0,.5))}
-.bc-poop .bc-ov{background:none;transform:translateZ(3.8px)}
-.bc-drip{position:absolute;left:0;top:0;width:100%;height:160%;pointer-events:none;transform:translateZ(3.4px);backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.embp{color:#F6DDB2;text-shadow:0 .35cqw 0 #2A1505}
-.bc-plogo{position:absolute;left:8.5cqw;top:8cqw;font-family:Unbounded;font-weight:800;font-size:4.4cqw;z-index:4}
-.bc-plogo i{font-style:normal;color:#9BD04A}
-.bc-pwrap{position:absolute;right:8cqw;top:12cqw;width:29cqw;height:29cqw;z-index:4}
-.bc-poop .bc-ov .bc-name{font-size:6cqw}
-.bc-rays{position:absolute;inset:-35%;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(255,215,130,.28) 0 7deg,transparent 7deg 22deg);
-  -webkit-mask:radial-gradient(circle,#000 18%,transparent 66%);mask:radial-gradient(circle,#000 18%,transparent 66%);animation:bcSpin 30s linear infinite}
-.bc-glow{position:absolute;inset:-10%;border-radius:50%;background:radial-gradient(circle,rgba(255,200,110,.35),transparent 65%);animation:pGlow 4.5s ease-in-out infinite}
-@keyframes pGlow{50%{transform:scale(1.12);opacity:.7}}
-.bc-pshadow{position:absolute;left:20%;right:20%;bottom:-2%;height:12%;border-radius:50%;background:radial-gradient(rgba(0,0,0,.55),transparent 70%);animation:pShadow 4.5s ease-in-out infinite}
-@keyframes pShadow{50%{transform:scaleX(.8);opacity:.6}}
-.bc-rays,.bc-glow,.bc-poop .bc-spk{display:none}
-.pp{position:absolute;inset:0;width:100%;height:100%;overflow:visible;animation:poopWob 2.4s ease-in-out infinite;transform-origin:50% 92%;filter:drop-shadow(0 1.4cqw 1.6cqw rgba(0,0,0,.4))}
-@keyframes poopWob{0%,100%{transform:rotate(-7deg) scale(1,1)}25%{transform:rotate(0) scale(1.07,.93)}50%{transform:rotate(7deg) scale(1,1)}75%{transform:rotate(0) scale(.94,1.06)}}
-.bc-flies{position:absolute;left:50%;top:58%;width:0;height:0;z-index:5}
-.bc-fly{position:absolute;left:0;top:0;width:4cqw;height:4cqw;margin:-2cqw;animation:flyA 2.9s linear infinite}
-.bc-fly.f2{animation:flyB 2.1s linear infinite}
-@keyframes flyA{0%{transform:rotate(0) translate(15cqw,-2cqw) rotate(0)}50%{transform:rotate(180deg) translate(12cqw,3cqw) rotate(-180deg)}100%{transform:rotate(360deg) translate(15cqw,-2cqw) rotate(-360deg)}}
-@keyframes flyB{0%{transform:rotate(360deg) translate(10cqw,2cqw) scaleX(-1)}50%{transform:rotate(180deg) translate(14cqw,-3cqw) scaleX(-1)}100%{transform:rotate(0) translate(10cqw,2cqw) scaleX(-1)}}
-.bc-fly i{position:absolute;inset:0;margin:auto;width:2.2cqw;height:1.6cqw;border-radius:50%;background:radial-gradient(circle at 70% 40%,#3d4a2a,#111 60%);box-shadow:.9cqw 0 0 -.35cqw #222}
-.bc-fly i::before,.bc-fly i::after{content:"";position:absolute;width:1.9cqw;height:1.1cqw;border-radius:50%;background:rgba(220,235,255,.75);left:.1cqw;top:-.8cqw;transform-origin:80% 100%;animation:flyW .06s linear infinite alternate}
+/* ---------- Маркетинг: тёмный шоколад, глянцевые потёки ---------- */
+.bc-poop .bc-edge{background:linear-gradient(90deg,#1E1006,#4A2A10 40%,#24130A)}
+.bc-poop .bc-face{background:radial-gradient(ellipse at 70% 110%,#5B3416,transparent 60%),radial-gradient(ellipse at 10% 0%,#4E2D12,transparent 55%),linear-gradient(150deg,#3B2210,#2A170A 55%,#20110A)}
+.bc-grain{position:absolute;inset:0;pointer-events:none;opacity:.35;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='190'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");background-size:100% 100%}
+.bc-poop .bc-ov{background:none;transform:translateZ(2.4px)}
+.bc-drip{position:absolute;left:0;top:0;width:100%;height:165%;pointer-events:none;transform:translateZ(2px);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.cream{color:#F3DDB8}
+.bc-poop .bc-wm{color:#F3DDB8;top:auto;bottom:auto;top:8cqw;z-index:5}
+.bc-poop .bc-wm i{color:#A6D45A}
+.bc-poop .bc-nm{color:#F3DDB8;text-shadow:0 .3cqw 1.2cqw rgba(0,0,0,.5);font-size:5.9cqw}
+.bc-poop .bc-role{color:#A6D45A;letter-spacing:.34em}
+.bc-pwrap{position:absolute;right:8cqw;top:11cqw;width:28cqw;height:28cqw;z-index:4}
+.bc-pshadow{position:absolute;left:18%;right:18%;bottom:2%;height:11%;border-radius:50%;background:radial-gradient(rgba(0,0,0,.6),transparent 70%);animation:pShadow 3.6s ease-in-out infinite}
+.pp{position:absolute;inset:0;width:100%;height:100%;overflow:visible;animation:pDance 3.6s ease-in-out infinite;transform-origin:50% 92%;filter:drop-shadow(0 1cqw 1.2cqw rgba(0,0,0,.45))}
+/* покачивание → присел → подпрыгнул → мягко приземлился */
+@keyframes pDance{0%{transform:rotate(-6deg)}14%{transform:rotate(5deg) scale(1.03,.97)}28%{transform:rotate(-5deg)}42%{transform:rotate(4deg) scale(1.02,.98)}
+  54%{transform:rotate(0) scale(1.14,.84)}64%{transform:translateY(-18%) rotate(-5deg) scale(.9,1.12)}72%{transform:translateY(-22%) rotate(4deg) scale(.96,1.04)}
+  82%{transform:translateY(0) scale(1.16,.84)}90%{transform:scale(.95,1.06)}100%{transform:rotate(-6deg)}}
+@keyframes pShadow{0%,50%,100%{transform:scaleX(1);opacity:1}64%,72%{transform:scaleX(.62);opacity:.45}82%{transform:scaleX(1.15)}}
+.pp .pe{transform-box:fill-box;transform-origin:center;animation:pBlink 5.2s ease-in-out infinite}
+@keyframes pBlink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.bc-flies{position:absolute;left:50%;top:55%;width:0;height:0;z-index:5}
+.bc-fly{position:absolute;left:0;top:0;width:4cqw;height:4cqw;margin:-2cqw;animation:flyA 3.1s ease-in-out infinite}
+.bc-fly.f2{animation:flyB 2.4s ease-in-out infinite}
+@keyframes flyA{0%{transform:rotate(0) translate(15cqw,-3cqw) rotate(0)}25%{transform:rotate(90deg) translate(12cqw,2cqw) rotate(-90deg)}50%{transform:rotate(180deg) translate(16cqw,-1cqw) rotate(-180deg)}75%{transform:rotate(270deg) translate(11cqw,3cqw) rotate(-270deg)}100%{transform:rotate(360deg) translate(15cqw,-3cqw) rotate(-360deg)}}
+@keyframes flyB{0%{transform:rotate(360deg) translate(10cqw,2cqw) scaleX(-1)}50%{transform:rotate(180deg) translate(15cqw,-4cqw) scaleX(-1)}100%{transform:rotate(0) translate(10cqw,2cqw) scaleX(-1)}}
+.bc-fly i{position:absolute;inset:0;margin:auto;width:2.2cqw;height:1.6cqw;border-radius:50%;background:radial-gradient(circle at 70% 40%,#4a5a30,#111 60%);box-shadow:.9cqw 0 0 -.35cqw #222}
+.bc-fly i::before,.bc-fly i::after{content:"";position:absolute;width:1.9cqw;height:1.1cqw;border-radius:50%;background:rgba(220,235,255,.7);left:.1cqw;top:-.8cqw;transform-origin:80% 100%;animation:flyW .06s linear infinite alternate}
 .bc-fly i::after{transform:scaleY(-1);top:auto;bottom:-.8cqw;transform-origin:80% 0;animation-name:flyW2}
 @keyframes flyW{from{transform:rotate(-30deg)}to{transform:rotate(25deg)}}
 @keyframes flyW2{from{transform:scaleY(-1) rotate(30deg)}to{transform:scaleY(-1) rotate(-25deg)}}
-.bc-stink{position:absolute;left:22%;top:-42%;width:20cqw;height:16cqw;pointer-events:none}
-.bc-stink svg{position:absolute;bottom:0;width:3.4cqw;height:14cqw;animation:stink 2.6s ease-in infinite;opacity:0}
-.bc-stink svg:nth-child(2){left:7cqw;animation-delay:-.9s}.bc-stink svg:nth-child(3){left:14cqw;animation-delay:-1.7s}
-@keyframes stink{0%{transform:translateY(3cqw) scaleY(.6);opacity:0}30%{opacity:.85}100%{transform:translateY(-6cqw) scaleY(1.1);opacity:0}}
-@keyframes pFloat{0%,100%{transform:translateY(0) rotate(-2deg) scale(1)}50%{transform:translateY(-6%) rotate(2deg) scale(1.03)}}
-.pp .pe{transform-box:fill-box;transform-origin:center}
-@keyframes pBlink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
-.pp .pg{}
-@keyframes pGloss{50%{opacity:.55}}
-.bc-poop .bc-spk i{background:#FFE9B0;filter:drop-shadow(0 0 1cqw #ffd57a)}
-.bc-poop .bc-back{background:radial-gradient(circle at 50% 45%,#6B3F1A,#3A200B 70%)}
-.bc-pat{position:absolute;inset:0;background:radial-gradient(circle at 25% 25%,rgba(255,210,160,.07) 0 1.2cqw,transparent 1.3cqw),radial-gradient(circle at 75% 75%,rgba(0,0,0,.18) 0 1.2cqw,transparent 1.3cqw);background-size:9cqw 9cqw;animation:patMove 20s linear infinite}
-@keyframes patMove{to{background-position:9cqw 9cqw,9cqw 9cqw}}
+.bc-stink{position:absolute;left:24%;top:-40%;width:20cqw;height:16cqw;pointer-events:none}
+.bc-stink svg{position:absolute;bottom:0;width:3.4cqw;height:14cqw;animation:stink 2.8s ease-in infinite;opacity:0}
+.bc-stink svg:nth-child(2){left:7cqw;animation-delay:-.95s}.bc-stink svg:nth-child(3){left:14cqw;animation-delay:-1.85s}
+@keyframes stink{0%{transform:translateY(3cqw) scaleY(.6) skewX(0);opacity:0}30%{opacity:.8}60%{transform:translateY(-2cqw) scaleY(.9) skewX(8deg)}100%{transform:translateY(-7cqw) scaleY(1.1) skewX(-6deg);opacity:0}}
+.bc-poop .bc-glare{mix-blend-mode:soft-light;opacity:calc(var(--gs) * .8)}
+.bc-poop .bc-back{background:radial-gradient(circle at 50% 42%,#4E2D12,#24130A 75%)}
+.bc-pat{position:absolute;inset:0;opacity:.5;background:repeating-linear-gradient(45deg,rgba(255,220,170,.04) 0 .3cqw,transparent .3cqw 2.4cqw)}
 .bc-pback{position:absolute;inset:0;display:grid;place-items:center;text-align:center;z-index:4;font-family:Unbounded;font-weight:800}
-.bc-pback .bc-pwrap{position:relative;left:auto;top:auto;width:30cqw;height:30cqw;margin:0 auto}
-.bc-pback small{display:block;font-size:3.6cqw;letter-spacing:.34em;margin-top:2.5cqw}
+.bc-pback .bc-pwrap{position:relative;right:auto;top:auto;width:28cqw;height:28cqw;margin:0 auto}
+.bc-pback small{display:block;font-size:3cqw;letter-spacing:.5em;margin-top:2cqw;color:#F3DDB8}
 
-/* --- просмотр карты --- */
+/* ---------- просмотр карты ---------- */
 #bcv{position:fixed;inset:0;z-index:400;display:grid;place-items:center;touch-action:none;-webkit-user-select:none;user-select:none;overflow:hidden}
-.bcv-bg{position:absolute;inset:0;background:rgba(6,6,10,.75);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);animation:bcvFade .5s ease both}
-#bcv.gold .bcv-bg{background:radial-gradient(circle at 50% 45%,rgba(255,200,90,.2),rgba(6,6,10,.84) 62%)}
-#bcv.poop .bcv-bg{background:radial-gradient(circle at 50% 45%,rgba(255,170,80,.14),rgba(12,8,4,.86) 62%)}
-.bcv-rays{position:absolute;left:50%;top:50%;width:170vmax;height:170vmax;margin:-85vmax;border-radius:50%;pointer-events:none;opacity:.55;
-  background:repeating-conic-gradient(from 0deg,rgba(255,214,120,.16) 0 5deg,transparent 5deg 15deg);-webkit-mask:radial-gradient(circle,#000 4%,transparent 45%);mask:radial-gradient(circle,#000 4%,transparent 45%);
-  animation:bcSpin 80s linear infinite,bcvFade 1.2s ease both}
-.bcv-stage{position:relative;width:min(86vw,380px);perspective:1300px;animation:bcvIn .9s cubic-bezier(.16,1,.3,1) both}
+.bcv-bg{position:absolute;inset:0;background:rgba(6,6,10,.78);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);animation:bcvFade .5s ease both}
+#bcv.gold .bcv-bg{background:radial-gradient(circle at 50% 42%,rgba(240,200,120,.2),rgba(8,7,6,.9) 60%)}
+#bcv.poop .bcv-bg{background:radial-gradient(circle at 50% 42%,rgba(170,110,50,.18),rgba(10,7,4,.92) 60%)}
+.bcv-light{position:absolute;left:50%;top:38%;width:120vmax;height:120vmax;margin:-60vmax;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,236,200,.12),transparent 45%);animation:bcvFade 1.4s ease both,bcvBreath 6s ease-in-out infinite}
+@keyframes bcvBreath{50%{transform:scale(1.08);opacity:.75}}
+.bcv-dust{position:absolute;inset:0;pointer-events:none}
+.bcv-dust i{position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(255,236,200,.7);animation:bcvDust linear infinite;opacity:0}
+@keyframes bcvDust{0%{transform:translateY(0);opacity:0}20%{opacity:.8}100%{transform:translateY(-38vh);opacity:0}}
+.bcv-stage{position:relative;width:min(86vw,380px);animation:bcvIn .95s cubic-bezier(.16,1,.3,1) both}
 .bcv-stage .bcard{cursor:grab}
 .bcv-x{position:absolute;top:calc(14px + env(safe-area-inset-top));right:16px;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:24px;line-height:1;z-index:2;animation:bcvFade .5s ease both}
 .bcv-hint{position:absolute;bottom:calc(34px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;color:rgba(255,255,255,.55);font-size:12.5px;font-weight:700;animation:bcvFade .8s .5s ease both}
-.bcv-shadow{position:absolute;left:12%;right:12%;bottom:-20%;height:14%;border-radius:50%;background:radial-gradient(rgba(0,0,0,.6),transparent 70%);filter:blur(8px);pointer-events:none}
-#bcv.out .bcv-bg,#bcv.out .bcv-x,#bcv.out .bcv-hint,#bcv.out .bcv-rays{animation:bcvFade .3s ease reverse both}
-#bcv.out .bcv-stage{animation:bcvOut .32s ease-in both}
+.bcv-shadow{position:absolute;left:10%;right:10%;bottom:-22%;height:16%;border-radius:50%;background:radial-gradient(rgba(0,0,0,.65),transparent 70%);filter:blur(10px);pointer-events:none}
+#bcv.out .bcv-bg,#bcv.out .bcv-x,#bcv.out .bcv-hint,#bcv.out .bcv-light,#bcv.out .bcv-dust{animation:bcvFade .3s ease reverse both}
+#bcv.out .bcv-stage{animation:bcvOut .34s ease-in both}
 @keyframes bcvFade{from{opacity:0}}
-@keyframes bcvIn{from{transform:scale(.82) translateY(70px);opacity:0}}
-@keyframes bcvOut{to{transform:scale(.85) translateY(40px);opacity:0}}
+@keyframes bcvIn{from{transform:scale(.8) translateY(80px);opacity:0}}
+@keyframes bcvOut{to{transform:scale(.86) translateY(50px);opacity:0}}
 .bc-tip{text-align:center;color:var(--muted);font-size:12px;font-weight:700;margin:-2px 0 16px}
 .dev{text-align:center;padding:18px 4px 8px}
 .dava{width:92px;height:92px;border-radius:30px;margin:0 auto 14px;display:grid;place-items:center;font-family:Unbounded;font-weight:700;font-size:30px;color:var(--on);
@@ -3018,7 +3017,7 @@ function sndCtx(){
 }
 function sfx(kind, k){
   k = k == null ? 1 : k; const a = sndCtx(); if (!a) return;
-  const now = a.currentTime, gap = kind === "bub" ? .07 : kind === "slosh" ? .2 : .045;
+  const now = a.currentTime, gap = kind === "bub" ? .07 : kind === "slosh" ? .2 : kind === "cflip" ? .22 : kind === "cdrip" ? .35 : .045;
   if (SND.last[kind] && now - SND.last[kind] < gap) return; SND.last[kind] = now;
   const route = (node, wet) => { node.connect(SND.dry); if (wet){ const g = a.createGain(); g.gain.value = wet; node.connect(g); g.connect(SND.rev); } };
   const tone = (f, t0, dur, g, type, f2, wet, att) => { const o = a.createOscillator(), e = a.createGain(); o.type = type || "sine"; o.frequency.setValueAtTime(f, now + t0); if (f2) o.frequency.exponentialRampToValueAtTime(f2, now + t0 + Math.min(dur, f2 > f ? dur * .6 : dur));
@@ -3060,6 +3059,13 @@ function sfx(kind, k){
   else if (kind === "portal"){ noise(0, .45, .07, "bandpass", 900, .8, .3, 2400); tone(220, 0, .45, .045, "sawtooth", 1400, .25); tone(660, .05, .3, .02, "sine", 2200, .3); }
   else if (kind === "poof"){ noise(0, .25, .07, "lowpass", 1200, .7, .25, 300); tone(500, 0, .2, .03, "sine", 120, .2); }
   else if (kind === "schwifty"){ [392, 392, 523, 466, 392, 349, 392].forEach((f, i) => tone(f, i * .16, .14, .045, "square")); [98, 98, 131, 117].forEach((f, i) => tone(f, i * .32, .3, .05, "triangle")); }
+  // визитки: тихие, глухие, мягкие
+  else if (kind === "cwhoosh"){ noise(0, .7, .022 * k, "bandpass", 260, .7, .35, 900); tone(90, 0, .6, .012 * k, "sine", 140, .3, .08); }
+  else if (kind === "cgold"){ [[392, 0, .016], [587.3, .07, .011], [784, .14, .008], [1174.7, .22, .004]].forEach(([f, d, g]) => { tone(f, d, 2.2, g * k, "sine", null, .6, .03); tone(f * 2.003, d, 1.1, g * .18 * k, "sine", null, .6, .02); }); }
+  else if (kind === "cpoop"){ bubble(0, 150, .045 * k, .22, .3); bubble(.09, 210, .03 * k, .18, .3); bubble(.2, 120, .025 * k, .2, .3); noise(0, .3, .014 * k, "lowpass", 380, .7, .25, 160); }
+  else if (kind === "cflip"){ noise(0, .38, .018 * k, "bandpass", 340, .8, .3, 1000); tone(160, 0, .3, .006 * k, "sine", 220, .25, .04); }
+  else if (kind === "cdrip"){ bubble(0, 260 + R() * 160, .016 * k, .11, .35); noise(0, .06, .004 * k, "lowpass", 600, .7, .2); }
+  else if (kind === "cclose"){ noise(0, .4, .016 * k, "bandpass", 700, .7, .3, 220); }
   else if (kind === "coin"){ tone(988, 0, .07, .045, "square"); tone(1319, .07, .28, .045, "square"); }
   else if (kind === "up"){ [523, 659, 784, 1047, 784, 1047].forEach((f, i) => tone(f, i * .09, .16, .04, "square")); }
   else if (kind === "beep"){ tone(440, 0, .18, .05, "square"); }
@@ -4039,9 +4045,8 @@ function themeCards(){
     <span class="ok">✓</span>${t.dev ? `<span class="dv">тест</span>` : ""}${t.vip ? `<span class="vipb">👑 VIP</span>` : ""}<b>${t.n}</b><small>${t.d}</small></button>`).join("")}</div>`;
 }
 
-/* ================= ВИЗИТКИ: золотая карта разработчика и карта отдела маркетинга ================= */
+/* ================= ВИЗИТКИ: CEO и отдел маркетинга ================= */
 let PPN = 0;
-// глянцевая какашка (своя векторная, в духе эмодзи): три яруса с завитком, блики, глазки моргают
 function poopSvg(){
   const n = "pp" + (++PPN), g = `url(#${n}g)`, tierG = (id, a, b, c) => `<radialGradient id="${n}${id}" cx="35%" cy="28%" r="80%"><stop offset="0" stop-color="${a}"/><stop offset=".55" stop-color="${b}"/><stop offset="1" stop-color="${c}"/></radialGradient>`;
   return `<svg class="pp" viewBox="0 0 100 100"><defs>${tierG("g", "#B8783E", "#7E4B1F", "#4A2A0E")}${tierG("m", "#C2834A", "#87532A", "#52300F")}${tierG("t", "#CC8E55", "#8E5A2C", "#583411")}
@@ -4056,85 +4061,115 @@ function poopSvg(){
       <circle cx="40.5" cy="63" r="4.2" fill="#2A1406"/><circle cx="59.5" cy="63" r="4.2" fill="#2A1406"/><circle cx="42" cy="61.2" r="1.5" fill="#fff"/><circle cx="61" cy="61.2" r="1.5" fill="#fff"/></g>
     <path d="M36 75Q50 89 64 75Q50 80 36 75Z" fill="#3A1A08"/><path d="M44 80.5Q50 85.5 56 80.5Q50 82 44 80.5Z" fill="#E8667A"/></svg>`;
 }
-const bcEdges = () => [-2.4, -1.6, -.8, 0, .8, 1.6, 2.4].map(z => `<div class="bc-edge" style="transform:translateZ(${z}px)"></div>`).join("");
-const STINK = `<svg viewBox="0 0 10 40"><path d="M5 40C0 32 10 28 5 20S0 8 5 0" stroke="#A8D04A" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`;
-const pwrap = () => `<div class="bc-pwrap"><div class="bc-stink">${STINK}${STINK}${STINK}</div>${poopSvg()}<div class="bc-flies"><span class="bc-fly"><i></i></span><span class="bc-fly f2"><i></i></span></div>
-  <div class="bc-spk"><i style="left:6%;top:12%"></i><i style="left:86%;top:30%;animation-delay:-1.7s"></i><i style="left:74%;top:-4%;animation-delay:-3.3s"></i></div></div>`;
+const STINK = `<svg viewBox="0 0 10 40"><path d="M5 40C0 32 10 28 5 20S0 8 5 0" stroke="#A6D45A" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`;
+const bcEdges = () => [-1.6, -.8, 0, .8, 1.6].map(z => `<div class="bc-edge" style="transform:translateZ(${z}px)"></div>`).join("");
+const bcLight = () => `<div class="bc-glare"></div><div class="bc-band"></div>`;
+const pwrap = () => `<div class="bc-pwrap"><div class="bc-stink">${STINK}${STINK}${STINK}</div><div class="bc-pshadow"></div>${poopSvg()}<div class="bc-flies"><span class="bc-fly"><i></i></span><span class="bc-fly f2"><i></i></span></div></div>`;
 function bizCardInner(kind){
   if (kind === "gold") return `<div class="bc-in">${bcEdges()}
-    <div class="bc-face bc-front"><div class="bc-holo"></div><div class="bc-frame"></div>
-      <div class="bc-logo emb">solve<i>.</i></div><div class="bc-seal"><b>✦</b></div>
-      <div class="bc-name emb">Кокоджанов<br>Радмир</div>
-      <div class="bc-spk"><i style="left:26%;top:30%"></i><i style="left:66%;top:20%;animation-delay:-1.8s"></i><i style="left:88%;top:58%;animation-delay:-3.4s"></i></div>
-      <div class="bc-sheen"></div><div class="bc-glint"></div><div class="bc-bevel"></div></div>
-    <div class="bc-face bc-back"><div class="bc-guil"></div><div class="bc-frame"></div><div class="bc-mono emb"><span>РК</span></div><div class="bc-bsm emb">SOLVE.</div><div class="bc-sheen"></div><div class="bc-glint"></div><div class="bc-bevel"></div></div></div>`;
+    <div class="bc-face bc-front"><div class="bc-brush"></div><div class="bc-aniso"></div>
+      <div class="bc-wm etch">solve<i>.</i></div><div class="bc-foil"><b>s.</b></div>
+      <div class="bc-nm etch"><span class="bc-role">CEO</span>Кокоджанов<br>Радмир</div>${bcLight()}</div>
+    <div class="bc-face bc-back"><div class="bc-brush"></div><div class="bc-guil"></div><div class="bc-aniso"></div>
+      <div class="bc-mono etch"><span>РК</span></div><div class="bc-bsm etch">SOLVE. · CEO</div>${bcLight()}</div></div>`;
   return `<div class="bc-in">${bcEdges()}
-    <div class="bc-face bc-front"><div class="bc-frame"></div><div class="bc-bevel"></div></div>
+    <div class="bc-face bc-front"><div class="bc-grain"></div></div>
     <canvas class="bc-drip"></canvas>
-    <div class="bc-face bc-ov">
-      <div class="bc-plogo embp">solve<i>.</i></div>${pwrap()}
-      <div class="bc-name embp"><span class="bc-sub">Отдел маркетинга</span>Сулайманов<br>Ислам</div>
-      <div class="bc-sheen"></div><div class="bc-glint" style="animation-duration:8s"></div></div>
-    <div class="bc-face bc-back"><div class="bc-pat"></div><div class="bc-frame"></div><div class="bc-pback"><div>${pwrap()}<small class="embp">МАРКЕТИНГ</small></div></div><div class="bc-sheen"></div><div class="bc-bevel"></div></div></div>`;
+    <div class="bc-face bc-ov"><div class="bc-wm">solve<i>.</i></div>${pwrap()}
+      <div class="bc-nm"><span class="bc-role">Отдел маркетинга</span>Сулайманов<br>Ислам</div>${bcLight()}</div>
+    <div class="bc-face bc-back"><div class="bc-grain"></div><div class="bc-pat"></div><div class="bc-pback"><div>${pwrap()}<small>MARKETING</small></div></div>${bcLight()}</div></div>`;
 }
 const bizCards = () => `<div class="bcards">
     <div class="bcard bthumb bc-gold" data-act="bcard:gold">${bizCardInner("gold")}</div>
-    <div class="bcard bthumb b2 bc-poop" data-act="bcard:poop">${bizCardInner("poop")}</div></div>
+    <div class="bcard bthumb bc-poop" data-act="bcard:poop">${bizCardInner("poop")}</div></div>
   <div class="bc-tip">Нажми на карту, чтобы покрутить её</div>`;
 
-// --- стекающее «добро» на карте маркетинга (canvas): медленно, густо, с бликами ---
-const POOP = {raf: 0, last: 0, idle: 0};
+// ---------- общий цикл: поворот карт + реалистичный свет ----------
+const BCL = {raf: 0, last: 0, idle: 0, t: 0};
+function bcLightVars(inner, rx, ry){
+  // нормаль карты относительно источника света сверху-спереди: блик бежит против наклона, ярче всего под «правильным» углом
+  let a = ((ry % 360) + 540) % 360 - 180; if (Math.abs(a) > 90) a = a > 0 ? a - 180 : a + 180; // для обратной стороны — зеркально
+  const r = a * Math.PI / 180, x = rx * Math.PI / 180;
+  const gx = 50 - Math.sin(r) * 95, gy = 30 + Math.sin(x) * 110;
+  const gs = .22 + .78 * Math.exp(-(((a + 14) / 26) ** 2 + ((rx - 10) / 30) ** 2));
+  inner.style.setProperty("--gx", gx.toFixed(1) + "%"); inner.style.setProperty("--gy", gy.toFixed(1) + "%");
+  inner.style.setProperty("--ga", (100 + a * .6 + rx * .4).toFixed(1) + "deg"); inner.style.setProperty("--gs", gs.toFixed(3));
+  inner.style.setProperty("--hx", (50 - Math.sin(r) * 120).toFixed(1) + "%");
+  inner._tilt = Math.sin(r);
+}
+function bcFrame(ts){
+  const now = ts / 1000, dt = Math.min(.05, BCL.last ? now - BCL.last : .016); BCL.last = now; BCL.t += dt;
+  let vis = 0;
+  document.querySelectorAll(".bthumb").forEach((card, i) => {
+    if (!card.offsetParent) return; vis++;
+    const inner = card.firstElementChild, t = BCL.t + i * 2.3;
+    const rx = Math.sin(t * .62) * 8 + Math.sin(t * 1.3) * 2, ry = Math.sin(t * .47) * 16 + Math.sin(t * 1.1 + 1) * 3;
+    inner.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`; bcLightVars(inner, rx, ry);
+  });
+  if (BCV.step){ vis++; BCV.step(dt); }
+  document.querySelectorAll(".bc-drip").forEach(cv => { if (cv.offsetParent || cv.closest("#bcv")) poopDraw(cv, dt, now); });
+  BCL.idle = vis ? 0 : BCL.idle + dt;
+  if (BCL.idle > 2){ BCL.raf = 0; BCL.last = 0; return; }
+  BCL.raf = requestAnimationFrame(bcFrame);
+}
+function bcKick(){ BCL.idle = 0; if (!BCL.raf) BCL.raf = requestAnimationFrame(bcFrame); }
+const poopKick = bcKick;
+
+// ---------- глянцевые потёки (canvas): объёмные, с бликом, который смещается при наклоне ----------
 function poopDripNew(fresh){
-  return {x: .05 + Math.random() * .9, w: .03 + Math.random() * .03, len: fresh ? .08 + Math.random() * .45 : .06, max: .22 + Math.random() * .9,
-    sp: .025 + Math.random() * .045, life: 12 + Math.random() * 12, age: 0, drop: 2 + Math.random() * 3, k: 1, ph: Math.random() * 6};
+  return {x: .05 + Math.random() * .9, w: .032 + Math.random() * .03, len: fresh ? .08 + Math.random() * .45 : .06, max: .25 + Math.random() * .95,
+    sp: .035 + Math.random() * .05, life: 11 + Math.random() * 11, age: 0, drop: 1.6 + Math.random() * 2.5, k: 1, ph: Math.random() * 6};
 }
 function poopDraw(cv, dt, t){
   const dpr = Math.min(2, window.devicePixelRatio || 1), cw = cv.clientWidth, ch = cv.clientHeight; if (!cw) return;
   if (cv.width !== Math.round(cw * dpr)){ cv.width = Math.round(cw * dpr); cv.height = Math.round(ch * dpr); }
   const c = cv.getContext("2d"), W = cw, H = cw / 1.586; c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, cw, ch);
   const S = cv._s || (cv._s = {d: Array.from({length: 7}, () => poopDripNew(true)), drops: []});
-  const cap = x => H * (.08 + .016 * Math.sin(x / W * 11 + t * .7) + .01 * Math.sin(x / W * 27 - t * .5));
-  const col = c.createLinearGradient(0, 0, 0, H * 1.5); col.addColorStop(0, "#7A471C"); col.addColorStop(.5, "#5E3514"); col.addColorStop(1, "#43240B");
-  c.save(); c.beginPath(); c.roundRect ? c.roundRect(0, 0, W, H, W * .055) : c.rect(0, 0, W, H); c.clip();
-  c.beginPath(); c.moveTo(0, 0); c.lineTo(W, 0); for (let x = W; x >= 0; x -= 4) c.lineTo(x, cap(x)); c.closePath(); c.fillStyle = col; c.fill();
-  c.strokeStyle = "rgba(255,215,170,.3)"; c.lineWidth = 1.6; c.beginPath(); for (let x = 6; x <= W - 6; x += 4){ const y = cap(x) - 3.5; x === 6 ? c.moveTo(x, y) : c.lineTo(x, y); } c.stroke(); c.restore();
+  const tilt = (cv.parentElement && cv.parentElement._tilt) || 0, inView = !!cv.closest("#bcv");
+  const cap = x => H * (.085 + .018 * Math.sin(x / W * 11 + t * .8) + .011 * Math.sin(x / W * 27 - t * .6));
+  // шапка: вертикальный объём + влажная кромка
+  const cg = c.createLinearGradient(0, 0, 0, H * .13); cg.addColorStop(0, "#3E2109"); cg.addColorStop(.55, "#6E4019"); cg.addColorStop(1, "#4A280C");
+  c.save(); c.beginPath(); c.roundRect ? c.roundRect(0, 0, W, H, W * .046) : c.rect(0, 0, W, H); c.clip();
+  c.beginPath(); c.moveTo(0, 0); c.lineTo(W, 0); for (let x = W; x >= 0; x -= 3) c.lineTo(x, cap(x)); c.closePath(); c.fillStyle = cg; c.fill();
+  const hl = c.createLinearGradient(0, 0, W, 0), hc = .5 - tilt * .45;
+  hl.addColorStop(Math.max(0, hc - .35), "rgba(255,225,185,0)"); hl.addColorStop(Math.min(1, Math.max(0, hc)), "rgba(255,232,200,.75)"); hl.addColorStop(Math.min(1, hc + .35), "rgba(255,225,185,0)");
+  c.strokeStyle = hl; c.lineWidth = 1.8; c.lineCap = "round"; c.beginPath(); for (let x = 6; x <= W - 6; x += 3){ const y = cap(x) - 4; x === 6 ? c.moveTo(x, y) : c.lineTo(x, y); } c.stroke(); c.restore();
   for (let i = 0; i < S.d.length; i++){
     const d = S.d[i]; d.age += dt;
-    if (d.len < d.max) d.len += d.sp * dt * (1 - d.len / (d.max + .5)); else { d.drop -= dt; if (d.drop <= 0){ S.drops.push({x: d.x * W, y: d.len * H + d.w * W * .4, vy: 10, r: d.w * W * .42}); d.drop = 2.5 + Math.random() * 3.5; } }
+    if (d.len < d.max) d.len += d.sp * dt * (1 - d.len / (d.max + .5));
+    else { d.drop -= dt; if (d.drop <= 0){ S.drops.push({x: d.x * W, y: d.len * H + d.w * W * .4, vy: 12, r: d.w * W * .42}); d.drop = 2 + Math.random() * 3; if (inView) sfx("cdrip", .8); } }
     if (d.age > d.life){ d.k -= dt * .35; if (d.k <= 0){ S.d[i] = poopDripNew(false); continue; } }
-    const x = d.x * W, w = d.w * W * d.k, top = cap(x) - 2, tip = Math.max(top + 2, d.len * H) + Math.sin(t * 1.2 + d.ph) * 1.4, bw = w * (.58 + .06 * Math.sin(t * 2 + d.ph));
-    c.fillStyle = col; c.beginPath(); c.moveTo(x - w / 2 - 4, top - 2); c.quadraticCurveTo(x - w / 2, top + 8, x - w * .34, tip); c.lineTo(x + w * .34, tip); c.quadraticCurveTo(x + w / 2, top + 8, x + w / 2 + 4, top - 2); c.closePath(); c.fill();
-    c.beginPath(); c.arc(x, tip, bw, 0, 7); c.fill();
-    c.fillStyle = "rgba(255,220,180,.3)"; c.beginPath(); c.ellipse(x - w * .17, (top + tip) / 2, w * .08, Math.max(1, (tip - top) / 2 - 3), 0, 0, 7); c.fill();
-    c.fillStyle = "rgba(255,240,215,.6)"; c.beginPath(); c.arc(x - bw * .35, tip - bw * .3, bw * .22, 0, 7); c.fill();
+    const x = d.x * W, w = d.w * W * d.k, top = cap(x) - 2, tip = Math.max(top + 2, d.len * H) + Math.sin(t * 1.3 + d.ph) * 1.5, bw = w * (.6 + .06 * Math.sin(t * 2 + d.ph));
+    // цилиндрическая заливка: тёмные края, светлая середина — как настоящая густая капля
+    const g = c.createLinearGradient(x - bw, 0, x + bw, 0); g.addColorStop(0, "#2C1606"); g.addColorStop(.32 - tilt * .1, "#7A4A1E"); g.addColorStop(.5, "#5E3514"); g.addColorStop(1, "#24120A");
+    c.fillStyle = g; c.beginPath(); c.moveTo(x - w / 2 - 4, top - 2); c.quadraticCurveTo(x - w / 2, top + 8, x - w * .34, tip); c.lineTo(x + w * .34, tip); c.quadraticCurveTo(x + w / 2, top + 8, x + w / 2 + 4, top - 2); c.closePath(); c.fill();
+    const rg = c.createRadialGradient(x - bw * (.3 + tilt * .3), tip - bw * .35, bw * .1, x, tip, bw); rg.addColorStop(0, "#8A5526"); rg.addColorStop(.6, "#4E2B0F"); rg.addColorStop(1, "#2A1406");
+    c.fillStyle = rg; c.beginPath(); c.arc(x, tip, bw, 0, 7); c.fill();
+    const sx = x - w * (.16 + tilt * .14);
+    c.fillStyle = "rgba(255,232,205,.42)"; c.beginPath(); c.ellipse(sx, (top + tip) / 2, Math.max(.6, w * .07), Math.max(1, (tip - top) / 2 - 3), 0, 0, 7); c.fill();
+    c.fillStyle = "rgba(255,245,230,.85)"; c.beginPath(); c.arc(x - bw * (.32 + tilt * .25), tip - bw * .32, bw * .18, 0, 7); c.fill();
   }
   for (let i = S.drops.length - 1; i >= 0; i--){
-    const p = S.drops[i]; p.vy += H * 1.8 * dt; p.y += p.vy * dt; if (p.y > ch + 10){ S.drops.splice(i, 1); continue; }
-    const st = Math.min(1.6, 1 + p.vy / (H * 3)); c.fillStyle = col; c.beginPath(); c.ellipse(p.x, p.y, p.r / Math.sqrt(st), p.r * st, 0, 0, 7); c.fill();
-    c.fillStyle = "rgba(255,230,200,.5)"; c.beginPath(); c.arc(p.x - p.r * .3, p.y - p.r * .3, p.r * .25, 0, 7); c.fill();
+    const p = S.drops[i]; p.vy += H * 2 * dt; p.y += p.vy * dt; if (p.y > ch + 10){ S.drops.splice(i, 1); continue; }
+    const st = Math.min(1.6, 1 + p.vy / (H * 3)), rg = c.createRadialGradient(p.x - p.r * .35, p.y - p.r * .4, p.r * .1, p.x, p.y, p.r * st);
+    rg.addColorStop(0, "#8A5526"); rg.addColorStop(1, "#2E1708"); c.fillStyle = rg; c.beginPath(); c.ellipse(p.x, p.y, p.r / Math.sqrt(st), p.r * st, 0, 0, 7); c.fill();
+    c.fillStyle = "rgba(255,240,220,.7)"; c.beginPath(); c.arc(p.x - p.r * .3, p.y - p.r * .35, p.r * .2, 0, 7); c.fill();
   }
 }
-function poopLoop(ts){
-  const now = ts / 1000, dt = Math.min(.05, POOP.last ? now - POOP.last : .016); POOP.last = now;
-  let vis = 0; document.querySelectorAll(".bc-drip").forEach(cv => { if (cv.offsetParent || cv.closest("#bcv")){ vis++; poopDraw(cv, dt, now); } });
-  POOP.idle = vis ? 0 : POOP.idle + dt;
-  if (POOP.idle > 2){ POOP.raf = 0; POOP.last = 0; return; }
-  POOP.raf = requestAnimationFrame(poopLoop);
-}
-function poopKick(){ POOP.idle = 0; if (!POOP.raf) POOP.raf = requestAnimationFrame(poopLoop); }
 
-// --- просмотр: крути пальцем, двойной тап — перевернуть ---
-const BCV = {st: null, raf: 0};
+// ---------- просмотр: крути пальцем, двойной тап — перевернуть ----------
+const BCV = {step: null};
 function openBizCard(kind){
   closeBizCard(true);
   const v = document.createElement("div"); v.id = "bcv"; v.className = kind;
-  v.innerHTML = `<div class="bcv-bg"></div><div class="bcv-rays"></div><button class="bcv-x" aria-label="Закрыть">×</button>
+  const dust = Array.from({length: 22}, () => `<i style="left:${Math.random() * 100}%;top:${50 + Math.random() * 55}%;animation-duration:${7 + Math.random() * 8}s;animation-delay:${-Math.random() * 12}s;transform:scale(${.5 + Math.random()})"></i>`).join("");
+  v.innerHTML = `<div class="bcv-bg"></div><div class="bcv-light"></div><div class="bcv-dust">${dust}</div><button class="bcv-x" aria-label="Закрыть">×</button>
     <div class="bcv-stage"><div class="bcv-shadow"></div><div class="bcard bc-${kind}">${bizCardInner(kind)}</div></div>
     <div class="bcv-hint">Крути пальцем · двойной тап — перевернуть</div>`;
-  document.body.appendChild(v); hap("medium"); poopKick();
+  document.body.appendChild(v); hap("medium");
+  sfx("cwhoosh"); setTimeout(() => sfx(kind === "gold" ? "cgold" : "cpoop"), 220);
   const inner = v.querySelector(".bcv-stage .bc-in"), shadow = v.querySelector(".bcv-shadow");
-  // карта плавно «выплывает», слегка развёрнутая, и величественно встаёт ровно
-  const S = BCV.st = {rx: 32, ry: -38, vx: 0, vy: 0, tx: 0, ty: 0, drag: null, lastTap: 0, t: 0, prev: performance.now()};
+  const S = {rx: 30, ry: -42, vx: 0, vy: 0, tx: 0, ty: 0, drag: null, lastTap: 0, t: 0, side: 0};
   const down = e => {
     if (e.target.closest(".bcv-x")){ closeBizCard(); return; }
     S.drag = {id: e.pointerId, x: e.clientX, y: e.clientY, rx: S.rx, ry: S.ry, lt: performance.now(), moved: 0, onCard: !!e.target.closest(".bcard")};
@@ -4160,29 +4195,22 @@ function openBizCard(kind){
     S.ty = Math.round((S.ry + S.vy * .2) / 180) * 180; S.tx = 0;
   };
   v.addEventListener("pointerdown", down); v.addEventListener("pointermove", move); v.addEventListener("pointerup", up); v.addEventListener("pointercancel", up);
-  let lastSide = 0;
-  const loop = now => {
-    if (!v.isConnected) return;
-    const dt = Math.min(.04, (now - S.prev) / 1000); S.prev = now; S.t += dt;
-    if (!S.drag){ // мягкая пружина почти без перелёта — движение плавное и тяжёлое
-      const k = 24, c = 8.6;
-      S.vy += ((S.ty - S.ry) * k - S.vy * c) * dt; S.vx += ((S.tx - S.rx) * k - S.vx * c) * dt;
-      S.ry += S.vy * dt; S.rx += S.vx * dt;
-    }
-    const calm = S.drag ? 0 : 1, fy = Math.sin(S.t * .45) * 5 * calm, fx = Math.sin(S.t * .6 + 1) * 3.5 * calm, lift = S.drag ? 1.05 : 1 + Math.sin(S.t * .8) * .01;
-    const ry = S.ry + fy, rx = S.rx + fx, rad = ry * Math.PI / 180;
-    inner.style.transform = `translateY(${Math.sin(S.t * .8) * -4 * calm}px) scale(${lift}) rotateX(${rx}deg) rotateY(${ry}deg)`;
-    inner.style.setProperty("--sx", (50 + Math.sin(rad) * 70) + "%"); inner.style.setProperty("--sy", (45 - rx * 1.3) + "%"); inner.style.setProperty("--h", (ry * 2) + "deg");
-    shadow.style.transform = `scaleX(${.75 + .25 * Math.abs(Math.cos(rad))})`; shadow.style.opacity = .5 + .3 * Math.abs(Math.cos(rad));
-    const side = Math.round(((ry % 360) + 360) % 360 / 180) % 2; if (side !== lastSide){ lastSide = side; hap(); }
-    BCV.raf = requestAnimationFrame(loop);
+  BCV.step = dt => {
+    if (!v.isConnected){ BCV.step = null; return; }
+    S.t += dt;
+    if (!S.drag){ const k = 24, c = 8.6; S.vy += ((S.ty - S.ry) * k - S.vy * c) * dt; S.vx += ((S.tx - S.rx) * k - S.vx * c) * dt; S.ry += S.vy * dt; S.rx += S.vx * dt; }
+    const calm = S.drag ? 0 : 1, ry = S.ry + Math.sin(S.t * .45) * 6 * calm, rx = S.rx + Math.sin(S.t * .6 + 1) * 4 * calm, lift = S.drag ? 1.05 : 1 + Math.sin(S.t * .8) * .01, rad = ry * Math.PI / 180;
+    inner.style.transform = `translateY(${Math.sin(S.t * .8) * -5 * calm}px) scale(${lift}) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    bcLightVars(inner, rx, ry);
+    shadow.style.transform = `translateX(${Math.sin(rad) * 14}px) scaleX(${.72 + .28 * Math.abs(Math.cos(rad))})`; shadow.style.opacity = .45 + .35 * Math.abs(Math.cos(rad));
+    const side = Math.round(((ry % 360) + 360) % 360 / 180) % 2; if (side !== S.side){ S.side = side; hap(); sfx("cflip", .9); }
   };
-  BCV.raf = requestAnimationFrame(loop);
+  bcKick();
 }
 function closeBizCard(now){
-  const v = $("bcv"); if (!v) return; cancelAnimationFrame(BCV.raf);
+  const v = $("bcv"); if (!v) return; BCV.step = null;
   if (now){ v.remove(); return; }
-  v.classList.add("out"); hap(); setTimeout(() => v.remove(), 320);
+  v.classList.add("out"); hap(); sfx("cclose"); setTimeout(() => v.remove(), 340);
 }
 /* ================= СТАТУСЫ: ТЕСТЕР (Лаборатория) и VIP (привилегии) ================= */
 const isTester = () => isAdmin() || ST === "tester" || window.__dev;

@@ -695,18 +695,18 @@ body.beta .achi .ae{width:46px;height:46px;font-size:21px;border-radius:15px}
 .bthumb.bc-gold,.bcv-stage .bc-gold{filter:drop-shadow(0 3cqw 5cqw rgba(0,0,0,.45))}
 @keyframes bcGold{0%,100%{background-position:0% 30%}50%{background-position:100% 70%}}
 .bc-gold .bc-face::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,transparent 1px 3px),repeating-linear-gradient(0deg,rgba(90,60,10,.05) 0 1px,transparent 1px 4px);mix-blend-mode:overlay}
-.emb{color:#C99A3C;text-shadow:-.16cqw -.16cqw 0 rgba(255,250,222,.95),.22cqw .26cqw 0 rgba(96,60,8,.85),.45cqw .6cqw .8cqw rgba(60,35,0,.4)}
+.emb{color:#5E3D0B}
+.bc-bevel,.bc-frame{display:none}
 .bc-logo{position:absolute;left:8.5cqw;top:8cqw;font-family:Unbounded;font-weight:800;font-size:5cqw;letter-spacing:-.02em;z-index:4}
 .bc-logo i{font-style:normal;color:#A3262A}
 .bc-seal{position:absolute;right:8cqw;top:7cqw;width:12cqw;height:12cqw;border-radius:50%;z-index:4;display:grid;place-items:center;font-size:5.6cqw;
-  background:radial-gradient(circle at 35% 30%,#FFF3C4,#D9A63A 55%,#8A5E18);box-shadow:inset .4cqw .4cqw .6cqw rgba(255,255,255,.6),inset -.5cqw -.5cqw .8cqw rgba(90,55,5,.55),.4cqw .6cqw 1cqw rgba(80,50,5,.4)}
-.bc-seal b{display:block;color:#C99A3C;text-shadow:-.15cqw -.15cqw 0 #FFF6D0,.2cqw .25cqw 0 #6B460E;animation:bcSpin 40s linear infinite}
+  background:radial-gradient(circle at 35% 30%,#FFF3C4,#D9A63A 55%,#8A5E18);box-shadow:0 .4cqw 1cqw rgba(80,50,5,.3)}
+.bc-seal b{display:block;color:#6B460E;animation:bcSpin 40s linear infinite}
 @keyframes bcSpin{to{transform:rotate(360deg)}}
 .bc-gold .bc-back{background:linear-gradient(125deg,#7A5214,#D9A63A 30%,#FFF0BE 45%,#C8962F 60%,#6E4A12);background-size:220% 220%;animation:bcGold 14s ease-in-out infinite reverse}
 .bc-guil{position:absolute;inset:0;background:repeating-radial-gradient(circle at 50% 50%,rgba(110,70,15,.16) 0 .35cqw,transparent .35cqw 2.4cqw),repeating-conic-gradient(from 0deg at 50% 50%,rgba(255,246,210,.12) 0 4deg,transparent 4deg 8deg);animation:bcSpin 120s linear infinite;opacity:.8}
 .bc-mono{position:absolute;inset:0;display:grid;place-items:center;font-family:Unbounded;font-weight:800;font-size:20cqw;letter-spacing:-.04em;z-index:4}
-.bc-mono span{display:grid;place-items:center;width:40cqw;height:40cqw;border-radius:50%;background:radial-gradient(circle at 40% 30%,rgba(255,250,225,.6),rgba(210,160,60,.3) 60%,transparent 72%);
-  box-shadow:inset .6cqw .6cqw 1cqw rgba(255,255,255,.45),inset -.7cqw -.7cqw 1.2cqw rgba(90,55,5,.4)}
+.bc-mono span{display:grid;place-items:center;width:40cqw;height:40cqw;border-radius:50%;background:radial-gradient(circle at 40% 30%,rgba(255,250,225,.6),rgba(210,160,60,.3) 60%,transparent 72%);}
 .bc-bsm{position:absolute;bottom:6.5cqw;left:0;right:0;text-align:center;font-family:Unbounded;font-weight:800;font-size:3.6cqw;letter-spacing:.4em;z-index:4}
 
 /* --- отдел маркетинга --- */
@@ -714,10 +714,10 @@ body.beta .achi .ae{width:46px;height:46px;font-size:21px;border-radius:15px}
 .bthumb.bc-poop,.bcv-stage .bc-poop{filter:drop-shadow(0 3cqw 5cqw rgba(0,0,0,.5))}
 .bc-poop .bc-ov{background:none;transform:translateZ(3.8px)}
 .bc-drip{position:absolute;left:0;top:0;width:100%;height:160%;pointer-events:none;transform:translateZ(3.4px);backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.embp{color:#EBCB98;text-shadow:-.16cqw -.16cqw 0 #FFF0D4,.24cqw .3cqw 0 #2A1505,.5cqw .8cqw 1cqw rgba(0,0,0,.5)}
+.embp{color:#F6DDB2;text-shadow:0 .35cqw 0 #2A1505}
 .bc-plogo{position:absolute;left:8.5cqw;top:8cqw;font-family:Unbounded;font-weight:800;font-size:4.4cqw;z-index:4}
 .bc-plogo i{font-style:normal;color:#9BD04A}
-.bc-pwrap{position:absolute;right:7cqw;top:7cqw;width:29cqw;height:29cqw;z-index:4}
+.bc-pwrap{position:absolute;right:8cqw;top:12cqw;width:29cqw;height:29cqw;z-index:4}
 .bc-poop .bc-ov .bc-name{font-size:6cqw}
 .bc-rays{position:absolute;inset:-35%;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(255,215,130,.28) 0 7deg,transparent 7deg 22deg);
   -webkit-mask:radial-gradient(circle,#000 18%,transparent 66%);mask:radial-gradient(circle,#000 18%,transparent 66%);animation:bcSpin 30s linear infinite}
@@ -725,11 +725,27 @@ body.beta .achi .ae{width:46px;height:46px;font-size:21px;border-radius:15px}
 @keyframes pGlow{50%{transform:scale(1.12);opacity:.7}}
 .bc-pshadow{position:absolute;left:20%;right:20%;bottom:-2%;height:12%;border-radius:50%;background:radial-gradient(rgba(0,0,0,.55),transparent 70%);animation:pShadow 4.5s ease-in-out infinite}
 @keyframes pShadow{50%{transform:scaleX(.8);opacity:.6}}
-.pp{position:absolute;inset:0;width:100%;height:100%;overflow:visible;animation:pFloat 4.5s ease-in-out infinite;transform-origin:50% 90%}
+.bc-rays,.bc-glow,.bc-poop .bc-spk{display:none}
+.pp{position:absolute;inset:0;width:100%;height:100%;overflow:visible;animation:poopWob 2.4s ease-in-out infinite;transform-origin:50% 92%;filter:drop-shadow(0 1.4cqw 1.6cqw rgba(0,0,0,.4))}
+@keyframes poopWob{0%,100%{transform:rotate(-7deg) scale(1,1)}25%{transform:rotate(0) scale(1.07,.93)}50%{transform:rotate(7deg) scale(1,1)}75%{transform:rotate(0) scale(.94,1.06)}}
+.bc-flies{position:absolute;left:50%;top:58%;width:0;height:0;z-index:5}
+.bc-fly{position:absolute;left:0;top:0;width:4cqw;height:4cqw;margin:-2cqw;animation:flyA 2.9s linear infinite}
+.bc-fly.f2{animation:flyB 2.1s linear infinite}
+@keyframes flyA{0%{transform:rotate(0) translate(15cqw,-2cqw) rotate(0)}50%{transform:rotate(180deg) translate(12cqw,3cqw) rotate(-180deg)}100%{transform:rotate(360deg) translate(15cqw,-2cqw) rotate(-360deg)}}
+@keyframes flyB{0%{transform:rotate(360deg) translate(10cqw,2cqw) scaleX(-1)}50%{transform:rotate(180deg) translate(14cqw,-3cqw) scaleX(-1)}100%{transform:rotate(0) translate(10cqw,2cqw) scaleX(-1)}}
+.bc-fly i{position:absolute;inset:0;margin:auto;width:2.2cqw;height:1.6cqw;border-radius:50%;background:radial-gradient(circle at 70% 40%,#3d4a2a,#111 60%);box-shadow:.9cqw 0 0 -.35cqw #222}
+.bc-fly i::before,.bc-fly i::after{content:"";position:absolute;width:1.9cqw;height:1.1cqw;border-radius:50%;background:rgba(220,235,255,.75);left:.1cqw;top:-.8cqw;transform-origin:80% 100%;animation:flyW .06s linear infinite alternate}
+.bc-fly i::after{transform:scaleY(-1);top:auto;bottom:-.8cqw;transform-origin:80% 0;animation-name:flyW2}
+@keyframes flyW{from{transform:rotate(-30deg)}to{transform:rotate(25deg)}}
+@keyframes flyW2{from{transform:scaleY(-1) rotate(30deg)}to{transform:scaleY(-1) rotate(-25deg)}}
+.bc-stink{position:absolute;left:22%;top:-42%;width:20cqw;height:16cqw;pointer-events:none}
+.bc-stink svg{position:absolute;bottom:0;width:3.4cqw;height:14cqw;animation:stink 2.6s ease-in infinite;opacity:0}
+.bc-stink svg:nth-child(2){left:7cqw;animation-delay:-.9s}.bc-stink svg:nth-child(3){left:14cqw;animation-delay:-1.7s}
+@keyframes stink{0%{transform:translateY(3cqw) scaleY(.6);opacity:0}30%{opacity:.85}100%{transform:translateY(-6cqw) scaleY(1.1);opacity:0}}
 @keyframes pFloat{0%,100%{transform:translateY(0) rotate(-2deg) scale(1)}50%{transform:translateY(-6%) rotate(2deg) scale(1.03)}}
-.pp .pe{transform-box:fill-box;transform-origin:center;animation:pBlink 5.5s ease-in-out infinite}
+.pp .pe{transform-box:fill-box;transform-origin:center}
 @keyframes pBlink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
-.pp .pg{animation:pGloss 4.5s ease-in-out infinite}
+.pp .pg{}
 @keyframes pGloss{50%{opacity:.55}}
 .bc-poop .bc-spk i{background:#FFE9B0;filter:drop-shadow(0 0 1cqw #ffd57a)}
 .bc-poop .bc-back{background:radial-gradient(circle at 50% 45%,#6B3F1A,#3A200B 70%)}
@@ -4041,7 +4057,8 @@ function poopSvg(){
     <path d="M36 75Q50 89 64 75Q50 80 36 75Z" fill="#3A1A08"/><path d="M44 80.5Q50 85.5 56 80.5Q50 82 44 80.5Z" fill="#E8667A"/></svg>`;
 }
 const bcEdges = () => [-2.4, -1.6, -.8, 0, .8, 1.6, 2.4].map(z => `<div class="bc-edge" style="transform:translateZ(${z}px)"></div>`).join("");
-const pwrap = () => `<div class="bc-pwrap"><div class="bc-rays"></div><div class="bc-glow"></div><div class="bc-pshadow"></div>${poopSvg()}
+const STINK = `<svg viewBox="0 0 10 40"><path d="M5 40C0 32 10 28 5 20S0 8 5 0" stroke="#A8D04A" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`;
+const pwrap = () => `<div class="bc-pwrap"><div class="bc-stink">${STINK}${STINK}${STINK}</div>${poopSvg()}<div class="bc-flies"><span class="bc-fly"><i></i></span><span class="bc-fly f2"><i></i></span></div>
   <div class="bc-spk"><i style="left:6%;top:12%"></i><i style="left:86%;top:30%;animation-delay:-1.7s"></i><i style="left:74%;top:-4%;animation-delay:-3.3s"></i></div></div>`;
 function bizCardInner(kind){
   if (kind === "gold") return `<div class="bc-in">${bcEdges()}

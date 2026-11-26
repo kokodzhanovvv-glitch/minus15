@@ -672,9 +672,9 @@ body.beta .achi .ae{width:46px;height:46px;font-size:21px;border-radius:15px}
 .bthumb{filter:drop-shadow(0 2.6cqw 4cqw rgba(0,0,0,.45))}
 /* блик: реальный свет — пятно и полоса смещаются против наклона, яркость зависит от угла */
 .bc-glare{position:absolute;inset:0;pointer-events:none;z-index:6;opacity:var(--gs);
-  background:radial-gradient(ellipse 55% 75% at var(--gx) var(--gy),rgba(255,255,255,.55),rgba(255,255,255,.12) 40%,transparent 70%);mix-blend-mode:soft-light}
-.bc-band{position:absolute;inset:-30%;pointer-events:none;z-index:6;opacity:calc(var(--gs) * 1.1);
-  background:linear-gradient(var(--ga),transparent 38%,rgba(255,251,235,.0) 42%,rgba(255,251,235,.75) 49%,rgba(255,251,235,.15) 53%,transparent 60%);
+  background:radial-gradient(ellipse 80% 110% at var(--gx) var(--gy),rgba(255,255,255,.38),rgba(255,255,255,.1) 45%,transparent 80%);mix-blend-mode:soft-light}
+.bc-band{position:absolute;inset:-30%;pointer-events:none;z-index:6;opacity:calc(var(--gs) * .75);
+  background:linear-gradient(var(--ga),transparent 18%,rgba(255,251,235,.1) 36%,rgba(255,251,235,.34) 50%,rgba(255,251,235,.1) 64%,transparent 82%);
   background-size:100% 100%;transform:translateX(calc(var(--gx) - 50%));mix-blend-mode:overlay}
 
 /* ---------- CEO: шлифованное золото ---------- */
@@ -684,8 +684,8 @@ body.beta .achi .ae{width:46px;height:46px;font-size:21px;border-radius:15px}
 .bc-brush{position:absolute;inset:0;pointer-events:none;opacity:.55;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.003 0.85' numOctaves='2' seed='7'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");background-size:100% 100%}
 /* анизотропный отблеск шлифовки: вертикальная световая полоса бежит поперёк при повороте */
-.bc-aniso{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:calc(.25 + var(--gs) * .6);
-  background:linear-gradient(90deg,transparent calc(var(--hx) - 28%),rgba(255,236,190,.35) calc(var(--hx) - 9%),rgba(255,248,225,.7) var(--hx),rgba(255,236,190,.35) calc(var(--hx) + 9%),transparent calc(var(--hx) + 28%))}
+.bc-aniso{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:calc(.35 + var(--gs) * .5);
+  background:linear-gradient(90deg,transparent calc(var(--hx) - 45%),rgba(255,236,190,.12) calc(var(--hx) - 22%),rgba(255,246,222,.42) var(--hx),rgba(255,236,190,.12) calc(var(--hx) + 22%),transparent calc(var(--hx) + 45%))}
 .etch{color:#5A3D12;text-shadow:0 .14cqw 0 rgba(255,246,220,.45)}
 .bc-wm{position:absolute;text-align:left;left:8cqw;top:7.4cqw;font-family:Unbounded;font-weight:800;font-size:4.8cqw;letter-spacing:-.02em;z-index:4}
 .bc-wm i{font-style:normal;color:#8E2A22}
@@ -693,12 +693,12 @@ body.beta .achi .ae{width:46px;height:46px;font-size:21px;border-radius:15px}
 .bc-role{display:flex;align-items:center;gap:2cqw;font-size:.44em;font-weight:800;letter-spacing:.5em;margin-bottom:2.2cqw}
 .bc-role::after{content:"";width:9cqw;height:.22cqw;background:currentColor;opacity:.55}
 /* голограмма-наклейка: радужный перелив зависит от угла */
-.bc-foil{position:absolute;right:7.6cqw;top:6.8cqw;width:14cqw;height:10.5cqw;border-radius:1.8cqw;overflow:hidden;z-index:4;
-  background:repeating-linear-gradient(calc(var(--ga) - 60deg),rgba(255,255,255,0) 0 .35cqw,rgba(255,255,255,.28) .35cqw .5cqw),
-    linear-gradient(calc(var(--ga) + 30deg),#f5a3d9,#ffe08a,#9ff0c6,#8fc4ff,#c9a3ff,#f5a3d9,#ffe08a);
-  background-size:100% 100%,420% 420%;background-position:0 0,var(--gx) var(--gy);filter:saturate(1.15) brightness(1.05);
-  box-shadow:inset 0 0 0 .22cqw rgba(255,255,255,.55),0 .25cqw .6cqw rgba(60,40,10,.3)}
-.bc-foil b{position:absolute;inset:0;display:grid;place-items:center;font-family:Unbounded;font-weight:800;font-size:4.4cqw;color:rgba(255,255,255,.75);mix-blend-mode:overlay}
+.bc-blogo{position:absolute;right:7.6cqw;top:6.6cqw;width:11.5cqw;height:11.5cqw;border-radius:3cqw;z-index:4;overflow:hidden;
+  background:radial-gradient(60% 60% at 30% 25%,rgba(200,245,66,.22),transparent 70%),radial-gradient(55% 55% at 80% 85%,rgba(91,140,255,.24),transparent 70%),#0A0C0F;
+  box-shadow:0 .5cqw 1.2cqw rgba(50,32,6,.4),inset 0 0 0 .15cqw rgba(255,255,255,.08)}
+.bc-blogo b{position:absolute;left:0;right:0;top:50%;transform:translate(-8%,-58%);text-align:center;font-family:Unbounded;font-weight:700;font-size:7.2cqw;letter-spacing:-.05em;color:#F3F5F8;line-height:1}
+.bc-blogo i{position:absolute;width:2.1cqw;height:2.1cqw;border-radius:50%;background:#C8F542;box-shadow:0 0 1.2cqw rgba(200,245,66,.75);left:66%;top:56%}
+.bc-blogo::after{content:"";position:absolute;inset:0;background:linear-gradient(var(--ga),transparent 30%,rgba(255,255,255,.14) 50%,transparent 70%)}
 .bc-gold .bc-back{background:linear-gradient(125deg,#B58A42,#E2C384 35%,#F4E1B4 50%,#D2AB62 65%,#9E7633)}
 .bc-guil{position:absolute;inset:0;opacity:.55;background:repeating-radial-gradient(circle at 50% 50%,rgba(90,60,15,.22) 0 .12cqw,transparent .12cqw 1.1cqw)}
 .bc-guil::after{content:"";position:absolute;inset:0;background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(255,248,225,.14) 0 3deg,transparent 3deg 6deg);animation:bcSpin 90s linear infinite}
@@ -744,7 +744,8 @@ body.beta .achi .ae{width:46px;height:46px;font-size:21px;border-radius:15px}
 .bc-stink svg{position:absolute;bottom:0;width:3.4cqw;height:14cqw;animation:stink 2.8s ease-in infinite;opacity:0}
 .bc-stink svg:nth-child(2){left:7cqw;animation-delay:-.95s}.bc-stink svg:nth-child(3){left:14cqw;animation-delay:-1.85s}
 @keyframes stink{0%{transform:translateY(3cqw) scaleY(.6) skewX(0);opacity:0}30%{opacity:.8}60%{transform:translateY(-2cqw) scaleY(.9) skewX(8deg)}100%{transform:translateY(-7cqw) scaleY(1.1) skewX(-6deg);opacity:0}}
-.bc-poop .bc-glare{mix-blend-mode:soft-light;opacity:calc(var(--gs) * .8)}
+.bc-poop .bc-glare{mix-blend-mode:soft-light;opacity:calc(var(--gs) * .6)}
+.bc-poop .bc-band{display:none}
 .bc-poop .bc-back{background:radial-gradient(circle at 50% 42%,#4E2D12,#24130A 75%)}
 .bc-pat{position:absolute;inset:0;opacity:.5;background:repeating-linear-gradient(45deg,rgba(255,220,170,.04) 0 .3cqw,transparent .3cqw 2.4cqw)}
 .bc-pback{position:absolute;inset:0;display:grid;place-items:center;text-align:center;z-index:4;font-family:Unbounded;font-weight:800}
@@ -4068,7 +4069,7 @@ const pwrap = () => `<div class="bc-pwrap"><div class="bc-stink">${STINK}${STINK
 function bizCardInner(kind){
   if (kind === "gold") return `<div class="bc-in">${bcEdges()}
     <div class="bc-face bc-front"><div class="bc-brush"></div><div class="bc-aniso"></div>
-      <div class="bc-wm etch">solve<i>.</i></div><div class="bc-foil"><b>s.</b></div>
+      <div class="bc-wm etch">solve<i>.</i></div><div class="bc-blogo"><b>s</b><i></i></div>
       <div class="bc-nm etch"><span class="bc-role">CEO</span>Кокоджанов<br>Радмир</div>${bcLight()}</div>
     <div class="bc-face bc-back"><div class="bc-brush"></div><div class="bc-guil"></div><div class="bc-aniso"></div>
       <div class="bc-mono etch"><span>РК</span></div><div class="bc-bsm etch">SOLVE. · CEO</div>${bcLight()}</div></div>`;
@@ -4091,7 +4092,7 @@ function bcLightVars(inner, rx, ry){
   let a = ((ry % 360) + 540) % 360 - 180; if (Math.abs(a) > 90) a = a > 0 ? a - 180 : a + 180; // для обратной стороны — зеркально
   const r = a * Math.PI / 180, x = rx * Math.PI / 180;
   const gx = 50 - Math.sin(r) * 95, gy = 30 + Math.sin(x) * 110;
-  const gs = .22 + .78 * Math.exp(-(((a + 14) / 26) ** 2 + ((rx - 10) / 30) ** 2));
+  const gs = .38 + .5 * Math.exp(-(((a + 14) / 48) ** 2 + ((rx - 10) / 50) ** 2));
   inner.style.setProperty("--gx", gx.toFixed(1) + "%"); inner.style.setProperty("--gy", gy.toFixed(1) + "%");
   inner.style.setProperty("--ga", (100 + a * .6 + rx * .4).toFixed(1) + "deg"); inner.style.setProperty("--gs", gs.toFixed(3));
   inner.style.setProperty("--hx", (50 - Math.sin(r) * 120).toFixed(1) + "%");
@@ -4115,46 +4116,72 @@ function bcFrame(ts){
 function bcKick(){ BCL.idle = 0; if (!BCL.raf) BCL.raf = requestAnimationFrame(bcFrame); }
 const poopKick = bcKick;
 
-// ---------- глянцевые потёки (canvas): объёмные, с бликом, который смещается при наклоне ----------
+// ---------- жидкие потёки: «метаболы» — капли сливаются, тянутся и отрываются как настоящая густая жидкость;
+// объём и глянец считаются по нормали поверхности, блик смещается при наклоне карты ----------
 function poopDripNew(fresh){
-  return {x: .05 + Math.random() * .9, w: .032 + Math.random() * .03, len: fresh ? .08 + Math.random() * .45 : .06, max: .25 + Math.random() * .95,
-    sp: .035 + Math.random() * .05, life: 11 + Math.random() * 11, age: 0, drop: 1.6 + Math.random() * 2.5, k: 1, ph: Math.random() * 6};
+  const len = fresh ? .1 + Math.random() * .4 : .02;
+  return {x: .06 + Math.random() * .88, w: .036 + Math.random() * .026, len, vis: len, max: .26 + Math.random() * .85,
+    sp: .03 + Math.random() * .04, life: 12 + Math.random() * 12, age: 0, drop: 1.8 + Math.random() * 2.6, dying: false, ph: Math.random() * 6};
 }
 function poopDraw(cv, dt, t){
   const dpr = Math.min(2, window.devicePixelRatio || 1), cw = cv.clientWidth, ch = cv.clientHeight; if (!cw) return;
   if (cv.width !== Math.round(cw * dpr)){ cv.width = Math.round(cw * dpr); cv.height = Math.round(ch * dpr); }
-  const c = cv.getContext("2d"), W = cw, H = cw / 1.586; c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, cw, ch);
-  const S = cv._s || (cv._s = {d: Array.from({length: 7}, () => poopDripNew(true)), drops: []});
+  const W = cw, H = cw / 1.586, s = 2, gw = Math.ceil(cw / s) + 1, gh = Math.ceil(ch / s) + 1;
+  let S = cv._s;
+  if (!S || S.gw !== gw || S.gh !== gh){
+    const off = document.createElement("canvas"); off.width = gw; off.height = gh;
+    S = cv._s = {gw, gh, f: new Float32Array(gw * gh), off, octx: off.getContext("2d"), img: null, d: Array.from({length: 7}, () => poopDripNew(true)), drops: []};
+    S.img = S.octx.createImageData(gw, gh);
+  }
+  const f = S.f; f.fill(0);
   const tilt = (cv.parentElement && cv.parentElement._tilt) || 0, inView = !!cv.closest("#bcv");
-  const cap = x => H * (.085 + .018 * Math.sin(x / W * 11 + t * .8) + .011 * Math.sin(x / W * 27 - t * .6));
-  // шапка: вертикальный объём + влажная кромка
-  const cg = c.createLinearGradient(0, 0, 0, H * .13); cg.addColorStop(0, "#3E2109"); cg.addColorStop(.55, "#6E4019"); cg.addColorStop(1, "#4A280C");
-  c.save(); c.beginPath(); c.roundRect ? c.roundRect(0, 0, W, H, W * .046) : c.rect(0, 0, W, H); c.clip();
-  c.beginPath(); c.moveTo(0, 0); c.lineTo(W, 0); for (let x = W; x >= 0; x -= 3) c.lineTo(x, cap(x)); c.closePath(); c.fillStyle = cg; c.fill();
-  const hl = c.createLinearGradient(0, 0, W, 0), hc = .5 - tilt * .45;
-  hl.addColorStop(Math.max(0, hc - .35), "rgba(255,225,185,0)"); hl.addColorStop(Math.min(1, Math.max(0, hc)), "rgba(255,232,200,.75)"); hl.addColorStop(Math.min(1, hc + .35), "rgba(255,225,185,0)");
-  c.strokeStyle = hl; c.lineWidth = 1.8; c.lineCap = "round"; c.beginPath(); for (let x = 6; x <= W - 6; x += 3){ const y = cap(x) - 4; x === 6 ? c.moveTo(x, y) : c.lineTo(x, y); } c.stroke(); c.restore();
+  const cap = x => H * (.1 + .016 * Math.sin(x / W * 9 + t * .6) + .009 * Math.sin(x / W * 23 - t * .45));
+  // слой сверху: поле растёт выше кромки — потёки сливаются с ним плавной «перемычкой»
+  const rows = Math.min(gh, Math.ceil(H * .15 / s) + 2);
+  for (let gx = 0; gx < gw; gx++){ const c = cap(gx * s); for (let gy = 0; gy < rows; gy++){ const v = (c - gy * s) / 6 + .5; if (v > 0) f[gy * gw + gx] += v > 1.5 ? 1.5 : v; } }
+  const blob = (x, y, r) => {
+    const R = r * 1.85, R2 = R * R, x0 = Math.max(0, Math.floor((x - R) / s)), x1 = Math.min(gw - 1, Math.ceil((x + R) / s)), y0 = Math.max(0, Math.floor((y - R) / s)), y1 = Math.min(gh - 1, Math.ceil((y + R) / s));
+    for (let gy = y0; gy <= y1; gy++){ const dy = gy * s - y, dy2 = dy * dy; if (dy2 > R2) continue; const row = gy * gw;
+      for (let gx = x0; gx <= x1; gx++){ const dx = gx * s - x, q = 1 - (dx * dx + dy2) / R2; if (q > 0) f[row + gx] += q * q; } }
+  };
   for (let i = 0; i < S.d.length; i++){
     const d = S.d[i]; d.age += dt;
-    if (d.len < d.max) d.len += d.sp * dt * (1 - d.len / (d.max + .5));
-    else { d.drop -= dt; if (d.drop <= 0){ S.drops.push({x: d.x * W, y: d.len * H + d.w * W * .4, vy: 12, r: d.w * W * .42}); d.drop = 2 + Math.random() * 3; if (inView) sfx("cdrip", .8); } }
-    if (d.age > d.life){ d.k -= dt * .35; if (d.k <= 0){ S.d[i] = poopDripNew(false); continue; } }
-    const x = d.x * W, w = d.w * W * d.k, top = cap(x) - 2, tip = Math.max(top + 2, d.len * H) + Math.sin(t * 1.3 + d.ph) * 1.5, bw = w * (.6 + .06 * Math.sin(t * 2 + d.ph));
-    // цилиндрическая заливка: тёмные края, светлая середина — как настоящая густая капля
-    const g = c.createLinearGradient(x - bw, 0, x + bw, 0); g.addColorStop(0, "#2C1606"); g.addColorStop(.32 - tilt * .1, "#7A4A1E"); g.addColorStop(.5, "#5E3514"); g.addColorStop(1, "#24120A");
-    c.fillStyle = g; c.beginPath(); c.moveTo(x - w / 2 - 4, top - 2); c.quadraticCurveTo(x - w / 2, top + 8, x - w * .34, tip); c.lineTo(x + w * .34, tip); c.quadraticCurveTo(x + w / 2, top + 8, x + w / 2 + 4, top - 2); c.closePath(); c.fill();
-    const rg = c.createRadialGradient(x - bw * (.3 + tilt * .3), tip - bw * .35, bw * .1, x, tip, bw); rg.addColorStop(0, "#8A5526"); rg.addColorStop(.6, "#4E2B0F"); rg.addColorStop(1, "#2A1406");
-    c.fillStyle = rg; c.beginPath(); c.arc(x, tip, bw, 0, 7); c.fill();
-    const sx = x - w * (.16 + tilt * .14);
-    c.fillStyle = "rgba(255,232,205,.42)"; c.beginPath(); c.ellipse(sx, (top + tip) / 2, Math.max(.6, w * .07), Math.max(1, (tip - top) / 2 - 3), 0, 0, 7); c.fill();
-    c.fillStyle = "rgba(255,245,230,.85)"; c.beginPath(); c.arc(x - bw * (.32 + tilt * .25), tip - bw * .32, bw * .18, 0, 7); c.fill();
+    const x = d.x * W + Math.sin(t * .5 + d.ph) * 1.2, w = d.w * W, top = cap(x);
+    if (!d.dying){
+      if (d.len < d.max) d.len += d.sp * dt * (1 - d.len / (d.max + .5));
+      else { d.drop -= dt; if (d.drop <= 0){ const tip = Math.max(top + 1, d.vis * H), bw = w * .58;
+        S.drops.push({x, y: tip + bw * .2, vy: 6, r: bw * .92}); d.len = Math.max(.04, d.len - bw * 1.7 / H); d.drop = 2.2 + Math.random() * 3; if (inView) sfx("cdrip", .8); } }
+      if (d.age > d.life) d.dying = true;
+    } else { d.len -= dt * .09; if (d.len < .02){ S.d[i] = poopDripNew(false); continue; } }
+    d.vis += (d.len - d.vis) * Math.min(1, dt * 4);
+    const tip = Math.max(top + 1, d.vis * H), L = tip - top, bw = w * (.56 + .05 * Math.sin(t * 1.6 + d.ph));
+    const n = Math.max(1, Math.ceil(L / (w * .28)));
+    for (let k = 0; k <= n; k++){ const u = k / n;
+      blob(x + Math.sin(u * 3 + t * .8 + d.ph) * w * .07 * u, top + L * u, w * (.34 - .09 * Math.sin(Math.PI * u) + .03 * Math.sin(u * 7 - t * 2 + d.ph))); }
+    blob(x, tip, bw);
   }
   for (let i = S.drops.length - 1; i >= 0; i--){
-    const p = S.drops[i]; p.vy += H * 2 * dt; p.y += p.vy * dt; if (p.y > ch + 10){ S.drops.splice(i, 1); continue; }
-    const st = Math.min(1.6, 1 + p.vy / (H * 3)), rg = c.createRadialGradient(p.x - p.r * .35, p.y - p.r * .4, p.r * .1, p.x, p.y, p.r * st);
-    rg.addColorStop(0, "#8A5526"); rg.addColorStop(1, "#2E1708"); c.fillStyle = rg; c.beginPath(); c.ellipse(p.x, p.y, p.r / Math.sqrt(st), p.r * st, 0, 0, 7); c.fill();
-    c.fillStyle = "rgba(255,240,220,.7)"; c.beginPath(); c.arc(p.x - p.r * .3, p.y - p.r * .35, p.r * .2, 0, 7); c.fill();
+    const p = S.drops[i]; p.vy += H * 1.9 * dt; p.y += p.vy * dt;
+    if (p.y - p.r * 3 > ch){ S.drops.splice(i, 1); continue; }
+    blob(p.x, p.y, p.r); blob(p.x, p.y - p.r * (.55 + Math.min(1.1, p.vy / (H * 1.3))), p.r * .5); // хвостик — капля вытягивается при падении
   }
+  // освещение по нормали поля: густой глянцевый шоколад
+  let lx = -.35 - tilt * .7, ly = -.62, lz = .72; const ll = Math.hypot(lx, ly, lz); lx /= ll; ly /= ll; lz /= ll;
+  let hx = lx, hy = ly, hz = lz + 1; const hl = Math.hypot(hx, hy, hz); hx /= hl; hy /= hl; hz /= hl;
+  const data = S.img.data, rr = W * .046 / s, gW = W / s, gH = H / s;
+  for (let gy = 0; gy < gh; gy++) for (let gx = 0; gx < gw; gx++){
+    const i = gy * gw + gx, o = i * 4, v = f[i];
+    if (v < .4 || gx === 0 || gy === 0 || gx === gw - 1 || gy === gh - 1){ data[o + 3] = 0; continue; }
+    if (gy < rr && ((gx < rr && (rr - gx) ** 2 + (rr - gy) ** 2 > rr * rr) || (gx > gW - rr && (gx - gW + rr) ** 2 + (rr - gy) ** 2 > rr * rr))){ data[o + 3] = 0; continue; }
+    let nx = -(f[i + 1] - f[i - 1]) * 3.2, ny = -(f[i + gw] - f[i - gw]) * 3.2, nz = 1; const nl = Math.hypot(nx, ny, nz); nx /= nl; ny /= nl; nz /= nl;
+    const dif = Math.max(0, nx * lx + ny * ly + nz * lz), sh = Math.max(0, nx * hx + ny * hy + nz * hz), sp = sh ** 48 * 1.1 + sh ** 7 * .12;
+    const th = Math.min(1, (v - .4) * 2.2), base = .42 + .8 * dif * (.75 + .25 * th);
+    const a = v < .56 ? (v - .4) / .16 : 1, A = a * a * (3 - 2 * a);
+    data[o] = Math.min(255, 132 * base + 255 * sp); data[o + 1] = Math.min(255, 78 * base + 236 * sp); data[o + 2] = Math.min(255, 34 * base + 205 * sp); data[o + 3] = 255 * A;
+  }
+  S.octx.putImageData(S.img, 0, 0);
+  const c = cv.getContext("2d"); c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, cw, ch);
+  c.imageSmoothingEnabled = true; c.imageSmoothingQuality = "high"; c.drawImage(S.off, 0, 0, gw * s, gh * s);
 }
 
 // ---------- просмотр: крути пальцем, двойной тап — перевернуть ----------

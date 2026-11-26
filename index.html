@@ -4212,6 +4212,21 @@ function poopDraw(cv, dt, t){
   }
 }
 
+// ---------- трек карты CEO: играет, пока карта открыта; плавно появляется и затихает ----------
+const CEO = {el: null, t: 0};
+function ceoPrefetch(){ if (!CEO.el){ const a = new Audio(); a.src = "ceo.m4a"; a.preload = "auto"; a.loop = true; a.setAttribute("playsinline", ""); CEO.el = a; } return CEO.el; }
+function ceoPlay(){
+  if (!SND.on) return; const a = ceoPrefetch(); clearInterval(CEO.t);
+  try { a.currentTime = 0; } catch(e){} a.volume = 0; const p = a.play(); if (p && p.catch) p.catch(() => {});
+  let v = 0; CEO.t = setInterval(() => { v = Math.min(.9, v + .05); try { a.volume = v; } catch(e){} if (v >= .9) clearInterval(CEO.t); }, 60);
+}
+function ceoStop(now){
+  const a = CEO.el; if (!a) return; clearInterval(CEO.t);
+  if (now || a.paused){ a.pause(); return; }
+  let v = a.volume; CEO.t = setInterval(() => { v -= .07; if (v <= 0){ clearInterval(CEO.t); a.pause(); } else try { a.volume = v; } catch(e){} }, 50);
+}
+document.addEventListener("visibilitychange", () => { if (document.hidden) ceoStop(); });
+
 // ---------- просмотр: крути пальцем, двойной тап — перевернуть ----------
 const BCV = {step: null};
 function openBizCard(kind){
@@ -4222,7 +4237,7 @@ function openBizCard(kind){
     <div class="bcv-stage"><div class="bcv-shadow"></div><div class="bcard bc-${kind}">${bizCardInner(kind)}</div></div>
     <div class="bcv-hint">Крути пальцем · двойной тап — перевернуть</div>`;
   document.body.appendChild(v); hap("medium");
-  sfx("cwhoosh"); setTimeout(() => sfx(kind === "gold" ? "cgold" : "cpoop"), 220);
+  sfx("cwhoosh"); if (kind === "gold") ceoPlay(); else setTimeout(() => sfx("cpoop"), 220);
   const inner = v.querySelector(".bcv-stage .bc-in"), shadow = v.querySelector(".bcv-shadow");
   const S = {rx: 30, ry: -42, vx: 0, vy: 0, tx: 0, ty: 0, drag: null, lastTap: 0, t: 0, side: 0};
   const down = e => {
@@ -4264,7 +4279,7 @@ function openBizCard(kind){
   bcKick();
 }
 function closeBizCard(now){
-  const v = $("bcv"); if (!v) return; BCV.step = null;
+  const v = $("bcv"); if (!v) return; BCV.step = null; ceoStop(now);
   if (now){ v.remove(); return; }
   v.classList.add("out"); hap(); sfx("cclose"); setTimeout(() => v.remove(), 340);
 }
@@ -5111,7 +5126,7 @@ function renderOb(){
   else if (s === "lang") body = `<h2 class="h obh">🌐 Язык</h2><p class="obp">Язык приложения. Сообщения бота пока остаются на русском.</p>
       ${LANGS.map(([code, flag, n]) => `<button class="pc ${LANG === code ? "on" : ""}" data-act="oblang:${code}"><div class="pi">${flag}</div><div style="flex:1"><b>${n}</b></div>
         <span class="tgl ${LANG === code ? "on" : ""}"><i></i></span></button>`).join("")}`;
-  else if (s === "dev"){ setTimeout(poopKick, 60); body = `<div class="dev" style="padding-top:4px">${bizCards()}
+  else if (s === "dev"){ setTimeout(poopKick, 60); ceoPrefetch(); body = `<div class="dev" style="padding-top:4px">${bizCards()}
       <button class="igbtn" data-act="openig"><span class="igi"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="#fff" stroke="none"/></svg></span>
         <span class="igt"><b>Instagram</b><small>@kokodzhanovv</small></span><span class="iga">›</span></button>
       <div class="devfoot">Есть идея или нашёл баг? Напиши в Instagram 💬</div></div>`; }
@@ -5168,7 +5183,7 @@ function renderOb(){
 }
 function obAct(cmd, p1, p2){
   if (!OB) return false;
-  const d = OB.d;
+  const d = OB.d, step0 = OB.step, sc0 = $("ob") ? $("ob").scrollTop : 0;
   switch (cmd){
     case "obnext": { const st = obSteps(d); OB.step = st[Math.min(st.length - 1, st.indexOf(OB.step) + 1)]; break; }
     case "obback": { const st = obSteps(d); OB.step = st[Math.max(0, st.indexOf(OB.step) - 1)]; break; }
@@ -5184,7 +5199,7 @@ function obAct(cmd, p1, p2){
     case "obtheme": { if (p1 === "matrix"){ openSheet(() => sheetHead("Выбор") + `<p class="obp" style="text-align:center">Синяя — всё останется как было.<br>Красная — узнаешь, насколько глубока кроличья нора.</p>
         <div class="pills"><button class="pill2 blue" data-act="obpill:blue">💊 Синяя</button><button class="pill2 red" data-act="obpill:red">💊 Красная</button></div>`); hap(); return true; }
       if (p1 === "matrix!") p1 = "matrix";
-      const t = p1 === "solve" ? "" : p1; LS.set("solve_theme", t); if (C){ C.theme = t; saveCfg(); } applyTheme(); renderAll(); hap("ok");
+      const t = p1 === "solve" ? "" : p1; LS.set("solve_theme", t); d.theme = t; if (C){ C.theme = t; saveCfg(); } applyTheme(); if (C) renderAll(); hap("ok");
       toast(t === "rick" ? "🌀 Wubba lubba dub dub! Добро пожаловать в C-137" : t === "bat" ? "🦇 Я — месть." : t === "matrix" ? "🟢 Добро пожаловать в реальный мир." : t === "pixel" ? "🕹 PLAYER 1 READY" : t === "f1" ? "📻 Радио: машина готова, поехали!" : t === "coraline" ? "🗝 На «Сегодня» появилась маленькая дверь…" : "🎨 Тема «" + (THEMES.find(x => x.id === t) || THEMES[0]).n + "»"); break; }
     case "obnt": { const n = notifOf(); if (p1 === "on") n.on = !n.on; else { if (!n.on){ n.on = true; n.am = n.pm = n.subs = false; } n[p1] = !n[p1]; if (!n.am && !n.pm && !n.subs) n.on = false; }
       C.notif = n; d.notif = n; saveCfg(); sendNotif(); toast(n.on ? "🔔 Уведомления включены" : "🔕 Уведомления выключены"); hap(); break; }
@@ -5222,7 +5237,7 @@ function obAct(cmd, p1, p2){
     }
     default: return false;
   }
-  hap(); renderOb(); $("ob").scrollTop = 0; return true;
+  hap(); renderOb(); $("ob").scrollTop = OB && OB.step === step0 ? sc0 : 0; return true; // в том же разделе — остаёмся на месте
 }
 document.addEventListener("input", e => {
   const f = e.target.dataset && e.target.dataset.ob; if (!f || !OB) return;
